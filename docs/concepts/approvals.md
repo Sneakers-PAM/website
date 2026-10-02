@@ -19,5 +19,5 @@ person.
 
 ## What gets logged
 
-Every request and every decision is recorded in the [audit trail](/concepts/audit), along
+Every request and every decision is recorded in the [audit trail](./audit.md), along
 with the eventual action it unlocked. Denials are recorded too — a request is evidence either way.

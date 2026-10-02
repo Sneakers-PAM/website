@@ -15,8 +15,12 @@ in secret.
 
 ## Before you start
 
-> Coming in v0.1.0. You'll need Sneakers-PAM set up and your coding assistant connected to the MCP
-> server. The exact setup steps will be added here once they're ready.
+:::info[Coming in v0.1.0]
+
+You'll need Sneakers-PAM set up and your coding assistant connected to the MCP
+server. The exact setup steps will be added here once they're ready.
+
+:::
 
 ## Things you can ask it to do
 
@@ -62,4 +66,4 @@ scenes, and you never actually see it typed out anywhere.
 - **Everything is logged.** If something looks wrong later, there's a record to check.
 
 To understand what's happening behind the scenes, see
-[Agents and the MCP](/concepts/agents-and-mcp) and [Approvals and requests](/concepts/approvals).
+[Agents and the MCP](./concepts/agents-and-mcp.md) and [Approvals and requests](./concepts/approvals.md).

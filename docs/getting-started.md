@@ -10,9 +10,13 @@ you're running, and you're never trusting a binary someone else built for you.
 A single-node appliance running the vault, identity, workflow, audit and related services, on a
 pinned, signed release.
 
-> Coming in v0.1.0: the ISO, OVA and AMI image formats, the closed admin shell and `:8443` OS admin
-> page for setup, backups and upgrades, and scheduled automatic updates applied in a maintenance
-> window you control.
+:::info[Coming in v0.1.0]
+
+The ISO, OVA and AMI image formats, the closed admin shell and `:8443` OS admin
+page for setup, backups and upgrades, and scheduled automatic updates applied in a maintenance
+window you control.
+
+:::
 
 ## Before you start
 
@@ -23,25 +27,41 @@ pinned, signed release.
 
 ## Build your image
 
-> Coming in v0.1.0. The build kit and its exact command-line flow aren't published yet — this
-> section will walk through choosing an image format, pointing the kit at a signed release, and
-> verifying the signature before the image is built.
+:::info[Coming in v0.1.0]
+
+The build kit and its exact command-line flow aren't published yet — this
+section will walk through choosing an image format, pointing the kit at a signed release, and
+verifying the signature before the image is built.
+
+:::
 
 ## Install
 
-> Coming in v0.1.0. First boot enforces key-only SSH setup before anything else, then opens the
-> `:8443` OS admin for the rest of setup (vault root key, networking, the first admin account).
+:::info[Coming in v0.1.0]
+
+First boot enforces key-only SSH setup before anything else, then opens the
+`:8443` OS admin for the rest of setup (vault root key, networking, the first admin account).
+
+:::
 
 ## Upgrades and backups
 
-> Coming in v0.1.0. Upgrades are whole, signed releases applied in a scheduled window with
-> automatic rollback on failure; see [Heartbeat and rotation](/concepts/heartbeat-and-rotation) and
-> the concepts pages for how the running system behaves once it's up. Backup and restore use a
-> separate key from the one you log in with, and are covered here once the appliance build lands.
+:::info[Coming in v0.1.0]
+
+Upgrades are whole, signed releases applied in a scheduled window with
+automatic rollback on failure; see [Heartbeat and rotation](./concepts/heartbeat-and-rotation.md) and
+the concepts pages for how the running system behaves once it's up. Backup and restore use a
+separate key from the one you log in with, and are covered here once the appliance build lands.
+
+:::
 
 ## Moving between appliances
 
-> Coming in v0.1.0. `sneakers-migrate` will export a full encrypted bundle from a running
-> Sneakers-PAM appliance — secrets with every version, folders, ACLs, users and groups, targets,
-> schedules and the audit chain — and import it into a fresh one, re-wrapping every secret under
-> the new root key.
+:::info[Coming in v0.1.0]
+
+`sneakers-migrate` will export a full encrypted bundle from a running
+Sneakers-PAM appliance — secrets with every version, folders, ACLs, users and groups, targets,
+schedules and the audit chain — and import it into a fresh one, re-wrapping every secret under
+the new root key.
+
+:::

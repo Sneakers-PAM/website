@@ -10,9 +10,9 @@ it, and who is just kept informed. A secret inherits its folder's rules unless i
 
 A secret can also be linked to a **target** — the system it actually protects, such as a server
 account or a service's own config. That link is what makes [heartbeat and
-rotation](/concepts/heartbeat-and-rotation) possible: Sneakers-PAM can check the secret against the
+rotation](./heartbeat-and-rotation.md) possible: Sneakers-PAM can check the secret against the
 target, and change both together.
 
 Values are never shown by default. Revealing one is a deliberate action, and it's logged every
-time — see [Approvals and requests](/concepts/approvals) for how a reveal gets approved and the
-[security page](/security) for how the project treats sensitive data generally.
+time — see [Approvals and requests](./approvals.md) for how a reveal gets approved and the
+[security page](../security.md) for how the project treats sensitive data generally.
