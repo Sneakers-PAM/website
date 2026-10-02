@@ -2,7 +2,7 @@
 
 Coding agents and other automated tools often need a credential just as much as a person does —
 to reach a database, call an API, or sign in to a target on someone's behalf. Sneakers-PAM's MCP
-server lets an agent do that through the same vault, the same [approvals](/concepts/approvals),
+server lets an agent do that through the same vault, the same [approvals](./approvals.md),
 and the same audit trail a person would use, rather than a credential being copied into a config
 file or an environment variable somewhere it can't be tracked.
 
@@ -21,5 +21,5 @@ value directly to an agent are flagged distinctly from an ordinary reveal, and i
 approvals turned on, approving one of these carries its own extra warning. Where possible, prefer
 a tool that runs a command with a secret injected over one that hands back the raw value.
 
-See [Using the MCP](/mcp-guide) for a plain, prompt-by-prompt guide to working with it, and
-[Security](/security) for how to report a problem with the MCP server itself.
+See [Using the MCP](../mcp-guide.md) for a plain, prompt-by-prompt guide to working with it, and
+[Security](../security.md) for how to report a problem with the MCP server itself.

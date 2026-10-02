@@ -1,0 +1,67 @@
+/* Laces design tokens, mapped onto Infima's custom properties. Light values
+   first, dark overrides under [data-theme='dark']. */
+
+:root {
+  --sp-bg: #FBF8F3;
+  --sp-surface: #FFFFFF;
+  --sp-sunken: #F4F0E8;
+  --sp-ink: #1C2230;
+  --sp-muted: #5A6170;
+  --sp-border: #E4DED3;
+  --sp-border-strong: #D6CFC2;
+  --sp-primary: #2F5BD3;
+  --sp-primary-hover: #2549B0;
+  --sp-primary-active: #1D3C94;
+  --sp-on-primary: #FFFFFF;
+  --sp-primary-soft: #E3EAFB;
+  --sp-sole: #F07A2B;
+
+  --ifm-font-family-base: 'Atkinson Hyperlegible', ui-sans-serif, system-ui, sans-serif;
+  --ifm-heading-font-family: 'Bricolage Grotesque', var(--ifm-font-family-base);
+  --ifm-font-family-monospace: 'JetBrains Mono', ui-monospace, monospace;
+
+  --ifm-color-primary: var(--sp-primary);
+  --ifm-color-primary-dark: var(--sp-primary-hover);
+  --ifm-color-primary-darker: var(--sp-primary-active);
+  --ifm-color-primary-darkest: var(--sp-primary-active);
+  --ifm-color-primary-light: var(--sp-primary);
+  --ifm-color-primary-lighter: var(--sp-primary-soft);
+  --ifm-color-primary-lightest: var(--sp-primary-soft);
+
+  --ifm-background-color: var(--sp-bg);
+  --ifm-background-surface-color: var(--sp-surface);
+  --ifm-navbar-background-color: var(--sp-bg);
+  --ifm-footer-background-color: var(--sp-sunken);
+  --ifm-color-emphasis-200: var(--sp-border);
+  --ifm-toc-border-color: var(--sp-border);
+  --ifm-hr-background-color: var(--sp-border);
+
+  --ifm-font-color-base: var(--sp-ink);
+  --ifm-heading-color: var(--sp-ink);
+  --ifm-color-content-secondary: var(--sp-muted);
+
+  --ifm-button-color: var(--sp-on-primary);
+  --ifm-code-font-size: 95%;
+}
+
+[data-theme='dark'] {
+  --sp-bg: #12151C;
+  --sp-surface: #1A1F29;
+  --sp-sunken: #232936;
+  --sp-ink: #ECEFF4;
+  --sp-muted: #9AA3B2;
+  --sp-border: #2A3140;
+  --sp-border-strong: #3A4252;
+  --sp-primary: #7C9BFF;
+  --sp-primary-hover: #9BB3FF;
+  --sp-primary-active: #B5C7FF;
+  --sp-on-primary: #12151C;
+  --sp-primary-soft: #1D2640;
+  --sp-sole: #FF9A55;
+}
+
+h1, h2, h3,
+.navbar__title {
+  font-family: var(--ifm-heading-font-family);
+  letter-spacing: -0.02em;
+}

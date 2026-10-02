@@ -1,0 +1,50 @@
+import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
+
+// Order here is the sidebar order; ids are file paths under docs/ minus ".md".
+const sidebars: SidebarsConfig = {
+  docs: [
+    {
+      type: 'category',
+      label: 'Start here',
+      collapsible: false,
+      items: [
+        {type: 'link', label: 'Home', href: '/'},
+        {type: 'doc', id: 'getting-started', label: 'Getting started'},
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Concepts',
+      collapsible: false,
+      items: [
+        {type: 'doc', id: 'concepts/index', label: 'Overview'},
+        {type: 'doc', id: 'concepts/secrets-and-folders', label: 'Secrets and folders'},
+        {type: 'doc', id: 'concepts/approvals', label: 'Approvals and requests'},
+        {type: 'doc', id: 'concepts/check-out', label: 'Check-out and check-in'},
+        {type: 'doc', id: 'concepts/heartbeat-and-rotation', label: 'Heartbeat and rotation'},
+        {type: 'doc', id: 'concepts/break-glass', label: 'Break-glass'},
+        {type: 'doc', id: 'concepts/agents-and-mcp', label: 'Agents and the MCP'},
+        {type: 'doc', id: 'concepts/audit', label: 'Audit trail'},
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Guides',
+      collapsible: false,
+      items: [{type: 'doc', id: 'mcp-guide', label: 'Using the MCP'}],
+    },
+    {
+      type: 'category',
+      label: 'Project',
+      collapsible: false,
+      items: [
+        {type: 'doc', id: 'security', label: 'Security'},
+        {type: 'doc', id: 'contributing', label: 'Contributing'},
+        {type: 'doc', id: 'governance', label: 'Governance'},
+        {type: 'doc', id: 'license', label: 'License'},
+      ],
+    },
+  ],
+};
+
+export default sidebars;

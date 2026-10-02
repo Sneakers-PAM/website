@@ -1,3 +1,12 @@
+# Dependencies
 node_modules/
-docs/.vitepress/cache/
-docs/.vitepress/dist/
+
+# Production build + caches
+build/
+.docusaurus/
+.cache-loader/
+
+# Misc
+*.log
+.DS_Store
+*.tsbuildinfo

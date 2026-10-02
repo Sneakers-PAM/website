@@ -38,5 +38,5 @@ real identifying details from a production deployment.
 ## Where to start
 
 Issues labelled `help wanted` or `good first issue` on any repository are a reasonable place to
-begin. See [Governance](/governance) for how decisions get made, and
-[Security](/security) for how to report a vulnerability rather than filing it as a regular issue.
+begin. See [Governance](./governance.md) for how decisions get made, and
+[Security](./security.md) for how to report a vulnerability rather than filing it as a regular issue.
