@@ -72,6 +72,10 @@ navbar appears once there's more than one version. From then on, build the publi
 - [docs/security.md](docs/security.md), [docs/contributing.md](docs/contributing.md): project
   pages.
 
+## 🙏 Acknowledgements
+
+Sneakers-PAM was originally written by [@Bugs5382](https://github.com/Bugs5382).
+
 ## 📄 License
 
 Apache-2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
