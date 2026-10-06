@@ -45,8 +45,10 @@ This lists the names of the secrets, not their values. It's a safe way to look a
 > "Reveal the API key for the weather service so I can test it."
 
 This is the one that needs the most care. Revealing a value is always written down in
-Sneakers-PAM's history, so there's a record of who asked and when. If your team has turned on
-approvals, someone else may need to say yes first.
+Sneakers-PAM's history, so there's a record of who asked and when. For a secret you can read, it
+just works, with no extra sign-in step once you've used `/login`. If the secret is set to need an
+approval, an owner or approver says yes first (never you), or, when nobody else can, you confirm
+the task once in your browser. See [who approves what](./concepts/approvals.md#who-approves-a-reveal).
 
 ### Run something with a secret, without seeing it
 
@@ -60,7 +62,8 @@ scenes, and you never actually see it typed out anywhere.
 - **The assistant follows the same rules you do.** It can't see or do anything you aren't allowed
   to see or do yourself.
 - **Asking for a secret to be revealed to an assistant is treated as extra sensitive.** Expect it
-  to need more care — and possibly someone else's approval — than just looking something up.
+  to need more care than just looking something up, and, for a secret set to need one,
+  [someone else's approval](./concepts/approvals.md).
 - **When you can, ask it to run something with the secret instead of showing you the secret.**
   That way the value never has to be typed out or saved anywhere, by you or the assistant.
 - **Everything is logged.** If something looks wrong later, there's a record to check.
