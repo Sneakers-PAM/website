@@ -24,6 +24,7 @@ rules give the approve permission (the "A" in its rules).
 | Not an owner, but you can read it (shared with you, or through the folder) | Just works | Any one owner of the secret approves | An owner or a designated approver approves |
 | No read access | Refused. Ask for access. | Refused. Ask for access. | Refused. Ask for access. |
 | An emergency, with no one able to approve in time | [Break-the-glass](./break-glass.md) | [Break-the-glass](./break-glass.md) | [Break-the-glass](./break-glass.md) |
+| A site admin in break-the-glass mode | [Break-the-glass mode](./break-glass.md#break-the-glass-mode-for-site-admins): web app only, a reason and your second factor, no approver. The owners are alerted on each reveal; the audit trail shows one entered and one left entry per session. | [Break-the-glass mode](./break-glass.md#break-the-glass-mode-for-site-admins): web app only, a reason and your second factor, no approver. The owners are alerted on each reveal; the audit trail shows one entered and one left entry per session. | [Break-the-glass mode](./break-glass.md#break-the-glass-mode-for-site-admins): web app only, a reason and your second factor, no approver. The owners are alerted on each reveal; the audit trail shows one entered and one left entry per session. |
 
 Nobody ever approves their own request. In the approvals list you see two things: other people's
 requests for secrets you own or approve, which you decide, and your own requests that are still
