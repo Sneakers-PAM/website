@@ -97,18 +97,27 @@ function Story(): ReactNode {
   return (
     <section className={styles.notice}>
       <div className="container">
-        <Heading as="h2">Where it started</Heading>
+        <Heading as="h2">Why it exists</Heading>
         <p>
-          Sneakers-PAM grew out of a real use case. Someone running a Jarvis-style hub of AI agents,
-          an operator agent handing work to coding and infrastructure agents, needed one safe place
-          for the passwords, keys and tokens those agents use. Keeping them in env files, dotfiles
-          and prompts meant development secrets kept turning up in logs and transcripts.
+          Sneakers-PAM comes from years of running privileged access in two major hospitals and a
+          private healthcare organisation, from the seats of a CISO, a VP of infrastructure and a
+          CIO. At every one of them the most dangerous passwords were the ones nobody could find
+          quickly: shared admin passwords in spreadsheets and ticket comments, values pasted into
+          chat, and audit answers spread across three logs, if they lived anywhere.
         </p>
         <p>
-          So the vault sits behind an MCP server: the agents find, use, store and manage credentials
-          through it, under the same approvals and audit trail as a person, and the values stay out
-          of their work. It's built to run on your own appliance, and a hosted option is planned on
-          the same idea. Read the <Link to="/docs/use-cases/agent-vault">use case</Link>.
+          The moment that sums it up: a system is down, people are waiting, and the tool holding
+          the one password that matters asks for an approval, then a second factor, then the second
+          factor again. By the third prompt nobody is thinking about the outage, only about the
+          shortcut they'll take next time. A control that costs that much attention stops being a
+          control.
+        </p>
+        <p>
+          So Sneakers-PAM is built around one idea: know who's asking and what they've already
+          proved, instead of asking again. Owners decide and nobody approves their own request, one
+          task gets one prompt, and every action lands in an audit trail nobody can quietly edit.
+          Privileged access has no organisation-specific core, so it's open source, for anyone who
+          needs it.
         </p>
       </div>
     </section>
