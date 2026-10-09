@@ -93,6 +93,28 @@ function Features(): ReactNode {
   );
 }
 
+function Story(): ReactNode {
+  return (
+    <section className={styles.notice}>
+      <div className="container">
+        <Heading as="h2">Where it started</Heading>
+        <p>
+          Sneakers-PAM grew out of a real use case. Someone running a Jarvis-style hub of AI agents,
+          an operator agent handing work to coding and infrastructure agents, needed one safe place
+          for the passwords, keys and tokens those agents use. Keeping them in env files, dotfiles
+          and prompts meant development secrets kept turning up in logs and transcripts.
+        </p>
+        <p>
+          So the vault sits behind an MCP server: the agents find, use, store and manage credentials
+          through it, under the same approvals and audit trail as a person, and the values stay out
+          of their work. It's built to run on your own appliance, and a hosted option is planned on
+          the same idea. Read the <Link to="/docs/use-cases/agent-vault">use case</Link>.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 function PreReleaseNotice(): ReactNode {
   return (
     <section className={styles.notice}>
@@ -120,6 +142,7 @@ export default function Home(): ReactNode {
       <Hero />
       <main>
         <Features />
+        <Story />
         <PreReleaseNotice />
       </main>
     </Layout>
