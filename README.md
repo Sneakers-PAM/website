@@ -8,11 +8,13 @@
   `sidebars.ts`.
 - `src/pages/index.tsx`: the home page. `src/css/custom.css` maps the Laces design tokens onto the
   theme.
-- `static/img/`: the logo, mark and favicon.
+- `static/img/`: the logo, mark and favicon. `static/img/guides/` holds the guide screenshots,
+  made by [scripts/screenshots/](scripts/screenshots/README.md) from a lab appliance and scrubbed
+  before they're saved.
 - `docusaurus.config.ts`: site config, navbar and footer. Broken links, anchors and Markdown links
   fail the build.
 - `.github/workflows/checks.yml`: the org scrub (leak guard) plus the `🧪 Build & Test` job, which
-  type-checks and builds the site on every PR.
+  type-checks, runs the tests and builds the site on every PR.
 
 Nothing deploys from this repo: there is no Pages or deploy workflow.
 

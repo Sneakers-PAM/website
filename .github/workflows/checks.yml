@@ -50,6 +50,9 @@ jobs:
       - name: Type-check
         run: npm run typecheck
 
+      - name: Test the screenshot scrub rules
+        run: npm test
+
       # onBrokenLinks, onBrokenAnchors and the markdown link hooks are all
       # set to throw, so a broken internal link fails this step.
       - name: Build the site

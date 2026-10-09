@@ -10,7 +10,9 @@
     "build": "docusaurus build",
     "serve": "docusaurus serve",
     "clear": "docusaurus clear",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "test": "node --test scripts/screenshots/*.test.mjs",
+    "screenshots": "node scripts/screenshots/capture.mjs"
   },
   "dependencies": {
     "@docusaurus/core": "3.10.1",
