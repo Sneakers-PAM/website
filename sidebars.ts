@@ -29,6 +29,12 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Use cases',
+      collapsible: false,
+      items: [{type: 'doc', id: 'use-cases/agent-vault', label: 'A vault for AI agents'}],
+    },
+    {
+      type: 'category',
       label: 'Guides',
       collapsible: false,
       items: [{type: 'doc', id: 'mcp-guide', label: 'Using the MCP'}],

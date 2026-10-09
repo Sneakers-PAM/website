@@ -93,6 +93,37 @@ function Features(): ReactNode {
   );
 }
 
+function Story(): ReactNode {
+  return (
+    <section className={styles.notice}>
+      <div className="container">
+        <Heading as="h2">Why it exists</Heading>
+        <p>
+          Sneakers-PAM comes from years of running privileged access in two major hospitals and a
+          private healthcare organisation, from the seats of a CISO, a VP of infrastructure and a
+          CIO. At every one of them the most dangerous passwords were the ones nobody could find
+          quickly: shared admin passwords in spreadsheets and ticket comments, values pasted into
+          chat, and audit answers spread across three logs, if they lived anywhere.
+        </p>
+        <p>
+          The moment that sums it up: a system is down, people are waiting, and the tool holding
+          the one password that matters asks for an approval, then a second factor, then the second
+          factor again. By the third prompt nobody is thinking about the outage, only about the
+          shortcut they'll take next time. A control that costs that much attention stops being a
+          control.
+        </p>
+        <p>
+          So Sneakers-PAM is built around one idea: know who's asking and what they've already
+          proved, instead of asking again. Owners decide and nobody approves their own request, one
+          task gets one prompt, and every action lands in an audit trail nobody can quietly edit.
+          Privileged access has no organisation-specific core, so it's open source, for anyone who
+          needs it.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 function PreReleaseNotice(): ReactNode {
   return (
     <section className={styles.notice}>
@@ -120,6 +151,7 @@ export default function Home(): ReactNode {
       <Hero />
       <main>
         <Features />
+        <Story />
         <PreReleaseNotice />
       </main>
     </Layout>
