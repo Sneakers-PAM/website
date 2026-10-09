@@ -24,5 +24,7 @@ read, unless the secret is set to need one, and then an owner or approver decide
 After `/login` there's no further second-factor prompt for the agent. Where possible, prefer
 a tool that runs a command with a secret injected over one that hands back the raw value.
 
-See [Using the MCP](../mcp-guide.md) for a plain, prompt-by-prompt guide to working with it, and
-[Security](../security.md) for how to report a problem with the MCP server itself.
+See [Using the MCP](../mcp-guide.md) for a plain, prompt-by-prompt guide to working with it,
+[Use case: a vault for AI agents](../use-cases/agent-vault.md) for how a hub of agents keeps its
+credentials out of its workspaces, and [Security](../security.md) for how to report a problem with
+the MCP server itself.
