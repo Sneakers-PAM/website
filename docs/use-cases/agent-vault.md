@@ -1,9 +1,12 @@
 # Use case: a vault for AI agents
 
+This page describes one way to use Sneakers-PAM: as the vault behind a set of AI agents.
+
 AI agents do real work now: they deploy code, run migrations, call APIs and sign in to servers.
-All of that needs credentials. Sneakers-PAM gives agents one safe place to get them. The vault
-holds the passwords, keys and tokens, and the agents query, store and manage them through the
-Sneakers-PAM MCP server, so your development secrets don't leak into everything the agents touch.
+All of that needs credentials. Used this way, Sneakers-PAM gives agents one safe place to get
+them. The vault holds the passwords, keys and tokens, and the agents query, store and manage them
+through the Sneakers-PAM MCP server, so your development secrets don't leak into everything the
+agents touch.
 
 ## The problem: agents leak credentials
 
