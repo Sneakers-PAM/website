@@ -1,3 +1,7 @@
+/*
+Copyright 2026 The Sneakers-PAM Authors
+SPDX-License-Identifier: Apache-2.0
+*/
 // Content layer: the page and every component stay the same shape; a new
 // release only changes this file and release.ts.
 export interface LedeSegment {

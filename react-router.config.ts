@@ -1,3 +1,7 @@
+/*
+Copyright 2026 The Sneakers-PAM Authors
+SPDX-License-Identifier: Apache-2.0
+*/
 import type { Config } from "@react-router/dev/config";
 
 // Prerender every route to static HTML at build time, no Node server at

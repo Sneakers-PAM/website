@@ -41,4 +41,12 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # Create the Pages project on the first run only. `--json` gives a
+          # real array of {"Project Name": ...} objects to match exactly
+          # against, instead of grep-ing wrangler's table output (which
+          # would also match a longer name that merely starts with this
+          # one, since "-" isn't a word-boundary character). No set -x and
+          # nothing here echoes the token or account ID.
+          preCommands: |
+            wrangler pages project list --json | jq -e '[.[] | select(."Project Name" == "sneakers-pam-www")] | length > 0' >/dev/null || wrangler pages project create sneakers-pam-www --production-branch=main
           command: pages deploy build/client --project-name=sneakers-pam-www

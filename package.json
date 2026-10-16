@@ -7,6 +7,7 @@
     "build": "react-router build",
     "typecheck": "react-router typegen && tsc",
     "test": "node --experimental-strip-types --test app/content/*.test.ts",
+    "lint": "eslint .",
     "preview": "npx serve build/client"
   },
   "dependencies": {
@@ -17,11 +18,16 @@
     "isbot": "^5"
   },
   "devDependencies": {
+    "@eslint/js": "9.39.5",
     "@react-router/dev": "^7.18.4",
     "@types/node": "^22.10.5",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
+    "eslint": "9.39.5",
+    "eslint-plugin-react": "7.37.5",
+    "eslint-plugin-react-hooks": "7.1.1",
     "typescript": "^5.7.2",
+    "typescript-eslint": "8.71.2",
     "vite": "^6.0.7",
     "vite-tsconfig-paths": "^5.1.4"
   }

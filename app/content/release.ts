@@ -1,3 +1,7 @@
+/*
+Copyright 2026 The Sneakers-PAM Authors
+SPDX-License-Identifier: Apache-2.0
+*/
 // The current release's downloads, in one place: a new release is a change
 // to this file only. Sizes are the GitHub Release API's byte counts at the
 // time this was written; the "How to verify" section checks them against

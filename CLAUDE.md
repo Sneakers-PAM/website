@@ -169,8 +169,8 @@ Keep public artifacts (issues, PRs, commit messages) free of references to local
 
 There is no version-bump workflow and no `CHANGELOG.md` here: this repo ships a site, not a
 package. **Release Drafter** (`.github/workflows/release-drafter.yml`) drafts the next release's
-notes on every push to `main`, extending `Sneakers-PAM/.github`'s canonical config (first release
-`0.1.0`, as a `rc` prerelease). **Nothing tags automatically.** The maintainer publishes the
-drafted GitHub Release by hand, which creates the `vX.Y.Z` tag and fires `deploy.yml`: a clean
-build of `build/client`, deployed to Cloudflare Pages. A push to `main` that isn't released never
-deploys anything.
+notes on every push to `main`, extending `Sneakers-PAM/.github`'s canonical config. Releases are
+plain SemVer starting at `0.1.0`, with no prereleases; publishing a release deploys the live
+site. **Nothing tags automatically.** The maintainer publishes the drafted GitHub Release by
+hand, which creates the `vX.Y.Z` tag and fires `deploy.yml`: a clean build of `build/client`,
+deployed to Cloudflare Pages. A push to `main` that isn't released never deploys anything.
