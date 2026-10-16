@@ -1,0 +1,16 @@
+# GoLic, for more details see: https://github.com/Bugs5382/golic
+# Ignore everything
+*
+
+# But inject license into Go, proto, SQL and TypeScript sources...
+!*.go
+!*.proto
+!*.sql
+!*.ts
+!*.tsx
+
+# ...except these are never real sources, even once re-included above. Later
+# patterns win, so these directory excludes must come after the negations.
+node_modules/**
+build/**
+.react-router/**

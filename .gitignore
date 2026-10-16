@@ -9,3 +9,6 @@ build/
 *.log
 .DS_Store
 *.tsbuildinfo
+
+# Local design notes (non-tracked).
+.local/

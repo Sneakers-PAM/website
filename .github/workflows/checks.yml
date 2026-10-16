@@ -20,9 +20,10 @@ jobs:
     uses: Sneakers-PAM/.github/.github/workflows/scrub.yml@main
     with:
       # The release's own GitHub Release asset host, the production signing
-      # key's raw-file host, the fonts, and the npm funding links (not a
-      # private deployment's host name).
-      allowed-domains: raw.githubusercontent.com fonts.googleapis.com fonts.gstatic.com opencollective.com tidelift.com paulmillr.com ko-fi.com liberapay.com patreon.com feross.org # scrub:allow=fqdn
+      # key's raw-file host, the fonts, and the npm funding/project links
+      # that come in through devDependencies (not a private deployment's
+      # host name).
+      allowed-domains: raw.githubusercontent.com fonts.googleapis.com fonts.gstatic.com opencollective.com tidelift.com paulmillr.com ko-fi.com liberapay.com patreon.com feross.org eslint.org # scrub:allow=fqdn
 
   build:
     name: 🧪 Build & Test
@@ -36,19 +37,33 @@ jobs:
           persist-credentials: false
 
       - name: Set up Node.js
+        # hashFiles() is only valid in a step's own `if`/`env`/etc, never a
+        # job-level `if` (actionlint). Every step below carries the same
+        # guard, so the job is green with everything skipped until the
+        # site's package.json lands (issue #4), and switches on by itself
+        # once it does.
+        if: hashFiles('package.json') != ''
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
           node-version-file: .nvmrc
           cache: npm
 
       - name: Install dependencies
+        if: hashFiles('package.json') != ''
         run: npm ci
 
       - name: Type-check
+        if: hashFiles('package.json') != ''
         run: npm run typecheck
 
+      - name: Lint
+        if: hashFiles('package.json') != ''
+        run: npm run lint
+
       - name: Test the release data
+        if: hashFiles('package.json') != ''
         run: npm test
 
       - name: Build the site
+        if: hashFiles('package.json') != ''
         run: npm run build

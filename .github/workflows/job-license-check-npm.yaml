@@ -1,0 +1,49 @@
+name: License Check (npm)
+# Fail if a 3rd-party npm dependency carries a license outside the allowlist. No
+# SAST/vuln scanning (deliberately out of scope).
+#
+# This file ships only to repos with a root package.json (compose.sh by
+# manifest, the governance overlay by manifest), so it never starts a runner just
+# to find no package.json. The Go check lives in job-license-check-go.yaml the
+# same way; both replace the old two-job job-license-check.yaml, whose
+# off-ecosystem job billed a minute per run to do nothing.
+#
+# Pull requests only, and not while the PR is a draft; the PR run covers what
+# merges, so nothing reruns on push to main.
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+permissions:
+  contents: read
+jobs:
+  npm:
+    name: ⚖️ Dependency licenses (npm)
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Node
+        # hashFiles() is only valid in a step's own `if` (actionlint), never
+        # a job-level `if`. Every step below carries the same guard, so the
+        # job is green with everything skipped until the site's
+        # package.json lands (issue #4), and switches on by itself once it
+        # does.
+        if: hashFiles('package.json') != ''
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Install dependencies
+        if: hashFiles('package.json') != ''
+        run: npm install --ignore-scripts --no-audit --no-fund
+
+      - name: Check dependency licenses
+        if: hashFiles('package.json') != ''
+        run: |
+          npx --yes license-checker-rseidelsohn \
+            --production --excludePrivatePackages \
+            --onlyAllow "MIT;ISC;Apache-2.0;BSD-2-Clause;BSD-3-Clause;0BSD;CC0-1.0;Unlicense;BlueOak-1.0.0;Python-2.0;MPL-2.0;CC-BY-4.0"

@@ -13,7 +13,7 @@ permissions:
 jobs:
   update_release_draft:
     name: 📝 Update Release Draft
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - name: Check out the repository
@@ -27,5 +27,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           extends: Sneakers-PAM/.github@432915be1a619fb8baace1c0ce6c636df8c31312
           first-version: 0.1.0
-          prerelease: true
-          prerelease-identifier: rc
+          prerelease: false

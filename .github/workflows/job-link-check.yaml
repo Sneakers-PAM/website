@@ -1,0 +1,68 @@
+name: Link Check
+# Checks every link in the built site: internal (root-relative) links resolve
+# straight to the files in build/client with no network call; external links
+# are fetched for real, with retries for flaky hosts. Excluded:
+#   - the release binaries, already verified by hand (sha256sum and cosign);
+#     re-downloading hundreds of megabytes on every PR would be slow and
+#     wasteful;
+#   - docs.sneakers-pam.com, until the domain is attached. Remove this
+#     exclusion once it resolves.
+#
+# Pull requests only, and not while the PR is a draft.
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  link-check:
+    name: 🔗 Link Check
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        # hashFiles() is only valid in a step's own `if` (actionlint), never
+        # a job-level `if`. Every step below carries the same guard, so the
+        # job is green with everything skipped until the site's
+        # package.json lands (issue #4) -- there is no build/client to
+        # check links in before then -- and switches on by itself once it
+        # does.
+        if: hashFiles('package.json') != ''
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        if: hashFiles('package.json') != ''
+        run: npm ci
+
+      - name: Build the site
+        if: hashFiles('package.json') != ''
+        run: npm run build
+
+      - name: Check links
+        if: hashFiles('package.json') != ''
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          args: >-
+            --no-progress --verbose
+            --root-dir ./build/client
+            --exclude '^https://github\.com/Sneakers-PAM/sneakers-appliance/releases/download/'
+            --exclude '^https://docs\.sneakers-pam\.com/'
+            --retry-wait-time 5
+            --max-retries 3
+            './build/client/**/*.html'
+          fail: true
+          failIfEmpty: true
+          jobSummary: true

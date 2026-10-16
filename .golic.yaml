@@ -1,0 +1,22 @@
+# The Sneakers-PAM header: two SPDX lines above the code.
+#   // Copyright 2026 The Sneakers-PAM Authors            (.go, .proto)
+#   /* Copyright 2026 The Sneakers-PAM Authors */          (.ts, .tsx)
+#
+# golic ships no built-in TypeScript rules (Bugs5382/golic#19); the block-
+# comment style is defined here so the header lands on TS sources too.
+golic:
+  licenses:
+    spdx-apache2: |
+      Copyright {{copyright}}
+      SPDX-License-Identifier: Apache-2.0
+  rules:
+    .go:
+      prefix: "// "
+    .proto:
+      prefix: "// "
+    .ts:
+      prefix: "/*"
+      suffix: "*/"
+    .tsx:
+      prefix: "/*"
+      suffix: "*/"
