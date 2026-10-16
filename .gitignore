@@ -1,0 +1,11 @@
+# Dependencies
+node_modules/
+
+# Production build + caches
+build/
+.react-router/
+
+# Misc
+*.log
+.DS_Store
+*.tsbuildinfo
