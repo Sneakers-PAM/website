@@ -1,0 +1,28 @@
+{
+  "name": "@sneakers-pam/website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "react-router dev",
+    "build": "react-router build",
+    "typecheck": "react-router typegen && tsc",
+    "test": "node --experimental-strip-types --test app/content/*.test.ts",
+    "preview": "npx serve build/client"
+  },
+  "dependencies": {
+    "@react-router/node": "^7.18.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router": "^7.18.4",
+    "isbot": "^5"
+  },
+  "devDependencies": {
+    "@react-router/dev": "^7.18.4",
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}
