@@ -48,8 +48,10 @@ jobs:
           # one, since "-" isn't a word-boundary character). No set -x and
           # nothing here echoes the token or account ID.
           # wrangler isn't on the PATH inside preCommands, so both calls go
-          # through npx. --branch=main makes a release run (a detached tag)
-          # deploy to production instead of a preview branch named "head".
+          # through npx. --branch is always explicit, because a release run checks
+          # out a detached tag and would otherwise deploy as a preview named
+          # "head": a pre-release goes to the dev branch, anything else to main
+          # (production).
           preCommands: |
             npx wrangler pages project list --json | jq -e '[.[] | select(."Project Name" == "sneakers-pam-www")] | length > 0' >/dev/null || npx wrangler pages project create sneakers-pam-www --production-branch=main
-          command: pages deploy build/client --project-name=sneakers-pam-www --branch=main
+          command: pages deploy build/client --project-name=sneakers-pam-www --branch=${{ github.event.release.prerelease && 'dev' || 'main' }}

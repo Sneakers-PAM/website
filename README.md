@@ -26,8 +26,9 @@ npm run preview
 ## 🚢 Deploying
 
 A published GitHub Release deploys `build/client` to the Cloudflare Pages project
-`sneakers-pam-www`, creating the project on the first run if it doesn't exist yet. Nothing else
-deploys: a merge to `main` only drafts the next release. The custom domains
+`sneakers-pam-www`, creating the project on the first run if it doesn't exist yet. A release
+published as a pre-release goes to the project's `dev` branch, its dev site; any other
+release goes to production. Nothing else deploys: a merge to `main` only drafts the next release. The custom domains
 (sneakers-pam.com, www.sneakers-pam.com) are added by hand in Cloudflare, not by this workflow.
 
 ## 🙏 Acknowledgements
