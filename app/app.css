@@ -1,0 +1,41 @@
+/* Laces design tokens: the same values as the Sneakers-PAM web UI kit's
+   packages/ui/src/styles/laces.css, used here as plain CSS custom
+   properties since this site doesn't pull in Tailwind. */
+:root {
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Atkinson Hyperlegible", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --color-bg: #fbf8f3;
+  --color-surface: #ffffff;
+  --color-sunken: #f4f0e8;
+  --color-ink: #1c2230;
+  --color-muted: #5a6170;
+  --color-border: #e4ded3;
+  --color-primary: #2f5bd3;
+  --color-primary-hover: #2549b0;
+  --color-on-primary: #ffffff;
+  --color-primary-soft: #e3eafb;
+  --color-sole: #f07a2b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+}
+
+a {
+  color: var(--color-primary);
+}
