@@ -9,10 +9,18 @@ SPDX-License-Identifier: Apache-2.0
 const RELEASE_BASE = "https://github.com/Sneakers-PAM/sneakers-appliance/releases/download";
 
 export const release = {
-  version: "v0.1.0-rc.2",
+  version: "v0.1.0-rc.3",
   kind: "prerelease" as const,
-  publishedOn: "2026-10-14",
-  pageHref: "https://github.com/Sneakers-PAM/sneakers-appliance/releases/tag/v0.1.0-rc.2",
+  publishedOn: "2026-10-24",
+  pageHref: "https://github.com/Sneakers-PAM/sneakers-appliance/releases/tag/v0.1.0-rc.3",
+};
+
+// The same release as Helm charts for a Kubernetes cluster you run yourself.
+// rc.3 is the first with linux/arm64 images for every service; the install
+// guide's CPU architecture section has the values an arm64 node needs.
+export const kubernetes = {
+  pageHref: `https://github.com/Sneakers-PAM/sneakers-release/releases/tag/${release.version}`,
+  archDocHref: "https://github.com/Sneakers-PAM/sneakers-release/blob/main/docs/install.md#cpu-architecture",
 };
 
 export interface DownloadAsset {
@@ -26,33 +34,39 @@ export interface DownloadAsset {
 export const downloads: DownloadAsset[] = [
   {
     label: "Appliance OVA (install image)",
-    name: "sneakers-appliance-0.1.0-rc.2-amd64.ova",
-    sizeBytes: 93270016,
+    name: "sneakers-appliance-0.1.0-rc.3-amd64.ova",
+    sizeBytes: 93262848,
     sizeLabel: "88.9 MiB",
   },
   {
     label: "OVA checksum",
-    name: "sneakers-appliance-0.1.0-rc.2-amd64.ova.sha256",
+    name: "sneakers-appliance-0.1.0-rc.3-amd64.ova.sha256",
     sizeBytes: 106,
     sizeLabel: "106 B",
   },
   {
     label: "Product unit",
-    name: "sneakers-product-0.1.0-rc.2-amd64.bin",
-    sizeBytes: 1068698863,
-    sizeLabel: "1019.2 MiB",
+    name: "sneakers-product-0.1.0-rc.3-amd64.bin",
+    sizeBytes: 1070738655,
+    sizeLabel: "1021.1 MiB",
   },
   {
     label: "Base OS unit",
-    name: "sneakers-appliance-baseOS-0.1.0-rc.2-amd64.bin",
-    sizeBytes: 219160325,
-    sizeLabel: "209.0 MiB",
+    name: "sneakers-appliance-baseOS-0.1.0-rc.3-amd64.bin",
+    sizeBytes: 219233557,
+    sizeLabel: "209.1 MiB",
   },
   {
-    label: "Base OS patch (rc.1 to rc.2)",
-    name: "sneakers-appliance-baseOS-patch-0.1.0-rc.1-to-0.1.0-rc.2-amd64.bin",
-    sizeBytes: 7836558,
-    sizeLabel: "7.5 MiB",
+    label: "Base OS patch (rc.2 to rc.3)",
+    name: "sneakers-appliance-baseOS-patch-0.1.0-rc.2-to-0.1.0-rc.3-amd64.bin",
+    sizeBytes: 16583647,
+    sizeLabel: "15.8 MiB",
+  },
+  {
+    label: "Base web unit",
+    name: "sneakers-appliance-baseWeb-0.1.0-rc.3-amd64.bin",
+    sizeBytes: 1256228,
+    sizeLabel: "1.2 MiB",
   },
   {
     label: "Checksums for every file above",
