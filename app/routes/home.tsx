@@ -12,7 +12,7 @@ import { Section } from "~/components/section";
 import { SplitHero } from "~/components/split-hero";
 import { TerminalCard } from "~/components/terminal-card";
 import { different, footer, hero, meta as pageMeta, nav, whatItIs } from "~/content/sneakers-pam";
-import { downloads, release, verify } from "~/content/release";
+import { downloads, kubernetes, release, verify } from "~/content/release";
 
 export const meta: MetaFunction = () => [
   { title: pageMeta.title },
@@ -66,6 +66,8 @@ export default function Home() {
             assets={downloads}
             keyHref={verify.keyHref}
             keyFingerprint={verify.keyFingerprint}
+            kubernetesHref={kubernetes.pageHref}
+            archDocHref={kubernetes.archDocHref}
           />
         </Section>
       </main>

@@ -19,7 +19,9 @@ deploys on a merge to `main` by itself — only publishing a Release does, via `
 
 - `app/routes/home.tsx` - the one page, composed from components and content.
 - `app/content/` - the copy (`sneakers-pam.ts`) and the release data (`release.ts`, with its own
-  test file).
+  test file). `release.ts` also holds the `kubernetes` links: the same tag's Helm chart release on
+  sneakers-release and its install guide's CPU architecture section, for arm64 (Raspberry Pi)
+  installs.
 - `app/components/` - the hero, nav, footer, feature grid, terminal card and downloads table.
 - `public/` - the favicon and logo marks, served as-is.
 

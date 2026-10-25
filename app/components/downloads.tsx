@@ -12,9 +12,19 @@ interface DownloadsProps {
   assets: DownloadAsset[];
   keyHref: string;
   keyFingerprint: string;
+  kubernetesHref: string;
+  archDocHref: string;
 }
 
-export const Downloads = ({ version, pageHref, assets, keyHref, keyFingerprint }: DownloadsProps) => (
+export const Downloads = ({
+  version,
+  pageHref,
+  assets,
+  keyHref,
+  keyFingerprint,
+  kubernetesHref,
+  archDocHref,
+}: DownloadsProps) => (
   <>
     <table className="downloads-table">
       <thead>
@@ -42,6 +52,14 @@ export const Downloads = ({ version, pageHref, assets, keyHref, keyFingerprint }
     <p className="prose dl-note">
       All files are on the {version} <a href={pageHref}>release page</a>. No ISO this release:
       install from the&nbsp;OVA.
+    </p>
+
+    <h3>Run it on a Raspberry Pi</h3>
+    <p className="prose">
+      The OVA is for an amd64 hypervisor. From v0.1.0-rc.3 on, every service image is also built for
+      linux/arm64, so the Helm charts install on a Kubernetes cluster on a Raspberry Pi (arm64). Get
+      the charts from the {version} <a href={kubernetesHref}>release on sneakers-release</a>, then set
+      the arm64 values from the install guide&apos;s <a href={archDocHref}>CPU architecture</a> section.
     </p>
 
     <h3>How to verify</h3>

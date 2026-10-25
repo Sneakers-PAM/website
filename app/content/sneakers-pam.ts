@@ -26,7 +26,7 @@ export const nav = {
 };
 
 export const hero = {
-  eyebrow: `Sneakers-PAM ${"v0.1.0-rc.2"} is out`,
+  eyebrow: `Sneakers-PAM ${"v0.1.0-rc.3"} is out, now on Raspberry Pi`,
   headlineLine1: "Privileged access,",
   headlineLine2: "kept on a short",
   headlineLine2TmWord: "leash",
@@ -40,7 +40,7 @@ export const hero = {
     { text: "signed appliance", accent: true },
     { text: " you own outright." },
   ] satisfies LedeSegment[],
-  primaryCta: { label: "Download v0.1.0-rc.2", href: "#download" },
+  primaryCta: { label: "Download v0.1.0-rc.3", href: "#download" },
   secondaryCta: { label: "View on GitHub", href: "https://github.com/Sneakers-PAM" },
   terminal: {
     title: "sneakers-run",
@@ -96,7 +96,7 @@ export const different = {
     },
     {
       title: "Free",
-      body: "No tiers and no seat count. Run it on your own hypervisor, offline if you want to.",
+      body: "No tiers and no seat count. Run it on your own hypervisor, offline if you want to, or on Kubernetes down to a Raspberry Pi.",
     },
   ],
 };

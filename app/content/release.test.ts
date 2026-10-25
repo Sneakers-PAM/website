@@ -5,7 +5,7 @@ SPDX-License-Identifier: Apache-2.0
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { downloads, release, verify } from "./release.ts";
+import { downloads, kubernetes, release, verify } from "./release.ts";
 
 test("every download asset points at the current release's tag", () => {
   const prefix = `https://github.com/Sneakers-PAM/sneakers-appliance/releases/download/${release.version}/`;
@@ -27,7 +27,18 @@ test("every download asset has a positive size and a unique name", () => {
 test("there is no ISO listed for a release that doesn't ship one", () => {
   assert.ok(
     !downloads.some((asset) => asset.name.endsWith(".iso")),
-    "rc.2 has no ISO; one must have been added without checking the release",
+    `${release.version} has no ISO; one must have been added without checking the release`,
+  );
+});
+
+test("the Kubernetes links point at the same tag on sneakers-release", () => {
+  assert.equal(
+    kubernetes.pageHref,
+    `https://github.com/Sneakers-PAM/sneakers-release/releases/tag/${release.version}`,
+  );
+  assert.ok(
+    kubernetes.archDocHref.startsWith("https://github.com/Sneakers-PAM/sneakers-release/blob/"),
+    "the CPU architecture guide must link into sneakers-release",
   );
 });
 
