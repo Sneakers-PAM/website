@@ -23,7 +23,10 @@ deploys on a merge to `main` by itself — only publishing a Release does, via `
   sneakers-release and its install guide's CPU architecture section, for arm64 (Raspberry Pi)
   installs.
 - `app/components/` - the hero, nav, footer, feature grid, terminal card and downloads table.
-- `public/` - the favicon and logo marks, served as-is.
+- `public/` - the favicon, logo marks and `apple-touch-icon.png`, served as-is. The touch icon is a
+  180x180 render of `img/mark-light.svg` on the page background; re-render it if the mark changes.
+- Link previews: the Open Graph and Twitter card tags in `app/routes/home.tsx` read their values
+  from `meta` in `app/content/sneakers-pam.ts`. There is no og:image yet.
 
 ## Build, test, lint
 

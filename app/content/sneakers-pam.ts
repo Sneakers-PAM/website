@@ -14,6 +14,10 @@ export const meta = {
   // The org profile's one-line description, word for word.
   description:
     "Open-source privileged access management: vault, rotation, approvals, SSH brokering and an appliance. Apache-2.0.",
+  // Link previews (iMessage, Slack, social) read these, not <title>.
+  siteName: "Sneakers-PAM",
+  url: "https://www.sneakers-pam.com/",
+  twitterCard: "summary",
 };
 
 export const nav = {
