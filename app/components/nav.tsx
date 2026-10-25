@@ -20,7 +20,7 @@ export const Nav = ({ links }: NavProps) => (
     <div className="container nav__row">
       <Link className="nav__brand" to="/" aria-label="Sneakers-PAM">
         <img src={`${import.meta.env.BASE_URL}img/mark-light.svg`} width={28} height={28} alt="" />
-        Sneakers-PAM
+        sneakers·pam
       </Link>
       <nav aria-label="Primary">
         <ul className="nav__links">
