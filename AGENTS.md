@@ -31,7 +31,9 @@ deploys on a merge to `main` by itself — only publishing a Release does, via `
 - `app/content/` - the copy (`sneakers-pam.ts`) and the release data (`release.ts`, with its own
   test file). `release.ts` also holds the `kubernetes` links: the same tag's Helm chart release on
   sneakers-release and its install guide's CPU architecture section, for arm64 (Raspberry Pi)
-  installs.
+  installs, and the `proxmox` link: the qcow2's Proxmox VE guide at the same tag. The tests
+  require every OVA and qcow2 to be listed with its `.sha256`, and the qcow2's label to say it's
+  untested on Proxmox VE until it has been.
 - `app/components/` - the hero, nav, footer, feature grid, terminal card and downloads table.
 - `public/` - the favicon, logo marks and `apple-touch-icon.png`, served as-is. The touch icon is a
   180x180 render of `img/mark-light.svg` on the page background; re-render it if the mark changes.

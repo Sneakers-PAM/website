@@ -11,7 +11,7 @@ export const review = {
   subtitle: "Architecture, key custody and controls of a self-hosted privileged access vault, with the evidence behind each claim.",
   docVersion: "Draft 1",
   date: "29 October 2026",
-  productVersion: "v0.1.0-rc.3 (prerelease)",
+  productVersion: "v0.1.0-rc.4 (prerelease)",
   classification: "Public",
   disclaimer:
     "Sneakers-PAM holds no SOC 2 report, ISO 27001 certificate or other certification. This review describes only what is built and published, maps it to SOC 2 Trust Services Criteria, ISO/IEC 27001:2022 Annex A, NIST SP 800-63B and OWASP ASVS 4.0.3 so an independent reviewer can test it, and lists every known gap. Where a control depends on how you deploy Sneakers, it says so.",
@@ -30,7 +30,7 @@ export const review = {
         },
         {
           kind: "p",
-          text: "This review covers the v0.1.0 release train, currently at release candidate 3. Each control names the component tag it first ships in; the v0.1.0-rc.3 release builds every service from a pinned commit. A control marked shipped has its code on a published tag. Partial means it is built with a named gap. Planned means it isn't built.",
+          text: "This review covers the v0.1.0 release train, currently at release candidate 4. Each control names the component tag it first ships in; the v0.1.0-rc.4 release builds every service from a pinned commit. A control marked shipped has its code on a published tag. Partial means it is built with a named gap. Planned means it isn't built.",
         },
         {
           kind: "table",
