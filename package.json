@@ -5,9 +5,11 @@
   "scripts": {
     "dev": "react-router dev",
     "build": "react-router build",
+    "build:pdf": "react-router build && node scripts/build-security-pdf.mjs",
     "typecheck": "react-router typegen && tsc",
-    "test": "node --experimental-strip-types --test app/content/*.test.ts",
+    "test": "node --experimental-strip-types --test app/content/*.test.ts app/content/trust/*.test.ts",
     "lint": "eslint .",
+    "check:evidence": "node --experimental-strip-types scripts/check-trust-evidence.mjs",
     "preview": "npx serve build/client"
   },
   "dependencies": {

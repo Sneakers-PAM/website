@@ -25,4 +25,9 @@ export default tseslint.config(
       "react/react-in-jsx-scope": "off",
     },
   },
+  {
+    // Build scripts run on Node, not in the browser.
+    files: ["scripts/**/*.mjs"],
+    languageOptions: { globals: { console: "readonly", process: "readonly", URL: "readonly" } },
+  },
 );
