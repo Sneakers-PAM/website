@@ -4,6 +4,8 @@ SPDX-License-Identifier: Apache-2.0
 */
 import { Link } from "react-router";
 
+import { siteHref } from "./site-href";
+
 import "./marketing.css";
 
 interface NavLink {
@@ -26,7 +28,7 @@ export const Nav = ({ links }: NavProps) => (
         <ul className="nav__links">
           {links.map((link) => (
             <li key={link.href}>
-              <a href={link.href}>{link.label}</a>
+              <a href={siteHref(link.href)}>{link.label}</a>
             </li>
           ))}
         </ul>

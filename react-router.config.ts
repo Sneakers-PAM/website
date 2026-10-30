@@ -17,6 +17,6 @@ export default {
   ssr: false,
   basename,
   async prerender() {
-    return ["/"];
+    return ["/", "/trust", "/trust/security-review"];
   },
 } satisfies Config;

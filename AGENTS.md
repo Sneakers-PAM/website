@@ -17,7 +17,17 @@ deploys on a merge to `main` by itself — only publishing a Release does, via `
 
 ## Layout
 
-- `app/routes/home.tsx` - the one page, composed from components and content.
+- `app/routes/home.tsx` - the home page, composed from components and content.
+- `app/routes/trust.tsx` - the trust center at `/trust`: posture, controls by area, documents,
+  sub-processors and how to report a vulnerability.
+- `app/routes/security-review.tsx` - the print source of the security review PDF at
+  `/trust/security-review` (noindex, not linked from the nav).
+- `app/content/trust/` - the one source behind both: `controls.ts` (the control register: status,
+  first tag, evidence, framework mappings, open issues), `review.ts` (the review's long-form
+  sections), `trust-center.ts` (the page copy) and `types.ts`. A claim lives in one place; both
+  pages render from it. `trust.test.ts` holds the invariants: evidence and issues point only at
+  public repos, a shipped control names its tag and evidence, a planned one links its issue, and
+  the content claims no certification.
 - `app/content/` - the copy (`sneakers-pam.ts`) and the release data (`release.ts`, with its own
   test file). `release.ts` also holds the `kubernetes` links: the same tag's Helm chart release on
   sneakers-release and its install guide's CPU architecture section, for arm64 (Raspberry Pi)
@@ -35,6 +45,13 @@ deploys on a merge to `main` by itself — only publishing a Release does, via `
 - Test: `npm test` (the release data's own invariants; no fixtures or services needed)
 - Lint: `npm run lint`
 - Preview locally: `npm run preview` (serves `build/client` with `serve`)
+- Security review PDF: `npm run build` ends by printing `/trust/security-review` with headless Chrome
+  (`CHROME_PATH` if it isn't in a standard place; GitHub's Ubuntu runners have it) to
+  `build/client/trust/sneakers-security-review.pdf`, the file the trust center's Documents section
+  links for download. A build without Chrome fails rather than ship a page with a dead link.
+- Evidence check: `TRUST_EVIDENCE_ROOT=<folder with the Sneakers-PAM checkouts> npm run check:evidence`
+  confirms every evidence path and Go test name in `controls.ts` exists. It needs the other repos
+  checked out, so it isn't in CI; run it whenever the control register changes.
 
 ## Logging
 
