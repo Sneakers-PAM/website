@@ -3,6 +3,7 @@ Copyright 2026 The Sneakers-PAM Authors
 SPDX-License-Identifier: Apache-2.0
 */
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { test } from "node:test";
 
 import { areas, controls } from "./controls.ts";
@@ -45,6 +46,16 @@ test("every review section's areas exist and every area appears in the review", 
   const used = new Set(review.sections.flatMap((s) => s.areas ?? []));
   for (const id of used) assert.ok(areaIds.has(id), `review cites unknown area ${id}`);
   for (const id of areaIds) assert.ok(used.has(id), `area ${id} is missing from the review`);
+});
+
+test("the PDF links point at the file the build prints", () => {
+  const script = readFileSync(new URL("../../../scripts/build-security-pdf.mjs", import.meta.url), "utf8");
+  const pdf = trustCenter.documents.items.find((d) => d.href.endsWith(".pdf"));
+  assert.ok(pdf, "the documents list must offer the PDF");
+  assert.equal(pdf.href, trustCenter.posture.download.href);
+  assert.equal(pdf.href, "/trust/sneakers-security-review.pdf");
+  assert.match(script, /build\/client\/trust/);
+  assert.match(script, /sneakers-security-review\.pdf/);
 });
 
 test("the content claims no certification", () => {

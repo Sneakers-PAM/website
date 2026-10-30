@@ -4,8 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "react-router dev",
-    "build": "react-router build",
-    "build:pdf": "react-router build && node scripts/build-security-pdf.mjs",
+    "build": "react-router build && node scripts/build-security-pdf.mjs",
     "typecheck": "react-router typegen && tsc",
     "test": "node --experimental-strip-types --test app/content/*.test.ts app/content/trust/*.test.ts",
     "lint": "eslint .",

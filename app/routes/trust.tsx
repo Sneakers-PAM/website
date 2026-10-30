@@ -8,6 +8,7 @@ import { Diagram } from "~/components/diagrams";
 import { Footer } from "~/components/footer";
 import { Nav } from "~/components/nav";
 import { Section } from "~/components/section";
+import { siteHref } from "~/components/site-href";
 import { AreaBlock, DocumentList, PostureTiles, SubProcessorTable } from "~/components/trust";
 import { footer, nav } from "~/content/sneakers-pam";
 import { areas, controls } from "~/content/trust/controls";
@@ -34,6 +35,11 @@ export default function Trust() {
               </li>
             ))}
           </ul>
+          <p className="trust-download">
+            <a className="button button--primary" href={siteHref(trustCenter.posture.download.href)} download="">
+              {trustCenter.posture.download.label}
+            </a>
+          </p>
           <PostureTiles controls={controls} />
           {trustCenter.posture.notes.map((n) => (
             <p key={n} className="trust-note">
@@ -62,7 +68,7 @@ export default function Trust() {
         </Section>
 
         <Section id="documents" eyebrow="Documents" heading={trustCenter.documents.heading} lede={trustCenter.documents.lede}>
-          <DocumentList documents={trustCenter.documents.items} requestHref={trustCenter.documents.requestHref} />
+          <DocumentList documents={trustCenter.documents.items} />
         </Section>
 
         <Section

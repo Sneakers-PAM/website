@@ -45,10 +45,10 @@ deploys on a merge to `main` by itself — only publishing a Release does, via `
 - Test: `npm test` (the release data's own invariants; no fixtures or services needed)
 - Lint: `npm run lint`
 - Preview locally: `npm run preview` (serves `build/client` with `serve`)
-- Security review PDF: `npm run build:pdf` builds the site, then prints `/trust/security-review` with
-  headless Chrome (`CHROME_PATH` if it isn't in a standard place) to
-  `build/pdf/sneakers-security-review.pdf`. It stays out of `build/client`: the trust center offers
-  the PDF on request, so a deploy never publishes it.
+- Security review PDF: `npm run build` ends by printing `/trust/security-review` with headless Chrome
+  (`CHROME_PATH` if it isn't in a standard place; GitHub's Ubuntu runners have it) to
+  `build/client/trust/sneakers-security-review.pdf`, the file the trust center's Documents section
+  links for download. A build without Chrome fails rather than ship a page with a dead link.
 - Evidence check: `TRUST_EVIDENCE_ROOT=<folder with the Sneakers-PAM checkouts> npm run check:evidence`
   confirms every evidence path and Go test name in `controls.ts` exists. It needs the other repos
   checked out, so it isn't in CI; run it whenever the control register changes.

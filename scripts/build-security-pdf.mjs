@@ -3,9 +3,8 @@ Copyright 2026 The Sneakers-PAM Authors
 SPDX-License-Identifier: Apache-2.0
 */
 // Prints the prerendered /trust/security-review page to a PDF with headless
-// Chrome. Run after `npm run build`. The PDF goes to build/pdf/, outside
-// build/client, because the trust center offers it on request rather than
-// publishing it with the site.
+// Chrome, as the last step of `npm run build`. The PDF lands in
+// build/client/trust/, so the trust center's download link ships with the site.
 import { execFile } from "node:child_process";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, statSync } from "node:fs";
 import { createServer } from "node:http";
@@ -13,7 +12,7 @@ import { tmpdir } from "node:os";
 import { extname, join, normalize, resolve } from "node:path";
 
 const root = resolve("build/client");
-const outDir = resolve("build/pdf");
+const outDir = resolve("build/client/trust");
 const out = join(outDir, "sneakers-security-review.pdf");
 const page = "/trust/security-review";
 
@@ -43,7 +42,7 @@ function findChrome() {
 }
 
 if (!existsSync(join(root, "trust/security-review/index.html"))) {
-  log("error", `no prerendered ${page} in build/client; run npm run build first`);
+  log("error", `no prerendered ${page} in build/client; run react-router build first`);
   process.exit(1);
 }
 
@@ -88,6 +87,9 @@ server.listen(0, "127.0.0.1", () => {
       // A throwaway profile keeps the print away from any Chrome already open.
       `--user-data-dir=${profile}`,
       "--disable-gpu",
+      // Ubuntu 24.04 runners block the sandbox's user namespaces; the page is
+      // this build's own static output.
+      ...(process.env.CI ? ["--no-sandbox"] : []),
       "--no-first-run",
       "--no-default-browser-check",
       "--no-pdf-header-footer",

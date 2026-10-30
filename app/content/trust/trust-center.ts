@@ -19,6 +19,7 @@ export const trustCenter = {
     { label: "Report", href: "#report" },
   ],
   posture: {
+    download: { label: "Download the security review (PDF)", href: "/trust/sneakers-security-review.pdf" },
     heading: "What protects your credentials, and what doesn't yet.",
     lede: "Every control below says what is built, the release it ships in and the code and tests that prove it. Gaps link the open issue that tracks them.",
     notes: [
@@ -41,29 +42,26 @@ export const trustCenter = {
   documents: {
     heading: "Documents.",
     lede: "The security review is the long form of this page: architecture, data flows, key hierarchy and every control with its evidence.",
-    requestHref: "https://github.com/Sneakers-PAM",
     items: [
       {
         title: "Security review",
         summary: "Architecture, data flows and every control mapped to SOC 2, ISO 27001, SP 800-63B and ASVS, with evidence. PDF.",
-        access: "on-request",
+        href: "/trust/sneakers-security-review.pdf",
+        action: "Download PDF",
       },
       {
         title: "Security policy",
         summary: "How to report a vulnerability and which versions get fixes.",
-        access: "public",
         href: "https://github.com/Sneakers-PAM/.github/blob/main/.github/SECURITY.md",
       },
       {
         title: "Cryptography and export",
         summary: "The algorithms Sneakers uses and its export classification.",
-        access: "public",
         href: "https://github.com/Sneakers-PAM/docs/blob/main/CRYPTO.md",
       },
       {
         title: "Key custody",
         summary: "How the appliance seals its keys in the TPM and escrows them to your recovery keys.",
-        access: "public",
         href: "https://github.com/Sneakers-PAM/sneakers-appliance/blob/main/docs/key-custody.md",
       },
     ] satisfies TrustDocument[],

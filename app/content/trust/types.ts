@@ -100,6 +100,7 @@ export interface SubProcessor {
 export interface TrustDocument {
   title: string;
   summary: string;
-  access: "public" | "on-request";
-  href?: string;
+  href: string;
+  // Shown on the link, e.g. "Download PDF"; defaults to "Read it".
+  action?: string;
 }

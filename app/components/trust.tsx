@@ -5,6 +5,8 @@ SPDX-License-Identifier: Apache-2.0
 import { evidenceHref, issueHref, issueLabel, mappingLine, statusLabel } from "~/content/trust/links";
 import type { Area, Control, SubProcessor, TrustDocument } from "~/content/trust/types";
 
+import { siteHref } from "./site-href";
+
 import "./marketing.css";
 import "./trust.css";
 
@@ -82,18 +84,16 @@ export const PostureTiles = ({ controls }: { controls: Control[] }) => {
   );
 };
 
-export const DocumentList = ({ documents, requestHref }: { documents: TrustDocument[]; requestHref: string }) => (
+export const DocumentList = ({ documents }: { documents: TrustDocument[] }) => (
   <ul className="feature-grid">
     {documents.map((d) => (
       <li key={d.title} className="feature-card">
         <h3 className="feature-card__title">{d.title}</h3>
         <p className="feature-card__body">{d.summary}</p>
         <p className="feature-card__body">
-          {d.access === "public" && d.href ? (
-            <a href={d.href}>Read it</a>
-          ) : (
-            <a href={requestHref}>Request a copy</a>
-          )}
+          <a href={siteHref(d.href)} download={d.href.endsWith(".pdf") ? "" : undefined}>
+            {d.action ?? "Read it"}
+          </a>
         </p>
       </li>
     ))}
