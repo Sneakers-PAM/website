@@ -6,7 +6,7 @@
     "dev": "react-router dev",
     "build": "react-router build && node scripts/build-security-pdf.mjs",
     "typecheck": "react-router typegen && tsc",
-    "test": "node --experimental-strip-types --test app/content/*.test.ts app/content/trust/*.test.ts",
+    "test": "node --experimental-strip-types --test app/content/*.test.ts app/content/trust/*.test.ts scripts/*.test.mjs",
     "lint": "eslint .",
     "check:evidence": "node --experimental-strip-types scripts/check-trust-evidence.mjs",
     "preview": "npx serve build/client"

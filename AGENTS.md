@@ -75,10 +75,11 @@ Follow the logging rules in `CLAUDE.md`. In short:
   `.claude/hooks` (run `bash .claude/hooks/install.sh` once per clone).
 - Open every PR as a draft. CI skips drafts, so run the full checks locally, push once they pass,
   and mark the PR ready when the work is finished; see CLAUDE.md "CI and Actions minutes".
-- `PREVIEW_BASE_PATH` (an env var, read by both `vite.config.ts` and `react-router.config.ts`)
-  lets a one-off build set the router's basename and asset base for serving from a sub-path
-  (e.g. a preview). It's unset in the real build, so both default to `/`; never hardcode a
-  sub-path into either config file.
+- `PREVIEW_BASE_PATH` (an env var, read by both `vite.config.ts` and `react-router.config.ts`,
+  and by `scripts/build-security-pdf.mjs` through `scripts/pdf-paths.mjs`) lets a one-off build
+  set the router's basename and asset base for serving from a sub-path (e.g. a preview). A
+  preview build prints the PDF too, into `build/client/<base>/trust/`. It's unset in the real
+  build, so all of them default to `/`; never hardcode a sub-path into any of them.
 - The hero headline and the footer's trademark notice each bind a mark's `™` to its last word in
   a `.nowrap` span (see `app/components/split-hero.tsx` and `footer.tsx`). Keep that pairing when
   editing either line; a mark must never wrap onto its own line.
