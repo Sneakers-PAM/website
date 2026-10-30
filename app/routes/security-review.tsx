@@ -9,6 +9,8 @@ import { evidenceHref, issueHref, issueLabel, mappingLine, statusLabel } from "~
 import { review } from "~/content/trust/review";
 import type { Block, Control } from "~/content/trust/types";
 
+import { Diagram } from "~/components/diagrams";
+
 import "~/components/security-review.css";
 
 // The print source for the security review PDF (scripts/build-security-pdf.mjs).
@@ -66,6 +68,8 @@ function BlockView({ block }: { block: Block }) {
       );
     case "note":
       return <p className={`sr-note sr-note--${block.tone}`}>{block.text}</p>;
+    case "figure":
+      return <Diagram id={block.diagram} caption={block.caption} />;
   }
 }
 

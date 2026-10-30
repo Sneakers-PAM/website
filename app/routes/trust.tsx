@@ -4,11 +4,12 @@ SPDX-License-Identifier: Apache-2.0
 */
 import type { MetaFunction } from "react-router";
 
+import { Diagram } from "~/components/diagrams";
 import { Footer } from "~/components/footer";
 import { Nav } from "~/components/nav";
 import { Section } from "~/components/section";
 import { AreaBlock, DocumentList, PostureTiles, SubProcessorTable } from "~/components/trust";
-import { footer } from "~/content/sneakers-pam";
+import { footer, nav } from "~/content/sneakers-pam";
 import { areas, controls } from "~/content/trust/controls";
 import { trustCenter } from "~/content/trust/trust-center";
 
@@ -23,14 +24,27 @@ export default function Trust() {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <Nav links={trustCenter.nav} />
+      <Nav links={nav.links} />
       <main id="main">
         <Section id="posture" eyebrow="Trust center" heading={trustCenter.posture.heading} lede={trustCenter.posture.lede}>
+          <ul className="area-nav" aria-label="On this page">
+            {trustCenter.sections.map((s) => (
+              <li key={s.href}>
+                <a href={s.href}>{s.label}</a>
+              </li>
+            ))}
+          </ul>
           <PostureTiles controls={controls} />
           {trustCenter.posture.notes.map((n) => (
             <p key={n} className="trust-note">
               {n}
             </p>
+          ))}
+        </Section>
+
+        <Section id="architecture" eyebrow="Architecture" heading={trustCenter.architecture.heading} lede={trustCenter.architecture.lede} tone="card">
+          {trustCenter.architecture.figures.map((f) => (
+            <Diagram key={f.diagram} id={f.diagram} caption={f.caption} />
           ))}
         </Section>
 
@@ -74,7 +88,7 @@ export default function Trust() {
           </p>
         </Section>
       </main>
-      <Footer marks={footer.marks} links={footer.links} />
+      <Footer tagline={footer.tagline} groups={footer.groups} marks={footer.marks} />
     </>
   );
 }

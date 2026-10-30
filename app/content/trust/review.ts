@@ -77,6 +77,15 @@ export const review = {
         },
         {
           kind: "p",
+          text: "Figure 1 is the high-level design of the product. The same services run on the appliance and on your own Kubernetes.",
+        },
+        {
+          kind: "figure",
+          diagram: "architecture",
+          caption: "Figure 1. Architecture and trust boundaries. Every internal call is gRPC carrying a verified workload identity. Solid arrows are calls; the dashed arrow is the front tier's use of the database and Valkey.",
+        },
+        {
+          kind: "p",
           text: "Trust boundaries: browsers and agents reach only the gateway, the MCP server, the web apps and the SSH broker's WebSocket. Every internal call carries a verified workload identity and is limited by a per-method caller allow-list and a NetworkPolicy. Only the connector and the SSH broker reach target systems.",
         },
         {
@@ -250,6 +259,26 @@ export const review = {
         {
           kind: "p",
           text: "The appliance is a single-node Kubernetes box built from a declared file list rather than a Linux distribution. Its root is a read-only, dm-verity-checked SquashFS whose hash is inside a signed kernel image, booted under Secure Boot with project-owned keys and no shim.",
+        },
+        {
+          kind: "figure",
+          diagram: "appliance-hld",
+          caption: "Figure 2. Appliance high-level design: the layers from firmware to product, the two network interfaces and the disk.",
+        },
+        {
+          kind: "figure",
+          diagram: "appliance-boot",
+          caption: "Figure 3. Appliance low-level design: the verified boot chain, the TPM-sealed disk key and what the escrow carries.",
+        },
+        {
+          kind: "figure",
+          diagram: "appliance-disk",
+          caption: "Figure 4. Appliance low-level design: the GPT layout and the A/B update path.",
+        },
+        {
+          kind: "figure",
+          diagram: "appliance-runtime",
+          caption: "Figure 5. Appliance low-level design: OS processes, the users they run as, and where every privileged action is checked.",
         },
         {
           kind: "flow",

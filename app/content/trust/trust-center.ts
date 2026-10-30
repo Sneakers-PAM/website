@@ -2,7 +2,7 @@
 Copyright 2026 The Sneakers-PAM Authors
 SPDX-License-Identifier: Apache-2.0
 */
-import type { SubProcessor, TrustDocument } from "./types.ts";
+import type { DiagramId, SubProcessor, TrustDocument } from "./types.ts";
 
 export const trustCenter = {
   meta: {
@@ -10,8 +10,9 @@ export const trustCenter = {
     description:
       "How Sneakers-PAM protects the credentials it holds: the controls by area, what is shipped and what is still open, and how to report a vulnerability.",
   },
-  nav: [
+  sections: [
     { label: "Posture", href: "#posture" },
+    { label: "Architecture", href: "#architecture" },
     { label: "Controls", href: "#controls" },
     { label: "Documents", href: "#documents" },
     { label: "Sub-processors", href: "#subprocessors" },
@@ -24,6 +25,14 @@ export const trustCenter = {
       "Sneakers-PAM holds no certifications. It is open-source software you run yourself, not a hosted service, so there is no SOC 2 report or ISO 27001 certificate to share. The controls are mapped to SOC 2, ISO 27001, NIST SP 800-63B and OWASP ASVS so your own reviewers can test them.",
       "Sneakers-PAM is in prerelease (v0.1.0-rc.3). Expect the gaps listed here to change from one release candidate to the next.",
     ],
+  },
+  architecture: {
+    heading: "How it fits together.",
+    lede: "The services and where each trust boundary sits, then the appliance from firmware to product. The security review has the low-level design.",
+    figures: [
+      { diagram: "architecture", caption: "Architecture and trust boundaries. Every internal call is gRPC carrying a verified workload identity." },
+      { diagram: "appliance-hld", caption: "The appliance, from firmware to product." },
+    ] satisfies { diagram: DiagramId; caption: string }[],
   },
   controls: {
     heading: "Controls by area.",

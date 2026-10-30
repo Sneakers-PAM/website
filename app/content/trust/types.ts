@@ -72,12 +72,15 @@ export interface Area {
   summary: string;
 }
 
+export type DiagramId = "architecture" | "appliance-hld" | "appliance-boot" | "appliance-disk" | "appliance-runtime";
+
 export type Block =
   | { kind: "p"; text: string }
   | { kind: "list"; items: string[] }
   | { kind: "table"; head: string[]; rows: string[][] }
   | { kind: "flow"; title: string; steps: string[] }
-  | { kind: "note"; tone: "info" | "warn"; text: string };
+  | { kind: "note"; tone: "info" | "warn"; text: string }
+  | { kind: "figure"; diagram: DiagramId; caption: string };
 
 export interface ReviewSection {
   id: string;
