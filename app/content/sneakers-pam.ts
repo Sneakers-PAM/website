@@ -31,7 +31,7 @@ export const nav = {
 };
 
 export const hero = {
-  eyebrow: `Sneakers-PAM ${"v0.1.0-rc.3"} is out, now on Raspberry Pi`,
+  eyebrow: `Sneakers-PAM ${"v0.1.0-rc.4"} is out, now with a Proxmox VE image`,
   headlineLine1: "Privileged access,",
   headlineLine2: "kept on a short",
   headlineLine2TmWord: "leash",
@@ -45,7 +45,7 @@ export const hero = {
     { text: "signed appliance", accent: true },
     { text: " you own outright." },
   ] satisfies LedeSegment[],
-  primaryCta: { label: "Download v0.1.0-rc.3", href: "#download" },
+  primaryCta: { label: "Download v0.1.0-rc.4", href: "#download" },
   secondaryCta: { label: "View on GitHub", href: "https://github.com/Sneakers-PAM" },
   terminal: {
     title: "sneakers-run",

@@ -14,6 +14,7 @@ interface DownloadsProps {
   keyFingerprint: string;
   kubernetesHref: string;
   archDocHref: string;
+  proxmoxGuideHref: string;
 }
 
 export const Downloads = ({
@@ -24,6 +25,7 @@ export const Downloads = ({
   keyFingerprint,
   kubernetesHref,
   archDocHref,
+  proxmoxGuideHref,
 }: DownloadsProps) => (
   <>
     <table className="downloads-table">
@@ -51,7 +53,9 @@ export const Downloads = ({
     </table>
     <p className="prose dl-note">
       All files are on the {version} <a href={pageHref}>release page</a>. No ISO this release:
-      install from the&nbsp;OVA.
+      install from the OVA, or on Proxmox VE from the qcow2 with the{" "}
+      <a href={proxmoxGuideHref}>Proxmox VE guide</a>. The qcow2 hasn&apos;t been tested on a real
+      Proxmox VE host&nbsp;yet.
     </p>
 
     <h3>Run it on a Raspberry Pi</h3>

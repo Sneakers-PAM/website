@@ -9,10 +9,10 @@ SPDX-License-Identifier: Apache-2.0
 const RELEASE_BASE = "https://github.com/Sneakers-PAM/sneakers-appliance/releases/download";
 
 export const release = {
-  version: "v0.1.0-rc.3",
+  version: "v0.1.0-rc.4",
   kind: "prerelease" as const,
-  publishedOn: "2026-10-24",
-  pageHref: "https://github.com/Sneakers-PAM/sneakers-appliance/releases/tag/v0.1.0-rc.3",
+  publishedOn: "2026-10-30",
+  pageHref: "https://github.com/Sneakers-PAM/sneakers-appliance/releases/tag/v0.1.0-rc.4",
 };
 
 // The same release as Helm charts for a Kubernetes cluster you run yourself.
@@ -21,6 +21,11 @@ export const release = {
 export const kubernetes = {
   pageHref: `https://github.com/Sneakers-PAM/sneakers-release/releases/tag/${release.version}`,
   archDocHref: "https://github.com/Sneakers-PAM/sneakers-release/blob/main/docs/install.md#cpu-architecture",
+};
+
+// The qcow2's install guide, read at the release's own tag so it matches the image.
+export const proxmox = {
+  guideHref: `https://github.com/Sneakers-PAM/sneakers-appliance/blob/${release.version}/docs/proxmox-vm.md`,
 };
 
 export interface DownloadAsset {
@@ -34,45 +39,57 @@ export interface DownloadAsset {
 export const downloads: DownloadAsset[] = [
   {
     label: "Appliance OVA (install image)",
-    name: "sneakers-appliance-0.1.0-rc.3-amd64.ova",
-    sizeBytes: 93262848,
-    sizeLabel: "88.9 MiB",
+    name: "sneakers-appliance-0.1.0-rc.4-amd64.ova",
+    sizeBytes: 98805760,
+    sizeLabel: "94.2 MiB",
   },
   {
     label: "OVA checksum",
-    name: "sneakers-appliance-0.1.0-rc.3-amd64.ova.sha256",
+    name: "sneakers-appliance-0.1.0-rc.4-amd64.ova.sha256",
     sizeBytes: 106,
     sizeLabel: "106 B",
   },
   {
+    label: "Proxmox VE disk image (qcow2, new and untested on a real Proxmox VE host)",
+    name: "sneakers-appliance-0.1.0-rc.4-amd64.qcow2",
+    sizeBytes: 233570304,
+    sizeLabel: "222.8 MiB",
+  },
+  {
+    label: "qcow2 checksum",
+    name: "sneakers-appliance-0.1.0-rc.4-amd64.qcow2.sha256",
+    sizeBytes: 108,
+    sizeLabel: "108 B",
+  },
+  {
     label: "Product unit",
-    name: "sneakers-product-0.1.0-rc.3-amd64.bin",
-    sizeBytes: 1070738655,
-    sizeLabel: "1021.1 MiB",
+    name: "sneakers-product-0.1.0-rc.4-amd64.bin",
+    sizeBytes: 1070756063,
+    sizeLabel: "1021.2 MiB",
   },
   {
     label: "Base OS unit",
-    name: "sneakers-appliance-baseOS-0.1.0-rc.3-amd64.bin",
-    sizeBytes: 219233557,
-    sizeLabel: "209.1 MiB",
+    name: "sneakers-appliance-baseOS-0.1.0-rc.4-amd64.bin",
+    sizeBytes: 232835589,
+    sizeLabel: "222.0 MiB",
   },
   {
-    label: "Base OS patch (rc.2 to rc.3)",
-    name: "sneakers-appliance-baseOS-patch-0.1.0-rc.2-to-0.1.0-rc.3-amd64.bin",
-    sizeBytes: 16583647,
-    sizeLabel: "15.8 MiB",
+    label: "Base OS patch (rc.3 to rc.4)",
+    name: "sneakers-appliance-baseOS-patch-0.1.0-rc.3-to-0.1.0-rc.4-amd64.bin",
+    sizeBytes: 9138382,
+    sizeLabel: "8.7 MiB",
   },
   {
     label: "Base web unit",
-    name: "sneakers-appliance-baseWeb-0.1.0-rc.3-amd64.bin",
+    name: "sneakers-appliance-baseWeb-0.1.0-rc.4-amd64.bin",
     sizeBytes: 1256228,
     sizeLabel: "1.2 MiB",
   },
   {
     label: "Checksums for every file above",
     name: "SHA256SUMS",
-    sizeBytes: 570,
-    sizeLabel: "570 B",
+    sizeBytes: 678,
+    sizeLabel: "678 B",
   },
   {
     label: "Signature bundle for SHA256SUMS",

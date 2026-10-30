@@ -31,6 +31,22 @@ test("there is no ISO listed for a release that doesn't ship one", () => {
   );
 });
 
+test("every install image is listed with its own .sha256 next to it", () => {
+  const names = downloads.map((asset) => asset.name);
+  const images = names.filter((name) => name.endsWith(".ova") || name.endsWith(".qcow2"));
+  assert.ok(images.some((name) => name.endsWith(".ova")), `${release.version} lists no OVA`);
+  assert.ok(images.some((name) => name.endsWith(".qcow2")), `${release.version} lists no Proxmox VE qcow2`);
+  for (const image of images) {
+    assert.ok(names.includes(`${image}.sha256`), `${image} is listed without its .sha256`);
+  }
+});
+
+test("the qcow2 says it hasn't been tested on Proxmox VE yet", () => {
+  const qcow2 = downloads.find((asset) => asset.name.endsWith(".qcow2"));
+  assert.ok(qcow2, "no qcow2 is listed");
+  assert.match(qcow2.label, /untested/i);
+});
+
 test("the Kubernetes links point at the same tag on sneakers-release", () => {
   assert.equal(
     kubernetes.pageHref,

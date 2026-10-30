@@ -24,7 +24,7 @@ export const trustCenter = {
     lede: "Every control below says what is built, the release it ships in and the code and tests that prove it. Gaps link the open issue that tracks them.",
     notes: [
       "Sneakers-PAM holds no certifications. It is open-source software you run yourself, not a hosted service, so there is no SOC 2 report or ISO 27001 certificate to share. The controls are mapped to SOC 2, ISO 27001, NIST SP 800-63B and OWASP ASVS so your own reviewers can test them.",
-      "Sneakers-PAM is in prerelease (v0.1.0-rc.3). Expect the gaps listed here to change from one release candidate to the next.",
+      "Sneakers-PAM is in prerelease (v0.1.0-rc.4). Expect the gaps listed here to change from one release candidate to the next.",
     ],
   },
   architecture: {
