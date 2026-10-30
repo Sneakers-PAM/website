@@ -22,7 +22,11 @@ export const meta: MetaFunction = () => [
   { property: "og:description", content: pageMeta.description },
   { property: "og:type", content: "website" },
   { property: "og:url", content: pageMeta.url },
-  { name: "twitter:card", content: pageMeta.twitterCard },
+  { property: "og:image", content: "https://www.sneakers-pam.com/og-image.png" },
+  { property: "og:image:width", content: "1200" },
+  { property: "og:image:height", content: "630" },
+  { property: "og:image:alt", content: "Sneakers-PAM — privileged access, kept on a short leash." },
+  { name: "twitter:card", content: "summary_large_image" },
 ];
 
 export default function Home() {
