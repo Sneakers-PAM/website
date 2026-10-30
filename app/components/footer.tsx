@@ -2,6 +2,8 @@
 Copyright 2026 The Sneakers-PAM Authors
 SPDX-License-Identifier: Apache-2.0
 */
+import { siteHref } from "./site-href";
+
 import "./marketing.css";
 
 interface FooterLink {
@@ -9,9 +11,15 @@ interface FooterLink {
   href: string;
 }
 
-interface FooterProps {
-  marks: string[];
+interface FooterGroup {
+  title: string;
   links: FooterLink[];
+}
+
+interface FooterProps {
+  tagline: string;
+  groups: FooterGroup[];
+  marks: string[];
 }
 
 // Renders a mark with its ™ bound to the last word in a no-break span,
@@ -31,21 +39,34 @@ function MarkedTerm({ mark }: { mark: string }) {
   );
 }
 
-export const Footer = ({ marks, links }: FooterProps) => {
+// The one footer every page uses: the brand, the link groups, then the legal line.
+export const Footer = ({ tagline, groups, marks }: FooterProps) => {
   const year = new Date().getFullYear();
 
   return (
     <footer className="footer">
-      <div className="container footer__row">
-        <nav aria-label="Footer">
-          <ul className="footer__links">
-            {links.map((link) => (
-              <li key={link.href}>
-                <a href={link.href}>{link.label}</a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+      <div className="container">
+        <div className="footer__grid">
+          <div className="footer__brand">
+            <p className="footer__name">
+              <img src={`${import.meta.env.BASE_URL}img/mark-light.svg`} width={24} height={24} alt="" />
+              sneakers·pam
+            </p>
+            <p className="footer__tagline">{tagline}</p>
+          </div>
+          {groups.map((group) => (
+            <nav key={group.title} aria-label={group.title} className="footer__group">
+              <h2 className="footer__heading">{group.title}</h2>
+              <ul className="footer__links">
+                {group.links.map((link) => (
+                  <li key={link.href}>
+                    <a href={siteHref(link.href)}>{link.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
+        </div>
         <p className="footer__legal">
           {marks.map((mark, index) => (
             <span key={mark}>

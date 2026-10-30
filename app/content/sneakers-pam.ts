@@ -22,9 +22,10 @@ export const meta = {
 
 export const nav = {
   links: [
-    { label: "What it is", href: "#what-it-is" },
-    { label: "What's different", href: "#different" },
-    { label: "Download", href: "#download" },
+    { label: "What it is", href: "/#what-it-is" },
+    { label: "What's different", href: "/#different" },
+    { label: "Download", href: "/#download" },
+    { label: "Trust", href: "/trust" },
     { label: "GitHub", href: "https://github.com/Sneakers-PAM" },
   ],
 };
@@ -107,8 +108,31 @@ export const different = {
 
 export const footer = {
   marks: ["Sneakers-PAM", "Privileged access, kept on a short leash"],
-  links: [
-    { label: "GitHub", href: "https://github.com/Sneakers-PAM" },
-    { label: "Docs", href: "https://docs.sneakers-pam.com" },
+  tagline: "Open-source privileged access management you run yourself.",
+  groups: [
+    {
+      title: "Product",
+      links: [
+        { label: "What it is", href: "/#what-it-is" },
+        { label: "What's different", href: "/#different" },
+        { label: "Download", href: "/#download" },
+      ],
+    },
+    {
+      title: "Resources",
+      links: [
+        { label: "Docs", href: "https://docs.sneakers-pam.com" },
+        { label: "GitHub", href: "https://github.com/Sneakers-PAM" },
+        { label: "Releases", href: "https://github.com/Sneakers-PAM/sneakers-release/releases" },
+      ],
+    },
+    {
+      title: "Trust",
+      links: [
+        { label: "Trust center", href: "/trust" },
+        { label: "Security policy", href: "https://github.com/Sneakers-PAM/.github/blob/main/.github/SECURITY.md" },
+        { label: "Report a vulnerability", href: "/trust#report" },
+      ],
+    },
   ],
 };
