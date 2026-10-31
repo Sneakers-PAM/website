@@ -4,17 +4,23 @@ SPDX-License-Identifier: Apache-2.0
 */
 // Prints the prerendered /trust/security-review page to a PDF with headless
 // Chrome, as the last step of `npm run build`. The PDF lands in
-// build/client/trust/, so the trust center's download link ships with the site.
+// build/client/trust/ (under the base path in a preview build), so the trust
+// center's download link ships with the site.
 import { execFile } from "node:child_process";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, statSync } from "node:fs";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
-import { extname, join, normalize, resolve } from "node:path";
+import { dirname, extname, join, resolve } from "node:path";
+
+import { pdfPaths, requestFile } from "./pdf-paths.mjs";
 
 const root = resolve("build/client");
-const outDir = resolve("build/client/trust");
-const out = join(outDir, "sneakers-security-review.pdf");
-const page = "/trust/security-review";
+const { base, page, prerendered, out } = pdfPaths(
+  root,
+  process.env.PREVIEW_BASE_PATH,
+  "sneakers-security-review.pdf",
+);
+const outDir = dirname(out);
 
 const types = {
   ".html": "text/html; charset=utf-8",
@@ -41,7 +47,7 @@ function findChrome() {
   return candidates.find((p) => existsSync(p));
 }
 
-if (!existsSync(join(root, "trust/security-review/index.html"))) {
+if (!existsSync(prerendered)) {
   log("error", `no prerendered ${page} in build/client; run react-router build first`);
   process.exit(1);
 }
@@ -55,7 +61,7 @@ log("debug", `chrome at ${chrome}`);
 
 const server = createServer((req, res) => {
   const url = new URL(req.url ?? "/", "http://localhost");
-  let file = normalize(join(root, decodeURIComponent(url.pathname)));
+  let file = requestFile(root, base, decodeURIComponent(url.pathname), existsSync);
   if (!file.startsWith(root)) {
     res.writeHead(403).end();
     return;
