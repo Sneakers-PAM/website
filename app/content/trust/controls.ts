@@ -229,8 +229,7 @@ export const controls: Control[] = [
     ],
     mappings: { soc2: ["CC6.7"], iso27001: ["A.8.24", "A.8.20"], asvs: ["V9.2.2"] },
     gaps: [
-      { repo: "sneakers-appliance", number: 235, title: "TLS on the product endpoint and cert-manager" },
-      { repo: "sneakers-notify", number: 20, title: "TLS in REDIS_URL is ignored" },
+      { repo: "sneakers-appliance", number: 531, title: "Issue certificates through ACME with cert-manager" },
     ],
   },
   {
@@ -353,14 +352,13 @@ export const controls: Control[] = [
     area: "identity",
     title: "Single sign-on and passkey sign-in",
     statement:
-      "SAML sign-on runs through the bundled Ory Polis at the gateway. Passkeys work as a second factor, but passwordless passkey sign-in isn't built, and SSO sessions have an open subject-mismatch bug.",
+      "SAML sign-on runs through the bundled Ory Polis at the gateway. Passkeys work as a second factor, but passwordless passkey sign-in isn't built.",
     status: "partial",
     since: "v0.1.0-rc.1",
     evidence: [{ repo: "sneakers-gateway", path: "internal/bff/sso.go", kind: "code" }],
     mappings: { soc2: ["CC6.1"], iso27001: ["A.8.5"], nist80063b: ["5.1.8", "5.2.5"] },
     gaps: [
       { repo: "sneakers-identity", number: 22, title: "Passkey sign-in" },
-      { repo: "sneakers-identity", number: 20, title: "SSO sessions fail with a subject mismatch" },
     ],
   },
 
@@ -485,7 +483,7 @@ export const controls: Control[] = [
     area: "access",
     title: "Rotation without agents on targets",
     statement:
-      "The connector pulls due heartbeat and rotation jobs and changes passwords over LDAP/LDAPS and Kerberos using the account's own current password, so it needs no admin rights. The directory's built-in Administrator is matched by SID and never rotated. SSH, WinRM and SAMR rotation aren't built.",
+      "The connector pulls due heartbeat and rotation jobs and changes passwords over LDAP/LDAPS and Kerberos using the account's own current password, so it needs no admin rights. A heartbeat reports an untrusted certificate as its own result, with the reason. The directory's built-in Administrator is matched by SID and never rotated. SSH, WinRM and SAMR rotation aren't built.",
     status: "partial",
     since: "v0.1.0-rc.1",
     evidence: [
@@ -625,7 +623,6 @@ export const controls: Control[] = [
       { repo: "sneakers-gateway", path: "internal/bff/oauth.go", kind: "code" },
     ],
     mappings: { soc2: ["CC6.1", "CC6.3"], iso27001: ["A.5.15"], asvs: ["V4.1.1"] },
-    gaps: [{ repo: "sneakers-gateway", number: 145, title: "Keep CLI tokens off the MCP switch" }],
   },
   {
     id: "MCP-3",
@@ -780,6 +777,20 @@ export const controls: Control[] = [
     mappings: { soc2: ["CC7.1", "CC9.2"], iso27001: ["A.5.21", "A.8.30"], asvs: ["V14.2.5"] },
     gaps: [{ repo: "sneakers-release", number: 69, title: "NIST SSDF (SP 800-218) self-assessment" }],
   },
+  {
+    id: "SUP-5",
+    area: "supply-chain",
+    title: "A signed OVA is booted before it publishes",
+    statement:
+      "The release build boots the production-signed OVA from fresh in QEMU, after signing and before anything publishes. If that boot fails, no files and no images go out.",
+    status: "shipped",
+    since: "v0.1.0-rc.6",
+    evidence: [
+      { repo: "sneakers-appliance", path: ".github/workflows/release.yml", kind: "ci", detail: "Fresh OVA first boot" },
+      { repo: "sneakers-appliance", path: "test/image/ova/ova_test.go", kind: "test", detail: "TestFreshOVAFirstBoot" },
+    ],
+    mappings: { soc2: ["CC8.1"], iso27001: ["A.8.29", "A.8.32"] },
+  },
 
   // Backup and recovery
   {
@@ -798,7 +809,7 @@ export const controls: Control[] = [
     area: "recovery",
     title: "Encrypted migration bundles",
     statement:
-      "sneakers-migrate exports every service's data as an age-encrypted archive, verifies the audit chain end to end on import, and is rehearsed in CI, including a 727,000-record audit chain.",
+      "sneakers-migrate exports secrets, folders, users and settings as an age-encrypted archive. The audit trail never moves: it stays on the source, and the target's chain starts with one \"imported from\" record. Import refuses any stream that doesn't match its checksum or count, and the path is rehearsed in CI.",
     status: "shipped",
     since: "v0.1.0-rc.3",
     evidence: [
@@ -846,8 +857,22 @@ export const controls: Control[] = [
     mappings: { soc2: ["CC7.2", "CC7.3"], iso27001: ["A.8.15", "A.8.16"] },
     gaps: [
       { repo: "sneakers-appliance", number: 113, title: "Forward logs to syslog or OTLP" },
-      { repo: "sneakers-appliance", number: 332, title: "Export logs over OpenTelemetry" },
+      { repo: "sneakers-appliance", number: 528, title: "Set the services' OTLP endpoint from :8443" },
     ],
+  },
+  {
+    id: "OPS-3",
+    area: "operations",
+    title: "Redacted support bundle",
+    statement:
+      "An admin can take one diagnostic bundle over SSH or from the :8443 Logs page. The box runs a fixed set of read-only commands, redacts every line before it's written, shows secrets and environment variables as names only, and records each bundle in the appliance's audit log. Host names, addresses and account names stay in the bundle, so read it before sending it to anyone.",
+    status: "shipped",
+    since: "v0.1.0-rc.5",
+    evidence: [
+      { repo: "sneakers-appliance", path: "docs/support-bundle.md", kind: "doc" },
+      { repo: "sneakers-appliance", path: "internal/supportbundle/redact_test.go", kind: "test", detail: "TestRedactionRemovesEverySecretShape" },
+    ],
+    mappings: { soc2: ["CC7.2"], iso27001: ["A.8.15"] },
   },
 
   // Secure development and vulnerability handling
