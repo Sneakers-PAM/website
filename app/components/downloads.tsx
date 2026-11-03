@@ -56,7 +56,7 @@ export const Downloads = ({
       install from the OVA, or on Proxmox VE from the qcow2 with the{" "}
       <a href={proxmoxGuideHref}>Proxmox VE guide</a>.
     </p>
-    <p className="prose dl-note">
+    <p className="prose dl-note dl-known-issue">
       Known issue: a box can stay stuck if it loses power right after the database move, so don&apos;t
       cut power during an upgrade to this release or straight after it. It&apos;s tracked in{" "}
       <a href="https://github.com/Sneakers-PAM/sneakers-appliance/issues/579">

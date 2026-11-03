@@ -394,6 +394,10 @@
     max-width: none;
     white-space: nowrap;
   }
+
+  .dl-note.dl-known-issue {
+    white-space: normal;
+  }
 }
 
 /* Feature grid */
