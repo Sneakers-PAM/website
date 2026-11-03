@@ -9,6 +9,10 @@
   that file only.
 - `app/components/`: the split hero, feature grid, terminal card, downloads table and nav/footer.
   Plain CSS in `app/components/marketing.css`, no Tailwind.
+- `app/site-frame.css`: the frame both Sneakers-PAM sites share, the header, page column and
+  footer sizes, the frame colours and the self-hosted fonts in `public/fonts/`. This copy is the
+  source of truth; the docs repo keeps it byte for byte, and `app/site-frame.test.ts` holds the
+  checksum both repos test against.
 - `react-router.config.ts`: `ssr: false` with the home route prerendered, so the build is static
   HTML — no Node server at request time.
 - `.github/workflows/checks.yml`: the org scrub (leak guard) plus build and a link check on every

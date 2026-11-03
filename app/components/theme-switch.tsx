@@ -26,8 +26,10 @@ function choose(choice: ThemeChoice) {
 }
 
 // The icons are all rendered and data-theme-choice on <html> picks one in
-// CSS, so the right icon shows before React hydrates. The sun and moon are
-// Material Design icons (Apache-2.0); System is a half-filled circle.
+// CSS, so the right icon shows before React hydrates. All three are the
+// docs site's (Docusaurus's) icons, path for path, so the switch looks the
+// same on both sites: the sun and moon are Material Design icons
+// (Apache-2.0), and System is a circle with one half filled.
 export const ThemeSwitch = () => {
   const choice = useSyncExternalStore(subscribe, getChoice, getServerChoice);
   const label = themeSwitchLabel(choice);
@@ -53,8 +55,10 @@ export const ThemeSwitch = () => {
         />
       </svg>
       <svg className="theme-switch__icon theme-switch__icon--system" viewBox="0 0 24 24" width={24} height={24} aria-hidden="true">
-        <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" strokeWidth="2" />
-        <path fill="currentColor" d="M12 4a8 8 0 0 1 0 16z" />
+        <path
+          fill="currentColor"
+          d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"
+        />
       </svg>
     </button>
   );

@@ -11,19 +11,21 @@
    screens only, so printing (and the security review PDF) stays on paper
    colours. */
 :root {
-  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Atkinson Hyperlegible", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  /* The fonts and the frame colours come from site-frame.css, which the
+     docs site shares; both themes follow from there. */
+  --font-display: var(--frame-font-display);
+  --font-sans: var(--frame-font-sans);
+  --font-mono: var(--frame-font-mono);
 
-  --color-bg: #fbf8f3;
-  --color-surface: #ffffff;
-  --color-sunken: #f4f0e8;
-  --color-ink: #1c2230;
-  --color-muted: #5a6170;
-  --color-border: #e4ded3;
+  --color-bg: var(--frame-bg);
+  --color-surface: var(--frame-surface);
+  --color-sunken: var(--frame-sunken);
+  --color-ink: var(--frame-ink);
+  --color-muted: var(--frame-muted);
+  --color-border: var(--frame-border);
   --color-border-strong: #d6cfc2;
   --color-control: #8a8170;
-  --color-primary: #2f5bd3;
+  --color-primary: var(--frame-primary);
   --color-primary-hover: #2549b0;
   --color-on-primary: #ffffff;
   --color-primary-soft: #e3eafb;
@@ -56,15 +58,8 @@
 
 @media screen and (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-bg: #12151c;
-    --color-surface: #1a1f29;
-    --color-sunken: #232936;
-    --color-ink: #eceff4;
-    --color-muted: #9aa3b2;
-    --color-border: #2a3140;
     --color-border-strong: #3a4252;
     --color-control: #6e788c;
-    --color-primary: #7c9bff;
     --color-primary-hover: #9bb3ff;
     --color-on-primary: #12151c;
     --color-primary-soft: #1d2640;
@@ -85,15 +80,8 @@
 
 @media screen {
   :root[data-theme="dark"] {
-    --color-bg: #12151c;
-    --color-surface: #1a1f29;
-    --color-sunken: #232936;
-    --color-ink: #eceff4;
-    --color-muted: #9aa3b2;
-    --color-border: #2a3140;
     --color-border-strong: #3a4252;
     --color-control: #6e788c;
-    --color-primary: #7c9bff;
     --color-primary-hover: #9bb3ff;
     --color-on-primary: #12151c;
     --color-primary-soft: #1d2640;

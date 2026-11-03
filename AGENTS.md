@@ -35,6 +35,14 @@ deploys on a merge to `main` by itself — only publishing a Release does, via `
   require every OVA and qcow2 to be listed with its `.sha256`, and the qcow2's label to say it's
   untested on Proxmox VE until it has been.
 - `app/components/` - the hero, nav, footer, feature grid, terminal card and downloads table.
+- `app/site-frame.css` - the frame shared with the docs site: header, page column and footer
+  sizes, the frame colours, and the `@font-face` rules for the self-hosted fonts in
+  `public/fonts/`. The nav and footer in `marketing.css` and the docs' header and footer are laid
+  out from these tokens only, so the two sites line up to the pixel. This copy is the source of
+  truth. To change it, edit it here, copy it and `public/fonts/` to the docs repo
+  (`src/css/site-frame.css`, `static/fonts/`) unchanged, and update the two checksums in
+  `app/site-frame.test.ts` and the docs' `scripts/site-frame.test.mjs`. `root.tsx` preloads the
+  three fonts the frame draws with, the same three the docs preload.
 - `app/theme.ts` - light and dark mode. `app/app.css` holds both palettes as tokens (the dark one is
   the web UI kit's and the docs site's); with no choice made the page follows the system setting.
   The header's theme switch (`components/theme-switch.tsx`) cycles System, Light, Dark like the
