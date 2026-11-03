@@ -26,6 +26,7 @@ export const nav = {
     { label: "What's different", href: "/#different" },
     { label: "Download", href: "/#download" },
     { label: "Trust", href: "/trust" },
+    { label: "Docs", href: "https://docs.sneakers-pam.com" },
     { label: "GitHub", href: "https://github.com/Sneakers-PAM" },
   ],
 };
