@@ -4,7 +4,7 @@ description: "A bank account: the bank, the account and routing numbers, and the
 sidebar_position: 13
 ---
 
-{/* Generated from the sneakers-vault 30ac7fd9296e secret-type catalogue by the docs repo's draft generator (Sneakers-PAM/docs#21), which isn't carried over yet; edit by hand until it is. */}
+{/* Checked by hand against the sneakers-vault secret-type catalogue at d68f3e0e (v0.1.0-rc.7). The docs repo's draft generator (Sneakers-PAM/docs#21) isn't carried over yet; edit by hand until it is. */}
 
 # 🏦 Bank Account
 
@@ -30,7 +30,7 @@ Type id: `type-bank-account`. Agents and `sneakers-put` name the type by this id
 
 **Account number**, **Routing number**, **Online password** are masked until someone who can read the secret reveals or copies them, and every reveal and copy is written to the [audit trail](../../concepts/audit.md). Everything else is plain metadata that anyone who can see the folder can see.
 
-**Account number**, **Routing number**, **Online password** are super-sensitive: the reveal shows a partial mask first and takes a second, deliberate reveal for the whole value. Service accounts and personal tokens can't read them while the **Allow API access to sensitive secrets** setting is off, which is the default ([security settings](../security-settings.md)). Checking out a secret of this type asks for a fresh second factor while **Require MFA for sensitive checkout** is on, also the default.
+**Account number**, **Routing number**, **Online password** are super-sensitive: the reveal shows a partial mask first and takes a second, deliberate reveal for the whole value. Service accounts and personal tokens can't read them while the **Allow API access to sensitive secrets** setting is off, which is the default ([security settings](../security-settings.md)).
 
 ## 🔁 Heartbeat, rotation and check-out {#automation}
 

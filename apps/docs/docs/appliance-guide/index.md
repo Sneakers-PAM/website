@@ -1,6 +1,6 @@
 ---
 title: Appliance admin guide
-description: For whoever installs and looks after the box — install, first setup, updates, backups, protection levels and troubleshooting.
+description: For whoever installs and looks after the box — install, first setup, network, updates, backups, protection levels and troubleshooting.
 ---
 
 # 📦 Appliance admin guide
@@ -14,28 +14,35 @@ appliance admin page never shows a secret.
 
 ## 🧭 In this guide {#guide}
 
-- 🖥️ **[Install](../getting-started.md):** import the OVA on VMware, verify the signature, or build your
-  own image from a signed release with `sneakers-kit`.
+- 🖥️ **Install:** deploy the signed OVA on [VMware ESXi](../install-esxi.md) or the qcow2 on
+  [Proxmox VE](../install-proxmox.md), checking the signature first. The [getting started
+  guide](../getting-started.md) has the downloads.
 - 🔧 **[First setup](./first-setup.md):** the console's setup code, the `:8443` admin page, the
   first appliance admin, the recovery keys, and installing and setting up the product itself.
+- 🌐 **[Network](../appliance-network-guide.md):** changing the address, gateway, DNS and host
+  name on `:8443`, over SSH or on the console, staged and then committed.
 - 📧 **[Email](./email.md):** the mail relay Sneakers-PAM sends through, its TLS and
-  authentication settings, sending a test, and what to do when the test fails.
+  authentication settings, pinning a relay's certificate, sending a test, and what to do when the
+  test fails.
 - 🔐 **[Protection levels](./protection.md):** full vs reduced protection, the TPM and key-file
   custody modes, and Secure Boot.
-- 🔄 **[Updates and channels](../appliance-updates-guide.md):** the three update units, the rc and stable channels,
-  patches vs full downloads, and how a revert works.
-- 💾 **[Backups and restore](../backups-guide.md):** the recovery keys and the escrow bundle,
-  and restoring onto replacement hardware.
+- 🔄 **[Updates](../appliance-updates-guide.md):** the Base OS, Base Web and Product cards, which
+  offer is preferred, a release the check skips, and how a revert works.
+- 💾 **[Backups and restore](../backups-guide.md):** the nightly database backups on the box,
+  and cutting, exporting and restoring a named backup set.
+- 📡 **[Telemetry](../telemetry-guide.md):** sending the services' traces, metrics and logs to an
+  OpenTelemetry collector you run.
 - 🖧 **[Console and shells](./console-and-shells.md):** the physical/serial console, SSH with
   box-issued keys, the closed shell, the root shell, and the MCP switch.
-- 🛠️ **[Troubleshooting](./troubleshooting.md):** read-only diagnostics — the support bundle,
-  logs and known issues. No workarounds: a real problem gets a real fix in a build.
+- 🛠️ **[Troubleshooting](./troubleshooting.md):** read-only diagnostics: the [support
+  bundle](../support-bundle-guide.md), logs and known issues. No workarounds: a real problem gets a
+  real fix in a build.
 
 ## 🧩 One box, two admin surfaces {#surfaces}
 
 | Surface | What it's for | Who uses it |
 |---|---|---|
-| `:8443` | The box itself: network, certificates, updates, admins, recovery keys, protection | An appliance admin |
+| `:8443` | The box itself: network, certificates, updates, backups, admins, recovery keys, protection, and the product's email and telemetry settings | An appliance admin |
 | The product's own sign-in (443) | Sneakers-PAM: folders, secrets, users, policies | Everyone, per their role |
 
 An appliance admin can look after the box without ever seeing a secret, and a Sneakers-PAM site

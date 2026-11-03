@@ -4,7 +4,7 @@ description: "A database login: the engine, the server, port and database, the u
 sidebar_position: 8
 ---
 
-{/* Generated from the sneakers-vault 30ac7fd9296e secret-type catalogue by the docs repo's draft generator (Sneakers-PAM/docs#21), which isn't carried over yet; edit by hand until it is. */}
+{/* Checked by hand against the sneakers-vault secret-type catalogue at d68f3e0e (v0.1.0-rc.7). The docs repo's draft generator (Sneakers-PAM/docs#21) isn't carried over yet; edit by hand until it is. */}
 
 # 🗄️ Database Account
 

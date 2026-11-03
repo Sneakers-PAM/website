@@ -4,7 +4,7 @@ description: "A sign-in for a website or web app: its URL, the username and the 
 sidebar_position: 3
 ---
 
-{/* Generated from the sneakers-vault 30ac7fd9296e secret-type catalogue by the docs repo's draft generator (Sneakers-PAM/docs#21), which isn't carried over yet; edit by hand until it is. */}
+{/* Checked by hand against the sneakers-vault secret-type catalogue at d68f3e0e (v0.1.0-rc.7). The docs repo's draft generator (Sneakers-PAM/docs#21) isn't carried over yet; edit by hand until it is. */}
 
 # 🌐 Web Password
 

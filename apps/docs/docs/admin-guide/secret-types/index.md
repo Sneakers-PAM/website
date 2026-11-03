@@ -4,15 +4,15 @@ description: Every built-in secret type, its fields, which are secret, and what 
 sidebar_position: 0
 ---
 
-{/* Generated from the sneakers-vault 30ac7fd9296e secret-type catalogue by the docs repo's draft generator (Sneakers-PAM/docs#21), which isn't carried over yet; edit by hand until it is. */}
+{/* Checked by hand against the sneakers-vault secret-type catalogue at d68f3e0e (v0.1.0-rc.7). The docs repo's draft generator (Sneakers-PAM/docs#21) isn't carried over yet; edit by hand until it is. */}
 
 # 🧩 Secret types
 
 A secret's type decides which fields it has, which of them are secret, and what Sneakers-PAM can do
 with it: check it against a target (the heartbeat), change it on the target (rotation), or lend it
-to one person at a time (check-out). Sneakers-PAM ships with the 21 types below. They're read-only:
+to one person at a time (check-out). Sneakers-PAM ships with the 22 types below. They're read-only:
 nobody can edit or delete a built-in type, but a site admin can clone one into a custom type on the
-admin app's **Secret types** page, and import the [extension packs](./extension-packs.md).
+admin console's **Secret types** page, and install the [extension packs](./extension-packs.md).
 
 | Type | Secret fields | Heartbeat | Rotation | Check-out | Takes a target |
 |---|---|---|---|---|---|
@@ -37,6 +37,7 @@ admin app's **Secret types** page, and import the [extension packs](./extension-
 | [Contact](./contact.md) | Email, Phone | No | No | No | No |
 | [Anthropic Token](./anthropic-token.md) | Token | No | No | No | No |
 | [SSL/PKI Certificate](./ssl-cert.md) | Private Key | No | No | No | No |
+| [GitHub App](./github-app.md) | Client Secret, Private Key (PEM), Webhook Secret | No | No | No | No |
 
 :::info[Heartbeat and rotation need a connector adapter]
 
@@ -67,14 +68,16 @@ valid option.
 - **Sensitive fields** are masked everywhere. Revealing or copying one is a deliberate act, written
   to the [audit trail](../../concepts/audit.md), and a site admin can require a fresh second factor first
   ([security settings](../security-settings.md)).
-- **Super-sensitive fields** (card numbers, PINs, the SSN, a certificate's private key, bank
-  numbers) also show a partial mask before the whole value, and service accounts and personal
+- **Super-sensitive fields** (a card number and CVV, a PIN, the SSN, a certificate's private key,
+  a bank account's numbers and online password) also show a partial mask before the whole value, and service accounts and personal
   tokens can't read them unless a site admin turns on **Allow API access to sensitive secrets**.
 
 ## 🔄 Changing a secret's type {#changing-type}
 
-A secret can move to another type. No value is ever dropped: a value with no field in the new type
-is appended to the notes, or the change is refused. A secret value only moves into a secret field,
-and a super-sensitive one only into a super-sensitive field.
+A secret can move to another type, from the staff app, with a preview of where each field goes
+before anything changes. No value is ever dropped: a value with no field in the new type moves to
+the notes, or the change is refused. A secret value only moves into a secret field, and a
+super-sensitive one only into a super-sensitive field. See [Changing a secret's
+type](../../change-type-guide.md) for the steps.
 
-<small>These pages are generated from the vault's built-in catalogue at commit `30ac7fd9296e`.</small>
+<small>These pages match the vault's built-in catalogue at commit `d68f3e0e`, the one v0.1.0-rc.7 ships.</small>

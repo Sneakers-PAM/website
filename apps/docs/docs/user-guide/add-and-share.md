@@ -8,6 +8,10 @@ description: Create a secret, generate a password or key, edit and move it, and 
 Anyone can keep secrets in their own personal folder. To add one to a shared folder you need the
 **Manage** permission there, which a folder's owners have.
 
+Anyone signed in can also start a new top-level folder with **New shared folder** in the sidebar,
+and owns it, unless a site admin turned on **Restrict top-level folders to admins**
+([Top-level folders](../concepts/secrets-and-folders.md#top-level-folders)).
+
 ## ➕ Create a secret {#create}
 
 1. Choose **New secret** (from a folder you can manage, or from your personal folder).
@@ -17,18 +21,12 @@ Anyone can keep secrets in their own personal folder. To add one to a shared fol
    - **A password field:** generate one that meets the folder's password policy.
    - **An SSH key:** generate a key pair in the vault (Ed25519, RSA 4096, RSA 2048 or ECDSA
      P-256), or import one you have. The private key is stored and never shown in the editor again.
-   - **A certificate:** upload a PKCS#12 / PFX, PEM, DER, PKCS#7 or JKS file; its details are
-     read from the certificate.
+   - **A certificate:** upload a PKCS#12 / PFX, PEM, DER, PKCS#7, JKS or JCEKS file; its details
+     are read from the certificate.
 4. Save. The first version of the secret is recorded.
 
-:::note[Known limits in v0.1.0-rc.2]
-
-A field its type marks required can still be saved empty — a Web Password with no URL, say, or a
-Password with no username. Nothing stops the save yet, but a secret like that can show as
-incomplete and some of its type's own features (the heartbeat, a URL launch) may not work until
-the field's filled in. Fill in every field the editor marks, even where it doesn't yet insist.
-
-:::
+The editor marks the fields the type requires. A save with one of them empty is refused, and the
+message names the field. For a GitHub App, see [Storing a GitHub App](../github-app-guide.md).
 
 :::tip[Values that are already in a file]
 
@@ -41,6 +39,8 @@ To store a value that's already on disk, such as a key file, without pasting it,
 
 - **Edit** changes fields; every save that changes something makes a new version, and the
   [history](./use-secrets.md#history) shows which fields changed.
+- **Change type** moves a secret, or several from a folder's list, to another type, with a preview
+  of what happens to each field before you confirm ([Changing a secret's type](../change-type-guide.md)).
 - **Move** a secret to another folder you can manage. From your personal folder to a shared one
   is free. From a shared folder into a personal one needs a site admin: for anyone else it becomes
   a move request that a site admin decides.

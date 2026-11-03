@@ -14,8 +14,15 @@ how it works to use it; this page is what to set up and what to type.
 
 ## 🔌 Connect an assistant {#connect}
 
-Your administrator turns the MCP server on and gives you its address. Then, in Sneakers-PAM, open
-your account menu, choose **My tokens**, and follow **Connect an agent**:
+### Before you start
+
+- Your administrator has turned the MCP server on. When it's on, **Connect an agent** fills its
+  address in for you; when it isn't set, the page says your administrator has the address.
+- You can sign in to Sneakers-PAM with your second factor.
+
+### Steps
+
+In Sneakers-PAM, open your account menu, choose **My tokens**, and follow **Connect an agent**:
 
 1. **Add this server to your MCP client.** The page has the setup for Claude's CLI, Claude Desktop,
    VS Code, and a generic JSON shape for other clients, with the address filled in. For example,
@@ -32,7 +39,8 @@ your account menu, choose **My tokens**, and follow **Connect an agent**:
 
 The token acts as you, with your current access: if you lose access to a folder, so does the
 token. Tokens don't expire on their own; **My tokens** lists them, and you can revoke one at any
-time, which stops that assistant at once without touching the others.
+time, which stops that assistant at once without touching the others. A revoked token can then be
+deleted from the list.
 
 ## 💬 Things you can ask {#asking}
 
@@ -74,6 +82,19 @@ a secret to its target, check a stored credential against its target, and turn r
 heartbeat on or off for a secret, all within your access. A secret that names you goes into your
 personal folder unless you ask for another.
 
+> "Make a new Ed25519 SSH key called deploy-bot in the staging folder."
+
+An SSH key is made and stored on the Sneakers-PAM side, so the assistant gets only the public key
+and its fingerprint, never the private key. Ed25519, RSA 4096, RSA 2048 and ECDSA P-256 are
+offered.
+
+> "Create a folder called agents."
+
+With no parent named, the assistant makes a top-level folder that belongs to you, unless a site
+admin restricted top-level folders to admins. It can't share the folder, and no token sees a new
+top-level folder until you share it in the web app
+([Top-level folders](../concepts/secrets-and-folders.md#top-level-folders)).
+
 A field that only takes one of a fixed set of choices — a key's format, say, or a database
 engine — is listed in the assistant's own tool description, so it picks one of the type's actual
 options rather than guessing; anything else is refused, naming the field and the allowed values.
@@ -84,10 +105,12 @@ options rather than guessing; anything else is refused, naming the field and the
 through the assistant or your shell history:
 
 ```bash
-export SNEAKERS_URL=https://sneakers.example.org SNEAKERS_TOKEN=snk_u_...
+export SNEAKERS_URL=https://sneakers.example.org
 sneakers-run -secret <id> -- ssh admin@router-01                     # value on stdin
 sneakers-run -secret <id> -inject file -- tool --key {secret_file}   # value in a private temp file
 ```
+
+It supplies the secret's `password` field unless `-field` names another.
 
 - The use is bound to that exact command, and the value is released once.
 - The command's output has the value masked, including its base64, hex and URL encodings.
@@ -109,13 +132,19 @@ sneakers-put -id <secret id> -field password=@./new.pw
 A secret field only takes a value from a file (`key=@path`) or stdin (`key=-`), never from the
 command line. It prints the secret's id, name and what changed, never a value.
 
-Both commands need a personal token (`snk_u_...`, from **My tokens**) and an `https://` address.
-Install them with Go:
+Both commands act as you, with your personal token, and need an `https://` address in
+`SNEAKERS_URL`. Sign in once with `sneakers-put login` (or `sneakers-run login`), which gets the
+token in your browser and keeps it on your machine, so you never copy it by hand. `SNEAKERS_TOKEN`,
+when it's set, is used instead. For a new appliance that still has its own certificate,
+`SNEAKERS_CA_FILE` or `-ca-file` points the commands at it. Install them with Go:
 
 ```bash
-go install github.com/Sneakers-PAM/sneakers-mcp/cmd/sneakers-run@latest
-go install github.com/Sneakers-PAM/sneakers-mcp/cmd/sneakers-put@latest
+go install github.com/Sneakers-PAM/sneakers-mcp/cmd/sneakers-put@v0.1.0-rc.7
+go install github.com/Sneakers-PAM/sneakers-mcp/cmd/sneakers-run@v0.1.0-rc.7
 ```
+
+[Signing in from the command line](../cli-sign-in-guide.md) has the full sign-in, including a box
+with no browser.
 
 ## 🛑 What an agent can't do {#limits}
 
@@ -126,13 +155,15 @@ go install github.com/Sneakers-PAM/sneakers-mcp/cmd/sneakers-put@latest
   allows API access to them.
 - 🙅 **No approving.** An agent can ask, never decide; approvals happen in the browser with a
   person's second factor.
-- 📌 **No changing pinned SSH host keys.** Only a human site admin does that.
+- 📌 **No changing pinned SSH host keys.** A person does that in the web app: a site admin for a
+  shared target, or the owner of a personal target. No token can, not even an admin's.
+- 🤝 **No sharing.** No token can change a folder's sharing; a person does that in the web app.
 
-:::note[Known limits in v0.1.0-rc.2]
+:::note[Folders an agent can and can't make]
 
-An assistant can make a subfolder of one it can already reach, but not a brand-new top-level
-folder — ask a site admin to make the top folder in the web app first, then the assistant can file
-secrets and subfolders under it.
+An assistant with your personal token can make a top-level folder, unless a site admin turned on
+**Restrict top-level folders to admins**, and a subfolder of any folder it can write to. A service
+account can't make a top-level folder, because it has no user to own it.
 
 :::
 
