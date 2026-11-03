@@ -53,6 +53,11 @@ const config: Config = {
   onBrokenAnchors: 'throw',
 
   markdown: {
+    // future.v4 turns this off by default; the user, admin and appliance
+    // guides use explicit heading IDs (`## Heading {#id}`), which need it.
+    mdx1Compat: {
+      headingIds: true,
+    },
     hooks: {
       onBrokenMarkdownLinks: 'throw',
       onBrokenMarkdownImages: 'throw',
