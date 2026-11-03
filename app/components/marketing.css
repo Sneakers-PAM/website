@@ -109,6 +109,53 @@
   color: var(--color-ink);
 }
 
+.nav__theme {
+  display: flex;
+  align-items: center;
+}
+
+/* The theme switch: the same size, icons and hover as the docs site's
+   Docusaurus switch, which sits at the same spot in its header. */
+.theme-switch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin-block: -0.4rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-muted);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.theme-switch:hover,
+.theme-switch:focus-visible {
+  background: var(--color-border);
+  color: var(--color-ink);
+}
+
+.theme-switch:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.theme-switch__icon {
+  display: none;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+:root:not([data-theme-choice]) .theme-switch__icon--system,
+[data-theme-choice="system"] .theme-switch__icon--system,
+[data-theme-choice="light"] .theme-switch__icon--light,
+[data-theme-choice="dark"] .theme-switch__icon--dark {
+  display: block;
+}
+
 @media (max-width: 640px) {
   .nav__row {
     flex-direction: column;
@@ -228,10 +275,10 @@
 .terminal {
   position: relative;
   z-index: 1;
-  background: #0e1117;
+  background: var(--color-term-bg);
   border-radius: 0.75rem;
   overflow: hidden;
-  box-shadow: 0 20px 45px -20px rgba(28, 34, 48, 0.45);
+  box-shadow: var(--shadow-raised);
 }
 
 .terminal__bar {
@@ -239,22 +286,22 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.6rem 0.9rem;
-  background: #181d27;
-  border-bottom: 1px solid #262c3a;
+  background: var(--color-term-bar);
+  border-bottom: 1px solid var(--color-term-rule);
 }
 
 .terminal__dot {
   width: 0.6rem;
   height: 0.6rem;
   border-radius: 50%;
-  background: #3a4254;
+  background: var(--color-term-dot);
 }
 
 .terminal__title {
   margin-inline-start: 0.5rem;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: #8a93a8;
+  color: var(--color-term-muted);
 }
 
 .terminal__body {
@@ -263,7 +310,7 @@
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   line-height: 1.5rem;
-  color: #e6e9ef;
+  color: var(--color-term-fg);
   white-space: pre-wrap;
   overflow-x: auto;
 }
@@ -273,7 +320,7 @@
   width: 0.5rem;
   height: 1rem;
   margin-inline-start: 0.15rem;
-  background: #ff9a55;
+  background: var(--color-term-cursor);
   vertical-align: text-bottom;
   animation: sp-blink 1s step-end infinite;
 }
@@ -411,8 +458,9 @@
 }
 
 .verify-block {
-  background: #0e1117;
-  color: #e6e9ef;
+  background: var(--color-term-bg);
+  color: var(--color-term-fg);
+  border: 1px solid var(--color-term-edge);
   border-radius: 0.5rem;
   padding: 1rem 1.1rem;
   font-family: var(--font-mono);

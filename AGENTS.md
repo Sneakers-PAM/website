@@ -35,6 +35,13 @@ deploys on a merge to `main` by itself — only publishing a Release does, via `
   require every OVA and qcow2 to be listed with its `.sha256`, and the qcow2's label to say it's
   untested on Proxmox VE until it has been.
 - `app/components/` - the hero, nav, footer, feature grid, terminal card and downloads table.
+- `app/theme.ts` - light and dark mode. `app/app.css` holds both palettes as tokens (the dark one is
+  the web UI kit's and the docs site's); with no choice made the page follows the system setting.
+  The header's theme switch (`components/theme-switch.tsx`) cycles System, Light, Dark like the
+  docs site's, keeps the choice in localStorage under `theme`, and an inline script in `root.tsx`
+  sets `data-theme` before the first paint. `theme.test.ts` runs that script against a fake page.
+  Dark is screen-only, so the security review PDF prints in light. Every colour lives in a token;
+  `components/mark.tsx` swaps the light and dark marks.
 - `public/` - the favicon, logo marks and `apple-touch-icon.png`, served as-is. The touch icon is a
   180x180 render of `img/mark-light.svg` on the page background; re-render it if the mark changes.
 - Link previews: the Open Graph and Twitter card tags in `app/routes/home.tsx` read their values

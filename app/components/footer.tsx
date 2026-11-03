@@ -2,6 +2,7 @@
 Copyright 2026 The Sneakers-PAM Authors
 SPDX-License-Identifier: Apache-2.0
 */
+import { Mark } from "./mark";
 import { siteHref } from "./site-href";
 
 import "./marketing.css";
@@ -49,7 +50,7 @@ export const Footer = ({ tagline, groups, marks }: FooterProps) => {
         <div className="footer__grid">
           <div className="footer__brand">
             <p className="footer__name">
-              <img src={`${import.meta.env.BASE_URL}img/mark-light.svg`} width={24} height={24} alt="" />
+              <Mark size={24} />
               sneakers·pam
             </p>
             <p className="footer__tagline">{tagline}</p>
