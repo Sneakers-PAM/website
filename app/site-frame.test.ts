@@ -11,7 +11,7 @@ import { test } from "node:test";
 // for byte copy (src/css/site-frame.css and static/fonts/) and its own test
 // holds the same two checksums. After changing either here, copy the files
 // to the docs unchanged and update both checksums in both repos.
-const SITE_FRAME_SHA256 = "aa93cae6ef799f7ff4842a46a3187fe5123abd484a3fc736a3a9066c84ae5121";
+const SITE_FRAME_SHA256 = "aafef473b65e159a5e1ce0bb269d4ea7f358f7d6ea85b786d323f919b7c5be6c";
 const FONTS_SHA256 = "27abdef0193b7fea3d84736891e15649aa403c45e3e66b060728faa96a35e69a";
 
 const framePath = new URL("./site-frame.css", import.meta.url);

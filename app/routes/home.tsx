@@ -12,7 +12,7 @@ import { Section } from "~/components/section";
 import { SplitHero } from "~/components/split-hero";
 import { TerminalCard } from "~/components/terminal-card";
 import { different, footer, hero, meta as pageMeta, nav, whatItIs } from "~/content/sneakers-pam";
-import { downloads, kubernetes, proxmox, release, verify } from "~/content/release";
+import { downloads, installTargets, kubernetes, release, verify } from "~/content/release";
 
 export const meta: MetaFunction = () => [
   { title: pageMeta.title },
@@ -70,11 +70,12 @@ export default function Home() {
             version={release.version}
             pageHref={release.pageHref}
             assets={downloads}
+            targets={installTargets}
+            chart={kubernetes}
             keyHref={verify.keyHref}
             keyFingerprint={verify.keyFingerprint}
             kubernetesHref={kubernetes.pageHref}
             archDocHref={kubernetes.archDocHref}
-            proxmoxGuideHref={proxmox.guideHref}
           />
         </Section>
       </main>

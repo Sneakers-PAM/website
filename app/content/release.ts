@@ -16,17 +16,70 @@ export const release = {
 };
 
 // The same release as Helm charts for a Kubernetes cluster you run yourself.
-// rc.3 is the first with linux/arm64 images for every service; the install
-// guide's CPU architecture section has the values an arm64 node needs.
+// The charts aren't in a chart registry yet: they're installed from a checkout
+// of sneakers-release at the release's tag. rc.3 is the first with linux/arm64
+// images for every service; the install guide's CPU architecture section has
+// the values an arm64 node needs.
 export const kubernetes = {
   pageHref: `https://github.com/Sneakers-PAM/sneakers-release/releases/tag/${release.version}`,
-  archDocHref: "https://github.com/Sneakers-PAM/sneakers-release/blob/main/docs/install.md#cpu-architecture",
+  repoHref: "https://github.com/Sneakers-PAM/sneakers-release",
+  chartPath: "charts/sneakers",
+  chartVersion: "0.1.0",
+  imageTag: release.version.slice(1),
+  guideHref: `https://github.com/Sneakers-PAM/sneakers-release/blob/${release.version}/docs/install.md`,
+  archDocHref: `https://github.com/Sneakers-PAM/sneakers-release/blob/${release.version}/docs/install.md#cpu-architecture`,
 };
 
 // The qcow2's install guide, read at the release's own tag so it matches the image.
 export const proxmox = {
   guideHref: `https://github.com/Sneakers-PAM/sneakers-appliance/blob/${release.version}/docs/proxmox-vm.md`,
 };
+
+// The OVA's install guide lives on the docs site; the appliance repo has none.
+export const esxi = {
+  guideHref: "https://docs.sneakers-pam.com/docs/install-esxi",
+};
+
+// Every way to install, and where each one stands in this release. Only an
+// available target links a guide. The appliance images and update files are
+// amd64 only; the Helm charts' service images are multi-arch.
+export interface InstallTarget {
+  id: "ova" | "qcow2" | "helm" | "iso" | "ami";
+  label: string;
+  status: "Available" | "Not yet available" | "Being considered";
+  arch: string;
+  guideLabel?: string;
+  guideHref?: string;
+}
+
+export const installTargets: InstallTarget[] = [
+  {
+    id: "ova",
+    label: "OVA, for VMware ESXi and vCenter",
+    status: "Available",
+    arch: "amd64 only",
+    guideLabel: "VMware ESXi guide",
+    guideHref: esxi.guideHref,
+  },
+  {
+    id: "qcow2",
+    label: "Disk image (qcow2), for Proxmox VE",
+    status: "Available",
+    arch: "amd64 only",
+    guideLabel: "Proxmox VE guide",
+    guideHref: proxmox.guideHref,
+  },
+  {
+    id: "helm",
+    label: "Helm charts, for your own Kubernetes",
+    status: "Available",
+    arch: "amd64 and arm64",
+    guideLabel: "Helm install guide",
+    guideHref: kubernetes.guideHref,
+  },
+  { id: "iso", label: "ISO, for bare metal", status: "Not yet available", arch: "None published" },
+  { id: "ami", label: "AWS AMI", status: "Being considered", arch: "None published" },
+];
 
 export interface DownloadAsset {
   label: string;

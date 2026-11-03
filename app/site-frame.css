@@ -72,6 +72,12 @@
 
   /* Home page colours, light. The terminal is dark in both themes. */
   --frame-sole: #f07a2b;
+  /* Orange as text. The brand orange is under 3:1 on the light hero band, so
+     orange text takes these darker shades of it: one for large text (3:1)
+     and one for small text (4.5:1). Fills, borders, the glow and the logo
+     keep the brand orange. */
+  --frame-text-accent: #c2571a;
+  --frame-text-accent-small: #a14816;
   --frame-primary-hover: #2549b0;
   --frame-primary-soft: #e3eafb;
   --frame-on-primary: #ffffff;
@@ -120,6 +126,8 @@
     --frame-border: #2a3140;
     --frame-primary: #7c9bff;
     --frame-sole: #ff9a55;
+    --frame-text-accent: #ff9a55;
+    --frame-text-accent-small: #ff9a55;
     --frame-primary-hover: #9bb3ff;
     --frame-primary-soft: #1d2640;
     --frame-on-primary: #12151c;
@@ -137,10 +145,27 @@
     --frame-border: #2a3140;
     --frame-primary: #7c9bff;
     --frame-sole: #ff9a55;
+    --frame-text-accent: #ff9a55;
+    --frame-text-accent-small: #ff9a55;
     --frame-primary-hover: #9bb3ff;
     --frame-primary-soft: #1d2640;
     --frame-on-primary: #12151c;
     --frame-shadow-raised: 0 20px 45px -20px rgb(0 0 0 / 0.7);
+  }
+}
+
+/* Dark, once the hero is one column (phones and small tablets): the hero's
+   glow sits behind the eyebrow, where the muted text falls under 4.5:1, so
+   the eyebrow takes the ink colour there. */
+@media screen and (prefers-color-scheme: dark) and (max-width: 860px) {
+  :root:not([data-theme="light"]) {
+    --frame-hero-eyebrow: var(--frame-ink);
+  }
+}
+
+@media screen and (max-width: 860px) {
+  :root[data-theme="dark"] {
+    --frame-hero-eyebrow: var(--frame-ink);
   }
 }
 
@@ -362,7 +387,7 @@ html {
   line-height: normal;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--frame-muted);
+  color: var(--frame-hero-eyebrow, var(--frame-muted));
 }
 
 .hero__headline {
@@ -380,7 +405,14 @@ html {
 }
 
 .hero__headline-accent {
-  color: var(--frame-sole);
+  color: var(--frame-text-accent);
+}
+
+/* On phones the tagline's trademark sign is small text, under 24px. */
+@media (max-width: 720px) {
+  .hero__headline-accent .tm {
+    color: var(--frame-text-accent-small);
+  }
 }
 
 .hero__lede {

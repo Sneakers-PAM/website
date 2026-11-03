@@ -5,7 +5,7 @@ SPDX-License-Identifier: Apache-2.0
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { downloads, kubernetes, release, verify } from "./release.ts";
+import { downloads, installTargets, kubernetes, release, verify } from "./release.ts";
 
 test("every download asset points at the current release's tag", () => {
   const prefix = `https://github.com/Sneakers-PAM/sneakers-appliance/releases/download/${release.version}/`;
@@ -60,4 +60,46 @@ test("the Kubernetes links point at the same tag on sneakers-release", () => {
 
 test("the verify key fingerprint is 64 lowercase hex characters", () => {
   assert.match(verify.keyFingerprint, /^[0-9a-f]{64}$/);
+});
+
+test("the install targets are the five the release says, in order, with their status", () => {
+  assert.deepEqual(
+    installTargets.map((target) => [target.id, target.status]),
+    [
+      ["ova", "Available"],
+      ["qcow2", "Available"],
+      ["helm", "Available"],
+      ["iso", "Not yet available"],
+      ["ami", "Being considered"],
+    ],
+  );
+});
+
+test("only an available install target links a guide", () => {
+  for (const target of installTargets) {
+    if (target.status === "Available") {
+      assert.ok(target.guideHref?.startsWith("https://"), `${target.id} has no guide link`);
+    } else {
+      assert.equal(target.guideHref, undefined, `${target.id} isn't out, so it must not link anything`);
+    }
+  }
+});
+
+test("the appliance images say amd64 only and the Helm charts say both architectures", () => {
+  const arch = Object.fromEntries(installTargets.map((target) => [target.id, target.arch]));
+  assert.equal(arch.ova, "amd64 only");
+  assert.equal(arch.qcow2, "amd64 only");
+  assert.equal(arch.helm, "amd64 and arm64");
+  for (const asset of downloads) {
+    assert.ok(!asset.name.includes("arm64"), `${asset.name}: the appliance files are amd64 only`);
+  }
+});
+
+test("the Helm target names the chart at the release's tag", () => {
+  assert.equal(kubernetes.chartPath, "charts/sneakers");
+  assert.equal(kubernetes.chartVersion, "0.1.0");
+  assert.equal(
+    kubernetes.guideHref,
+    `https://github.com/Sneakers-PAM/sneakers-release/blob/${release.version}/docs/install.md`,
+  );
 });

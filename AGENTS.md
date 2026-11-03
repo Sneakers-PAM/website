@@ -29,11 +29,12 @@ deploys on a merge to `main` by itself — only publishing a Release does, via `
   public repos, a shipped control names its tag and evidence, a planned one links its issue, and
   the content claims no certification.
 - `app/content/` - the copy (`sneakers-pam.ts`) and the release data (`release.ts`, with its own
-  test file). `release.ts` also holds the `kubernetes` links: the same tag's Helm chart release on
-  sneakers-release and its install guide's CPU architecture section, for arm64 (Raspberry Pi)
-  installs, and the `proxmox` link: the qcow2's Proxmox VE guide at the same tag. The tests
-  require every OVA and qcow2 to be listed with its `.sha256`, and the qcow2's label to say it's
-  untested on Proxmox VE until it has been.
+  test file). `release.ts` also holds the `kubernetes` details: the same tag on sneakers-release,
+  the chart's path and version, and its install guide with the CPU architecture section for arm64
+  (Raspberry Pi) installs; the `proxmox` and `esxi` guide links; and `installTargets`, the install
+  target table (OVA, qcow2 and Helm available, ISO not yet available, AWS AMI being considered,
+  with each one's CPU architecture). The tests require every OVA and qcow2 to be listed with its
+  `.sha256`, only an available target to link a guide, and the appliance images to say amd64 only.
 - `app/components/` - the hero, nav, footer, feature grid, terminal card and downloads table.
 - `app/site-frame.css` - the frame shared with the docs site: header, page column and footer
   sizes, the frame colours, and the `@font-face` rules for the self-hosted fonts in
