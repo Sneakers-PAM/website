@@ -10,6 +10,7 @@ import { review } from "~/content/trust/review";
 import type { Block, Control } from "~/content/trust/types";
 
 import { Diagram } from "~/components/diagrams";
+import { Mark } from "~/components/mark";
 
 import "~/components/security-review.css";
 
@@ -124,7 +125,7 @@ export default function SecurityReview() {
       <style>{`@page { @top-left { content: "${review.title}"; } @top-right { content: "${review.docVersion} · ${review.date}"; } }`}</style>
 
       <section className="sr-cover">
-        <img src={`${import.meta.env.BASE_URL}img/mark-light.svg`} width={88} height={88} alt="" />
+        <Mark size={88} />
         <p className="sr-cover__eyebrow">sneakers·pam</p>
         <h1>{review.title}</h1>
         <p className="sr-cover__subtitle">{review.subtitle}</p>

@@ -2,7 +2,7 @@
 Copyright 2026 The Sneakers-PAM Authors
 SPDX-License-Identifier: Apache-2.0
 */
-import type { DownloadAsset } from "~/content/release";
+import type { DownloadAsset, InstallTarget } from "~/content/release";
 
 import "./marketing.css";
 
@@ -10,24 +10,57 @@ interface DownloadsProps {
   version: string;
   pageHref: string;
   assets: DownloadAsset[];
+  targets: InstallTarget[];
+  chart: { repoHref: string; chartPath: string; chartVersion: string; imageTag: string };
   keyHref: string;
   keyFingerprint: string;
   kubernetesHref: string;
   archDocHref: string;
-  proxmoxGuideHref: string;
 }
 
 export const Downloads = ({
   version,
   pageHref,
   assets,
+  targets,
+  chart,
   keyHref,
   keyFingerprint,
   kubernetesHref,
   archDocHref,
-  proxmoxGuideHref,
 }: DownloadsProps) => (
   <>
+    <table className="downloads-table">
+      <thead>
+        <tr>
+          <th>Install target</th>
+          <th>Status</th>
+          <th>CPU</th>
+        </tr>
+      </thead>
+      <tbody>
+        {targets.map((target) => (
+          <tr key={target.id}>
+            <td>
+              {target.label}
+              {target.guideHref && (
+                <div className="prose" style={{ fontSize: "0.8125rem", margin: 0 }}>
+                  <a href={target.guideHref}>{target.guideLabel}</a>
+                </div>
+              )}
+            </td>
+            <td>{target.status}</td>
+            <td>{target.arch}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <p className="prose">
+      The appliance is amd64 only: the OVA, the qcow2 and its update files. The Helm charts&apos;
+      images are built for amd64 and arm64.
+    </p>
+
+    <h3>Download the appliance</h3>
     <table className="downloads-table">
       <thead>
         <tr>
@@ -52,18 +85,26 @@ export const Downloads = ({
       </tbody>
     </table>
     <p className="prose dl-note">
-      All files are on the {version} <a href={pageHref}>release page</a>. No ISO this release:
-      install from the OVA, or on Proxmox VE from the qcow2 with the{" "}
-      <a href={proxmoxGuideHref}>Proxmox VE guide</a>. This release hasn&apos;t been run on a real
-      Proxmox VE host&nbsp;yet.
+      All files are on the {version} <a href={pageHref}>release page</a>. There&apos;s no ISO yet:
+      a bare-metal install isn&apos;t available in this release.
+    </p>
+    <p className="prose dl-note dl-known-issue">
+      Known issue: a box can stay stuck if it loses power right after the database move, so don&apos;t
+      cut power during an upgrade to this release or straight after it. It&apos;s tracked in{" "}
+      <a href="https://github.com/Sneakers-PAM/sneakers-appliance/issues/579">
+        sneakers-appliance#579
+      </a>
+      .
     </p>
 
-    <h3>Run it on a Raspberry Pi</h3>
+    <h3>Install with Helm</h3>
     <p className="prose">
-      The OVA is for an amd64 hypervisor. From v0.1.0-rc.3 on, every service image is also built for
-      linux/arm64, so the Helm charts install on a Kubernetes cluster on a Raspberry Pi (arm64). Get
-      the charts from the {version} <a href={kubernetesHref}>release on sneakers-release</a>, then set
-      the arm64 values from the install guide&apos;s <a href={archDocHref}>CPU architecture</a> section.
+      The Helm charts install the same release on a Kubernetes cluster you run, on amd64 or arm64,
+      down to a Raspberry Pi. The chart is <code>{chart.chartPath}</code> (version{" "}
+      {chart.chartVersion}) in <a href={chart.repoHref}>sneakers-release</a> at the {version}{" "}
+      <a href={kubernetesHref}>tag</a>, installed from a checkout with{" "}
+      <code>global.imageTag={chart.imageTag}</code>. On arm64, set the values from the install
+      guide&apos;s <a href={archDocHref}>CPU architecture</a> section.
     </p>
 
     <h3>How to verify</h3>

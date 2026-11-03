@@ -161,8 +161,8 @@
 }
 
 .status--shipped {
-  background: #e2f2e9;
-  color: #1f7a4d;
+  background: var(--color-ok-soft);
+  color: var(--color-ok);
 }
 
 .status--main {
@@ -171,11 +171,11 @@
 }
 
 .status--partial {
-  background: #fbebd0;
-  color: #9a5b00;
+  background: var(--color-warn-soft);
+  color: var(--color-warn);
 }
 
 .status--planned {
-  background: #eeeae2;
+  background: var(--color-neutral-soft);
   color: var(--color-muted);
 }

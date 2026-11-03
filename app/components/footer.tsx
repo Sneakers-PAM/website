@@ -2,6 +2,9 @@
 Copyright 2026 The Sneakers-PAM Authors
 SPDX-License-Identifier: Apache-2.0
 */
+import { Fragment } from "react";
+
+import { Mark } from "./mark";
 import { siteHref } from "./site-href";
 
 import "./marketing.css";
@@ -22,21 +25,16 @@ interface FooterProps {
   marks: string[];
 }
 
-// Renders a mark with its ™ bound to the last word in a no-break span,
-// so a line break can never land between the word and its mark.
-function MarkedTerm({ mark }: { mark: string }) {
-  const lastSpace = mark.lastIndexOf(" ");
-  const rest = lastSpace === -1 ? "" : mark.slice(0, lastSpace + 1);
-  const lastWord = lastSpace === -1 ? mark : mark.slice(lastSpace + 1);
-  return (
-    <>
-      {rest}
-      <span className="nowrap">
-        {lastWord}
-        <sup className="tm">™</sup>
-      </span>
-    </>
-  );
+// Splits the legal line into runs of plain text, each ending in a mark whose
+// last word and ™ sit in a no-break span, so a line break can never land
+// between the word and its mark. Each run is one text node, the same split
+// as the docs footer's line, so the two are set glyph for glyph alike.
+function legalRuns(marks: string[]) {
+  return marks.map((mark, index) => {
+    const lastSpace = mark.lastIndexOf(" ");
+    const lead = (index > 0 ? " and " : "") + (lastSpace === -1 ? "" : mark.slice(0, lastSpace + 1));
+    return { lead, word: lastSpace === -1 ? mark : mark.slice(lastSpace + 1) };
+  });
 }
 
 // The one footer every page uses: the brand, the link groups, then the legal line.
@@ -49,7 +47,7 @@ export const Footer = ({ tagline, groups, marks }: FooterProps) => {
         <div className="footer__grid">
           <div className="footer__brand">
             <p className="footer__name">
-              <img src={`${import.meta.env.BASE_URL}img/mark-light.svg`} width={24} height={24} alt="" />
+              <Mark size={24} />
               sneakers·pam
             </p>
             <p className="footer__tagline">{tagline}</p>
@@ -68,14 +66,16 @@ export const Footer = ({ tagline, groups, marks }: FooterProps) => {
           ))}
         </div>
         <p className="footer__legal">
-          {marks.map((mark, index) => (
-            <span key={mark}>
-              {index > 0 && " and "}
-              <MarkedTerm mark={mark} />
-            </span>
-          ))}{" "}
-          {marks.length > 1 ? "are trademarks" : "is a trademark"} of the Sneakers-PAM
-          project. &copy; {year} The Sneakers-PAM Authors. Licensed under Apache-2.0.
+          {legalRuns(marks).map(({ lead, word }) => (
+            <Fragment key={word}>
+              {lead}
+              <span className="nowrap">
+                {word}
+                <sup className="tm">™</sup>
+              </span>
+            </Fragment>
+          ))}
+          {` ${marks.length > 1 ? "are trademarks" : "is a trademark"} of the Sneakers-PAM project. © ${year} The Sneakers-PAM Authors. Licensed under Apache-2.0.`}
         </p>
       </div>
     </footer>

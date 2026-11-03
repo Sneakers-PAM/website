@@ -22,66 +22,66 @@
 .dg-box rect {
   stroke-width: 1.5;
   fill: var(--color-surface);
-  stroke: var(--color-border-strong, #d6cfc2);
+  stroke: var(--color-border-strong);
 }
 
 .dg-box--edge rect {
-  fill: #e3eafb;
-  stroke: #2f5bd3;
+  fill: var(--color-primary-soft);
+  stroke: var(--color-primary);
 }
 
 .dg-box--core rect {
-  fill: #fbf8f3;
-  stroke: #1c2230;
+  fill: var(--color-bg);
+  stroke: var(--color-ink);
 }
 
 .dg-box--data rect {
-  fill: #e2f2e9;
-  stroke: #1f7a4d;
+  fill: var(--color-ok-soft);
+  stroke: var(--color-ok);
 }
 
 .dg-box--ext rect {
-  fill: #f4f0e8;
-  stroke: #8a8170;
+  fill: var(--color-sunken);
+  stroke: var(--color-control);
   stroke-dasharray: 4 3;
 }
 
 .dg-box--key rect {
-  fill: #fdeadc;
-  stroke: #f07a2b;
+  fill: var(--color-sole-soft);
+  stroke: var(--color-sole);
 }
 
 .dg-box--os rect {
-  fill: #ffffff;
-  stroke: #5a6170;
+  fill: var(--color-surface);
+  stroke: var(--color-muted);
 }
 
 .dg-box--warn rect {
-  fill: #fbebd0;
-  stroke: #9a5b00;
+  fill: var(--color-warn-soft);
+  stroke: var(--color-warn);
 }
 
 .dg-title {
   font-size: 13px;
   font-weight: 700;
-  fill: #1c2230;
+  fill: var(--color-ink);
 }
 
 .dg-sub {
   font-size: 10.5px;
-  fill: #5a6170;
+  fill: var(--color-muted);
 }
 
 .dg-label {
   font-family: var(--font-mono);
   font-size: 10.5px;
-  fill: #5a6170;
+  fill: var(--color-muted);
 }
 
 .dg-line,
 .dg-bus {
   fill: none;
-  stroke: #5a6170;
+  stroke: var(--color-muted);
   stroke-width: 1.4;
 }
 
@@ -94,12 +94,12 @@
 }
 
 .dg-arrowhead {
-  fill: #5a6170;
+  fill: var(--color-muted);
 }
 
 .dg-boundary {
   fill: none;
-  stroke: #f07a2b;
+  stroke: var(--color-sole);
   stroke-width: 1.5;
   stroke-dasharray: 8 5;
 }

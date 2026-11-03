@@ -216,7 +216,7 @@ html {
 }
 
 .sr-gap {
-  color: #9a5b00;
+  color: var(--color-warn);
 }
 
 .sr-status {
@@ -229,7 +229,7 @@ html {
 }
 
 .sr-status--shipped {
-  color: #1f7a4d;
+  color: var(--color-ok);
 }
 
 .sr-status--main {
@@ -237,7 +237,7 @@ html {
 }
 
 .sr-status--partial {
-  color: #9a5b00;
+  color: var(--color-warn);
 }
 
 .sr-status--planned {
@@ -275,8 +275,8 @@ html {
 }
 
 .sr-note--warn {
-  border-left-color: #9a5b00;
-  background: #fbebd0;
+  border-left-color: var(--color-warn);
+  background: var(--color-warn-soft);
 }
 
 @media print {

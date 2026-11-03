@@ -149,7 +149,7 @@ function ApplianceHld() {
       <Box x={700} y={284} w={116} h={40} title="root A" sub="verity" tone="os" />
       <Box x={824} y={284} w={116} h={40} title="root B" sub="next update" tone="os" />
       <Box x={700} y={332} w={240} h={40} title="state: LUKS2 AES-XTS" sub="/var/lib" tone="data" />
-      <Box x={700} y={380} w={240} h={40} title="backup: LUKS2 AES-XTS" sub="reserved, unused yet" tone="data" />
+      <Box x={700} y={380} w={240} h={40} title="backup: LUKS2 AES-XTS" sub="database archive and backup sets" tone="data" />
       <Box x={700} y={428} w={240} h={40} title="key file (no TPM only)" tone="warn" />
       <Label x={700} y={494}>The owner’s escrow (age, to 1-3</Label>
       <Label x={700} y={510}>SSH recovery keys) holds the disk</Label>
@@ -236,7 +236,7 @@ function ApplianceDisk() {
       <Line d="M870,210 V250" />
       <Label x={20} y={270}>Logs: init and services write to tmpfs (1 MiB), never disk.</Label>
       <Label x={20} y={290}>Pod logs, the OS audit log and images are capped on the state volume.</Label>
-      <Label x={20} y={310}>The backup volume is encrypted and reserved; no backup job writes to it yet.</Label>
+      <Label x={20} y={310}>The backup volume is encrypted and holds the database archive and backup sets.</Label>
     </Frame>
   );
 }

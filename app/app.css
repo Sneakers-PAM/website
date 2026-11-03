@@ -1,22 +1,93 @@
 /* Laces design tokens: the same values as the Sneakers-PAM web UI kit's
    packages/ui/src/styles/laces.css, used here as plain CSS custom
    properties since this site doesn't pull in Tailwind. */
-:root {
-  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Atkinson Hyperlegible", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+/* Laces design tokens: the same values as the Sneakers-PAM web UI kit's
+   packages/ui/src/styles/laces.css, used here as plain CSS custom
+   properties since this site doesn't pull in Tailwind. Light is the default;
+   the dark values are the kit's and the docs site's dark palette.
 
-  --color-bg: #fbf8f3;
-  --color-surface: #ffffff;
-  --color-sunken: #f4f0e8;
-  --color-ink: #1c2230;
-  --color-muted: #5a6170;
-  --color-border: #e4ded3;
-  --color-primary: #2f5bd3;
-  --color-primary-hover: #2549b0;
-  --color-on-primary: #ffffff;
-  --color-primary-soft: #e3eafb;
-  --color-sole: #f07a2b;
+   Theme: with no data-theme on <html> the page follows the system setting;
+   data-theme="light" or "dark" forces one (see app/theme.ts). Dark is for
+   screens only, so printing (and the security review PDF) stays on paper
+   colours. */
+:root {
+  /* The fonts and the frame colours come from site-frame.css, which the
+     docs site shares; both themes follow from there. */
+  --font-display: var(--frame-font-display);
+  --font-sans: var(--frame-font-sans);
+  --font-mono: var(--frame-font-mono);
+
+  --color-bg: var(--frame-bg);
+  --color-surface: var(--frame-surface);
+  --color-sunken: var(--frame-sunken);
+  --color-ink: var(--frame-ink);
+  --color-muted: var(--frame-muted);
+  --color-border: var(--frame-border);
+  --color-border-strong: #d6cfc2;
+  --color-control: #8a8170;
+  --color-primary: var(--frame-primary);
+  --color-primary-hover: var(--frame-primary-hover);
+  --color-on-primary: var(--frame-on-primary);
+  --color-primary-soft: var(--frame-primary-soft);
+  --color-sole: var(--frame-sole);
+  /* The sole at 16% over the surface, for the key diagram box. */
+  --color-sole-soft: #fdeadc;
+  --color-ok: #1f7a4d;
+  --color-ok-soft: #e2f2e9;
+  --color-warn: #9a5b00;
+  --color-warn-soft: #fbebd0;
+  --color-neutral-soft: #eeeae2;
+  --shadow-raised: var(--frame-shadow-raised);
+  /* An edge for code blocks, which only need one on a dark page. */
+  --color-term-edge: transparent;
+
+  /* Which of the two marks shows (see components/mark.tsx). */
+  --mark-light-display: inline;
+  --mark-dark-display: none;
+  color-scheme: light;
+
+  /* The terminal and code blocks are dark in both themes. */
+  --color-term-bg: var(--frame-term-bg);
+  --color-term-fg: var(--frame-term-fg);
+  --color-term-cursor: var(--frame-term-cursor);
+  --color-term-bar: var(--frame-term-bar);
+  --color-term-rule: var(--frame-term-rule);
+  --color-term-dot: var(--frame-term-dot);
+  --color-term-muted: var(--frame-term-muted);
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-border-strong: #3a4252;
+    --color-control: #6e788c;
+    --color-sole-soft: #3f3330;
+    --color-ok: #4cc38a;
+    --color-ok-soft: #16302a;
+    --color-warn: #f2b33d;
+    --color-warn-soft: #3a2e14;
+    --color-neutral-soft: #232936;
+    --color-term-edge: #2a3140;
+    --mark-light-display: none;
+    --mark-dark-display: inline;
+    color-scheme: dark;
+  }
+}
+
+@media screen {
+  :root[data-theme="dark"] {
+    --color-border-strong: #3a4252;
+    --color-control: #6e788c;
+    --color-sole-soft: #3f3330;
+    --color-ok: #4cc38a;
+    --color-ok-soft: #16302a;
+    --color-warn: #f2b33d;
+    --color-warn-soft: #3a2e14;
+    --color-neutral-soft: #232936;
+    --color-term-edge: #2a3140;
+    --mark-light-display: none;
+    --mark-dark-display: inline;
+    color-scheme: dark;
+  }
 }
 
 * {
@@ -38,4 +109,12 @@ h3 {
 
 a {
   color: var(--color-primary);
+}
+
+.mark--light {
+  display: var(--mark-light-display);
+}
+
+.mark--dark {
+  display: var(--mark-dark-display);
 }
