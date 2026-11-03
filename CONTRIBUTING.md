@@ -8,7 +8,8 @@ issues from a template, a branch per issue, Conventional Commits, squash-merged 
 ## Working on this repo
 
 - Build and preview: see [README.md](README.md).
-- Content lives under `docs/`; one Markdown file per page. Keep examples on `example.org`,
+- Docs content lives under `apps/docs/docs/`; one Markdown file per page. The site's copy lives in
+  `apps/site/app/content/`. Keep examples on `example.org`,
   `192.0.2.0/24`, `2001:db8::/32` and invented names — no real identifiers of any private
   deployment.
 - Mark anything not yet true as "Coming in v0.1.0" rather than inventing commands or

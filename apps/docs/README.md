@@ -1,47 +1,58 @@
-# website 🌐
+# docs 📚
 
-> 🥿 The public Sneakers-PAM project site and system docs, built with Docusaurus.
+> 🥿 The Sneakers-PAM system docs, docs.sneakers-pam.com, built with Docusaurus.
 
 ## 🏗️ What's here
 
-- `docs/`: the documentation pages, one Markdown file per page. The sidebar order lives in
-  `sidebars.ts`.
-- `src/pages/index.tsx`: the home page. It renders the website's home markup (the split hero with
-  its terminal card, the sections and the feature cards), styled from `src/css/site-frame.css`, so
-  the two home pages line up. `src/css/custom.css` maps the Laces design tokens onto the theme.
-- `src/release.ts`: the current release's version, which the home page shows. Each release updates
-  it together with the website's `app/content/release.ts`.
-- `src/css/site-frame.css` and `static/fonts/`: the frame shared with the website (header, page
-  column and footer sizes, frame colours, self-hosted fonts, and the home page's hero and section
-  styles). They're copies of the website's
-  `app/site-frame.css` and `public/fonts/`, which are the source of truth: never edit them here,
-  copy them over. `scripts/site-frame.test.mjs` fails when they drift from the website's checksum.
-- `static/img/`: the logo, mark and favicon. `static/img/guides/` holds the guide screenshots,
-  made by [scripts/screenshots/](scripts/screenshots/README.md) from a lab appliance and scrubbed
-  before they're saved.
-- `docusaurus.config.ts`: site config, navbar (it mirrors the website's header, theme switch
-  included) and footer. Broken links, anchors and Markdown links fail the build.
-- `.github/workflows/checks.yml`: the org scrub (leak guard) plus the `🧪 Build & Test` job, which
-  type-checks, runs the tests and builds the site on every PR.
+The docs app of the website repo (`apps/docs`), imported from the Sneakers-PAM/docs repo's main as
+one squashed commit.
 
-Nothing deploys from this repo: there is no Pages or deploy workflow.
+- `docs/`: the documentation pages for Next (unreleased main), one Markdown file per page. The
+  sidebar order lives in `sidebars.ts`.
+- `versioned_docs/`, `versioned_sidebars/` and `versions.json`: one snapshot per release, newest
+  first. The newest is the default at `/docs/`; see "Versioned docs" below.
+- `src/pages/index.tsx`: the home page. It renders the site's home markup (the split hero with
+  its terminal card, the sections and the feature cards), styled from the shared
+  `packages/frame/site-frame.css`, so the two home pages line up. It shows the release version
+  from `packages/frame/release.ts`. `src/css/custom.css` maps the Laces design tokens onto the
+  theme.
+- `src/components/docs-version-navbar-item.tsx` and `src/theme/NavbarItem/ComponentTypes.tsx`: the
+  version picker, a `custom-docsVersion` navbar item that shows only on doc pages.
+- The frame, fonts, marks and favicon aren't copied here: `docusaurus.config.ts` loads
+  `packages/frame/site-frame.css` first and serves `packages/frame/public` and
+  `packages/brand/public` as extra static folders, so `/fonts/`, `/img/mark-*.svg` and
+  `/favicon.svg` are the same files the site serves. `scripts/site-frame.test.mjs` checks that
+  wiring.
+- `static/img/guides/`: the guide screenshots, made by
+  [scripts/screenshots/](scripts/screenshots/README.md) from a lab appliance and scrubbed before
+  they're saved.
+- `docusaurus.config.ts`: site config, navbar (it mirrors the site's header, theme switch
+  included) and footer. Broken links, anchors and Markdown links fail the build.
+
+CI and the deploy live at the repo root; see the [root README](../../README.md).
 
 ## 🚀 Run it locally
 
-Use the Node.js version in `.nvmrc`, then:
+Use the Node.js version in `.nvmrc`, install once at the repo root, then start this app:
 
 ```bash
 npm ci --ignore-scripts
-npm run start
+npm run start -w @sneakers-pam/docs
 ```
 
-Build the static site the same way CI does (the output lands in `build/`):
+Build the static site the same way CI does (the output lands in `apps/docs/build/`):
 
 ```bash
-npm ci --ignore-scripts
-npm run typecheck
-npm run build
-npm run serve
+npm run typecheck -w @sneakers-pam/docs
+npm test -w @sneakers-pam/docs
+npm run build -w @sneakers-pam/docs
+npm run serve -w @sneakers-pam/docs
+```
+
+The published build leaves Next out:
+
+```bash
+DOCS_INCLUDE_NEXT=false npm run build -w @sneakers-pam/docs
 ```
 
 ## ✍️ Writing pages
@@ -64,36 +75,36 @@ import TabItem from '@theme/TabItem';
 
 ## 🗂️ Versioned docs
 
-Versioning is on, with no snapshots yet: the pages in `docs/` are the current ("Next") version and
-the whole site. When a release ships, cut its snapshot with:
+- **Versions:** each release has a snapshot in `versioned_docs/version-<version>/`, listed in
+  `versions.json`. The first is `v0.1.0-rc.7`. The newest is the default at `/docs/`; older ones
+  live at `/docs/<version>/`.
+- **Next:** the pages in `docs/` are Next, unreleased main, at `/docs/next/`, under a banner that
+  points at the current version. Write new and changed pages there. Dev, CI and preview builds
+  include Next; the deploy builds with `DOCS_INCLUDE_NEXT=false`, so the published site has the
+  released versions only.
+- **The picker:** a version dropdown sits right after the wordmark on doc pages, where the site's
+  header shows nothing, so the rest of the header lines up with the site's. It isn't on the home
+  page, whose header matches the site's exactly. Below 997px it moves into the menu.
+- **Cutting a version:** a release cuts its docs version in its own PR, from the repo root, after
+  bumping `packages/frame/release.ts`:
 
 ```bash
-npm run docusaurus docs:version 0.1.0
+npm run docs:version
 ```
 
-That copies `docs/` into `versioned_docs/` and adds `versions.json`. The header mirrors the
-website's and has no version picker yet, so add a `{type: 'docsVersionDropdown', position: 'right'}`
-item to the navbar in the same change. From then on, build the published site with
-`DOCS_INCLUDE_NEXT=false` so the unreleased "Next" pages stay local.
+That runs `docusaurus docs:version <version>` for the release version, copying `docs/` into
+`versioned_docs/` and adding it to `versions.json`. Commit all three. The deploy refuses a release
+whose version isn't cut (`npm run check:docs-version`).
+
+- **Fixing a released version:** edit its copy in `versioned_docs/`. A fix that also applies to
+  Next goes in `docs/` too.
 
 ## 📍 Where to look
 
 - [docs/getting-started.md](docs/getting-started.md), [docs/concepts/](docs/concepts/),
   [docs/mcp-guide.md](docs/mcp-guide.md): the content pages.
+- [docs/user-guide/](docs/user-guide/), [docs/admin-guide/](docs/admin-guide/),
+  [docs/appliance-guide/](docs/appliance-guide/): the user, admin and appliance admin guides, in
+  Next only until the next release cuts them.
 - [docs/security.md](docs/security.md), [docs/contributing.md](docs/contributing.md): project
   pages.
-
-## 🙏 Acknowledgements
-
-Sneakers-PAM was originally written by [@Bugs5382](https://github.com/Bugs5382).
-
-## 🔐 Export compliance
-
-Sneakers-PAM is published from the United States and uses only standard, publicly available
-cryptography; see [CRYPTO.md](CRYPTO.md). You are responsible for complying with applicable
-export control and sanctions laws, including not using, exporting or re-exporting it in violation
-of those laws or if you are on a restricted-party list.
-
-## 📄 License
-
-Apache-2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
