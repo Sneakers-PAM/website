@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# Production build + caches
+build/
+.docusaurus/
+.cache-loader/
+
+# Misc
+*.log
+.DS_Store
+*.tsbuildinfo
