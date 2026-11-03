@@ -1,0 +1,16 @@
+# Reviewed scrub allowlist: `<class> <exact value> <path glob>`, with a reason on the line or the
+# line above. The org CI scrub reads it at the PR base and the local pre-push gate at the remote's
+# default branch, so a new entry counts only once its own PR has merged. Format:
+# Sneakers-PAM/.github, .github/scripts/README.md, "The allowlist file".
+#
+# The SIL Open Font License site, linked from the docs' License page (and its versioned copies).
+fqdn openfontlicense.org *license.md
+# npm's "funding" links for dependencies, which npm writes into the lock file.
+fqdn opencollective.com package-lock.json
+fqdn paulmillr.com package-lock.json
+fqdn eslint.org package-lock.json
+fqdn tidelift.com package-lock.json
+fqdn ko-fi.com package-lock.json
+fqdn liberapay.com package-lock.json
+fqdn www.patreon.com package-lock.json
+fqdn feross.org package-lock.json
