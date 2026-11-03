@@ -84,7 +84,8 @@ import TabItem from '@theme/TabItem';
   released versions only.
 - **The picker:** a version dropdown sits right after the wordmark on doc pages, where the site's
   header shows nothing, so the rest of the header lines up with the site's. It isn't on the home
-  page, whose header matches the site's exactly. Below 997px it moves into the menu.
+  page, whose header matches the site's exactly. Below 997px there's no room beside the
+  wordmark, so it moves into the menu, under Versions.
 - **Cutting a version:** a release cuts its docs version in its own PR, from the repo root, after
   bumping `packages/frame/release.ts`:
 

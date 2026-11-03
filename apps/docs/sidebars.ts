@@ -88,15 +88,6 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: 'More',
-      collapsible: true,
-      items: [
-        {type: 'doc', id: 'migration-guide', label: 'Migration guide'},
-        {type: 'doc', id: 'kubernetes-helm', label: 'Kubernetes with Helm'},
-      ],
-    },
-    {
-      type: 'category',
       label: 'Guides',
       collapsible: false,
       items: [
@@ -109,6 +100,15 @@ const sidebars: SidebarsConfig = {
         {type: 'doc', id: 'support-bundle-guide', label: 'Getting a support bundle'},
         {type: 'doc', id: 'backups-guide', label: 'Backing up and restoring the appliance'},
         {type: 'doc', id: 'telemetry-guide', label: 'Sending telemetry to a collector'},
+      ],
+    },
+    {
+      type: 'category',
+      label: 'More',
+      collapsible: true,
+      items: [
+        {type: 'doc', id: 'migration-guide', label: 'Migration guide'},
+        {type: 'doc', id: 'kubernetes-helm', label: 'Kubernetes with Helm'},
       ],
     },
     {

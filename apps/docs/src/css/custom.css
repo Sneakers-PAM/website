@@ -543,15 +543,19 @@ code {
    wordmark, where the website's header has empty space, so nothing else in
    the bar moves. It takes the nav links' size and line, so the bar keeps the
    frame's height, and the mono face the release tags use elsewhere. Doc
-   pages only; below 997px it moves into the menu with the sidebar. */
-.navbar__items:not(.navbar__items--right) > .dropdown {
-  display: flex;
-  align-items: center;
-  height: var(--frame-nav-line);
-  margin-left: var(--frame-nav-gap);
-  padding: 0;
-  font-size: var(--frame-nav-size);
-  line-height: var(--frame-nav-line);
+   pages only. Below 997px there's no room beside the wordmark, so it stays
+   hidden there, as Infima hides every bar item, and shows in the menu. */
+@media (min-width: 997px) {
+  .navbar__items:not(.navbar__items--right) > .dropdown {
+    display: flex;
+    align-items: center;
+    height: var(--frame-nav-line);
+    margin-left: var(--frame-nav-gap);
+    padding: 0;
+    font-size: var(--frame-nav-size);
+    line-height: var(--frame-nav-line);
+    white-space: nowrap;
+  }
 }
 
 .navbar__version.navbar__link {
