@@ -1,3 +1,7 @@
+/*
+Copyright 2026 The Sneakers-PAM Authors
+SPDX-License-Identifier: Apache-2.0
+*/
 import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
 
 // Order here is the sidebar order; ids are file paths under docs/ minus ".md".

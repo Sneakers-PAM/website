@@ -11,6 +11,7 @@
 
 # ...except these are never real sources, even once re-included above. Later
 # patterns win, so these directory excludes must come after the negations.
-node_modules/**
-build/**
-.react-router/**
+**/node_modules/**
+**/build/**
+**/.react-router/**
+**/.docusaurus/**
