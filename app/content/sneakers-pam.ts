@@ -31,7 +31,7 @@ export const nav = {
 };
 
 export const hero = {
-  eyebrow: `Sneakers-PAM ${"v0.1.0-rc.6"} is out`,
+  eyebrow: `Sneakers-PAM ${"v0.1.0-rc.7"} is out`,
   headlineLine1: "Privileged access,",
   headlineLine2: "kept on a short",
   headlineLine2TmWord: "leash",
@@ -45,7 +45,7 @@ export const hero = {
     { text: "signed appliance", accent: true },
     { text: " you own outright." },
   ] satisfies LedeSegment[],
-  primaryCta: { label: "Download v0.1.0-rc.6", href: "#download" },
+  primaryCta: { label: "Download v0.1.0-rc.7", href: "#download" },
   secondaryCta: { label: "View on GitHub", href: "https://github.com/Sneakers-PAM" },
   terminal: {
     title: "sneakers-run",

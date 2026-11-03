@@ -9,10 +9,10 @@ SPDX-License-Identifier: Apache-2.0
 const RELEASE_BASE = "https://github.com/Sneakers-PAM/sneakers-appliance/releases/download";
 
 export const release = {
-  version: "v0.1.0-rc.6",
+  version: "v0.1.0-rc.7",
   kind: "prerelease" as const,
-  publishedOn: "2026-11-01",
-  pageHref: "https://github.com/Sneakers-PAM/sneakers-appliance/releases/tag/v0.1.0-rc.6",
+  publishedOn: "2026-11-03",
+  pageHref: "https://github.com/Sneakers-PAM/sneakers-appliance/releases/tag/v0.1.0-rc.7",
 };
 
 // The same release as Helm charts for a Kubernetes cluster you run yourself.
@@ -39,50 +39,50 @@ export interface DownloadAsset {
 export const downloads: DownloadAsset[] = [
   {
     label: "Appliance OVA (install image)",
-    name: "sneakers-appliance-0.1.0-rc.6-amd64.ova",
-    sizeBytes: 99340288,
-    sizeLabel: "94.7 MiB",
+    name: "sneakers-appliance-0.1.0-rc.7-amd64.ova",
+    sizeBytes: 100018176,
+    sizeLabel: "95.4 MiB",
   },
   {
     label: "OVA checksum",
-    name: "sneakers-appliance-0.1.0-rc.6-amd64.ova.sha256",
+    name: "sneakers-appliance-0.1.0-rc.7-amd64.ova.sha256",
     sizeBytes: 106,
     sizeLabel: "106 B",
   },
   {
     label: "Proxmox VE disk image (qcow2, this release untested on a real Proxmox VE host)",
-    name: "sneakers-appliance-0.1.0-rc.6-amd64.qcow2",
-    sizeBytes: 236519424,
-    sizeLabel: "225.6 MiB",
+    name: "sneakers-appliance-0.1.0-rc.7-amd64.qcow2",
+    sizeBytes: 239992832,
+    sizeLabel: "228.9 MiB",
   },
   {
     label: "qcow2 checksum",
-    name: "sneakers-appliance-0.1.0-rc.6-amd64.qcow2.sha256",
+    name: "sneakers-appliance-0.1.0-rc.7-amd64.qcow2.sha256",
     sizeBytes: 108,
     sizeLabel: "108 B",
   },
   {
     label: "Product unit",
-    name: "sneakers-product-0.1.0-rc.6-amd64.bin",
-    sizeBytes: 1071279455,
-    sizeLabel: "1021.7 MiB",
+    name: "sneakers-product-0.1.0-rc.7-amd64.bin",
+    sizeBytes: 1111079759,
+    sizeLabel: "1059.6 MiB",
   },
   {
     label: "Base OS unit",
-    name: "sneakers-appliance-baseOS-0.1.0-rc.6-amd64.bin",
-    sizeBytes: 235781333,
-    sizeLabel: "224.9 MiB",
+    name: "sneakers-appliance-baseOS-0.1.0-rc.7-amd64.bin",
+    sizeBytes: 239298613,
+    sizeLabel: "228.2 MiB",
   },
   {
-    label: "Base OS patch (rc.5 to rc.6)",
-    name: "sneakers-appliance-baseOS-patch-0.1.0-rc.5-to-0.1.0-rc.6-amd64.bin",
-    sizeBytes: 12896351,
-    sizeLabel: "12.3 MiB",
+    label: "Base OS patch (rc.6 to rc.7)",
+    name: "sneakers-appliance-baseOS-patch-0.1.0-rc.6-to-0.1.0-rc.7-amd64.bin",
+    sizeBytes: 18215791,
+    sizeLabel: "17.4 MiB",
   },
   {
     label: "Base web unit",
-    name: "sneakers-appliance-baseWeb-0.1.0-rc.6-amd64.bin",
-    sizeBytes: 1265444,
+    name: "sneakers-appliance-baseWeb-0.1.0-rc.7-amd64.bin",
+    sizeBytes: 1282340,
     sizeLabel: "1.2 MiB",
   },
   {

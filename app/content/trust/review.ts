@@ -11,7 +11,7 @@ export const review = {
   subtitle: "Architecture, key custody and controls of a self-hosted privileged access vault, with the evidence behind each claim.",
   docVersion: "Draft 1",
   date: "29 October 2026",
-  productVersion: "v0.1.0-rc.6 (prerelease)",
+  productVersion: "v0.1.0-rc.7 (prerelease)",
   classification: "Public",
   disclaimer:
     "Sneakers-PAM holds no SOC 2 report, ISO 27001 certificate or other certification. This review describes only what is built and published, maps it to SOC 2 Trust Services Criteria, ISO/IEC 27001:2022 Annex A, NIST SP 800-63B and OWASP ASVS 4.0.3 so an independent reviewer can test it, and lists every known gap. Where a control depends on how you deploy Sneakers, it says so.",
@@ -30,7 +30,7 @@ export const review = {
         },
         {
           kind: "p",
-          text: "This review covers the v0.1.0 release train, currently at release candidate 6. Each control names the component tag it first ships in; the v0.1.0-rc.6 release builds every service from a pinned commit. A control marked shipped has its code on a published tag. Partial means it is built with a named gap. Planned means it isn't built.",
+          text: "This review covers the v0.1.0 release train, currently at release candidate 7. Each control names the component tag it first ships in; the v0.1.0-rc.7 release builds every service from a pinned commit. A control marked shipped has its code on a published tag. Partial means it is built with a named gap. Planned means it isn't built.",
         },
         {
           kind: "table",
@@ -45,7 +45,7 @@ export const review = {
         {
           kind: "note",
           tone: "warn",
-          text: "Sneakers-PAM is in prerelease. Several controls are partial, and two areas (encryption between services, and scheduled backups) are not built. They are described plainly in their sections and collected in Gaps and planned work.",
+          text: "Sneakers-PAM is in prerelease. Several controls are partial, one area (encryption between services) is not built, and backups stay on the box with no offsite copy. They are described plainly in their sections and collected in Gaps and planned work.",
         },
       ],
     },
@@ -333,7 +333,7 @@ export const review = {
       blocks: [
         {
           kind: "p",
-          text: "Recovery today rests on two things: the key escrow, which lets a replacement box open restored data, and sneakers-migrate, which exports secrets, folders, users and settings as an age-encrypted archive and leaves the audit trail on the source. Scheduled and offsite backups are not built.",
+          text: "Recovery today rests on two things: the key escrow, which lets a replacement box open restored data, and sneakers-migrate, which exports secrets, folders, users and settings as an age-encrypted archive and leaves the audit trail on the source. From v0.1.0-rc.7 the database also archives itself to the box's encrypted backup partition, takes a base backup nightly and can be restored to a named backup set on the same box. Offsite and scheduled copies off the box are not built.",
         },
         {
           kind: "note",
@@ -349,7 +349,7 @@ export const review = {
       blocks: [
         {
           kind: "p",
-          text: "Each service reports readiness from its real dependencies and keeps liveness to the process. Logs are JSON in every cluster, at a level set per environment (error in production by default), and never include secrets, tokens or personal data. Traces and metrics can go to your OpenTelemetry collector.",
+          text: "Each service reports readiness from its real dependencies and keeps liveness to the process. Logs are JSON in every cluster, at a level set per environment (error in production by default), and never include secrets, tokens or personal data. Traces, metrics and, if you turn them on, logs can go to your OpenTelemetry collector, set on the :8443 Telemetry page, with its own CA if it uses a private one.",
         },
       ],
     },

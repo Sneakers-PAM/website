@@ -57,7 +57,7 @@ export const areas: Area[] = [
   {
     id: "recovery",
     title: "Backup and recovery",
-    summary: "Key escrow and migration bundles exist; scheduled backups don't yet.",
+    summary: "Key escrow, migration bundles and nightly on-box backups exist; offsite copies don't yet.",
   },
   {
     id: "operations",
@@ -823,13 +823,18 @@ export const controls: Control[] = [
     area: "recovery",
     title: "Scheduled backups",
     statement:
-      "There are no scheduled or offsite backups yet: the appliance's backup service is a stub and its backup partition is unused. Until then, recovery relies on the escrow and a migration export.",
-    status: "planned",
-    evidence: [],
+      "The database archives its write-ahead log to the box's encrypted backup partition and takes a base backup nightly, keeping seven, with a nightly restore check. An admin cuts a named backup set over SSH, an owner can export it encrypted to the recovery keys, and an owner restores it with a new authenticator code. A set restores only on the box that made it. Nothing is pushed off the box on a schedule, so a lost box still relies on the escrow and a migration export.",
+    status: "partial",
+    since: "v0.1.0-rc.7",
+    evidence: [
+      { repo: "sneakers-appliance", path: "docs/backups.md", kind: "doc" },
+      { repo: "sneakers-appliance", path: "docs/data-move.md", kind: "doc", detail: "Moving the database to helm-postgres-ha" },
+    ],
     mappings: { soc2: ["A1.2", "A1.3"], iso27001: ["A.8.13", "A.5.30"] },
     gaps: [
       { repo: "sneakers-appliance", number: 462, title: "Scheduled offsite backups" },
       { repo: "sneakers-appliance", number: 106, title: "Backup lifecycle" },
+      { repo: "sneakers-appliance", number: 537, title: "Resources page for the PostgreSQL settings" },
     ],
   },
 
@@ -850,14 +855,13 @@ export const controls: Control[] = [
     area: "operations",
     title: "Structured logs and telemetry",
     statement:
-      "Services log JSON at a level set per environment (production defaults to error) and can send traces and metrics to an OpenTelemetry collector. The appliance doesn't forward its logs and there is no built-in alerting yet.",
+      "Services log JSON at a level set per environment (production defaults to error) and export traces, metrics and, if you turn them on, logs over OTLP to a collector you set on the :8443 Telemetry page. A collector with a private CA can be given that CA, and no logs leave while its certificate isn't verified. The appliance doesn't forward its own logs and there is no built-in alerting yet.",
     status: "partial",
     since: "v0.1.0-rc.3",
     evidence: [{ repo: "sneakers-release", path: "docs/values.md", kind: "doc" }],
     mappings: { soc2: ["CC7.2", "CC7.3"], iso27001: ["A.8.15", "A.8.16"] },
     gaps: [
       { repo: "sneakers-appliance", number: 113, title: "Forward logs to syslog or OTLP" },
-      { repo: "sneakers-appliance", number: 528, title: "Set the services' OTLP endpoint from :8443" },
     ],
   },
   {

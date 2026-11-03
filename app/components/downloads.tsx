@@ -57,6 +57,14 @@ export const Downloads = ({
       <a href={proxmoxGuideHref}>Proxmox VE guide</a>. This release hasn&apos;t been run on a real
       Proxmox VE host&nbsp;yet.
     </p>
+    <p className="prose dl-note">
+      Known issue: a box can stay stuck if it loses power right after the database move, so don&apos;t
+      cut power during an upgrade to this release or straight after it. It&apos;s tracked in{" "}
+      <a href="https://github.com/Sneakers-PAM/sneakers-appliance/issues/579">
+        sneakers-appliance#579
+      </a>
+      .
+    </p>
 
     <h3>Run it on a Raspberry Pi</h3>
     <p className="prose">
