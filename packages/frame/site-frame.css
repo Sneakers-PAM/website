@@ -3,11 +3,9 @@
    docs.sneakers-pam.com both use, so moving between the two never shifts
    or resizes anything in the frame.
 
-   Source of truth: Sneakers-PAM/website app/site-frame.css. The copy in
-   Sneakers-PAM/docs src/css/site-frame.css must match it byte for byte.
-   Change the website's copy, copy the file over to the docs unchanged, and
-   update the checksum in both repos' site-frame tests, which fail when a
-   copy drifts.
+   This is the one copy, in the website repo's packages/frame. The site
+   (apps/site) and the docs (apps/docs) both import it, so there is nothing
+   to keep in step: change it here and both sites change together.
 
    Each site lays out its own header and footer markup from these tokens;
    only the values live here. The home page is the exception: both sites

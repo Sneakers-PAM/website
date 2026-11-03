@@ -1,0 +1,29 @@
+{
+  "name": "@sneakers-pam/website-monorepo",
+  "private": true,
+  "type": "module",
+  "description": "The Sneakers-PAM product site and docs site, with the frame and brand they share.",
+  "license": "Apache-2.0",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "build:site": "npm run build -w @sneakers-pam/site",
+    "build:docs": "npm run build -w @sneakers-pam/docs",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm test --workspaces --if-present && node --test scripts/*.test.mjs",
+    "lint": "eslint .",
+    "check:evidence": "npm run check:evidence -w @sneakers-pam/site",
+    "check:docs-version": "node scripts/check-docs-version.mjs",
+    "docs:version": "node scripts/cut-docs-version.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.5",
+    "eslint": "9.39.5",
+    "eslint-plugin-react": "7.37.5",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "typescript-eslint": "8.71.2"
+  }
+}

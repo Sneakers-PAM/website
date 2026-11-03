@@ -1,50 +1,33 @@
+/*
+Copyright 2026 The Sneakers-PAM Authors
+SPDX-License-Identifier: Apache-2.0
+*/
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { createHash } from 'node:crypto';
 import { readdirSync, readFileSync } from 'node:fs';
 
-// src/css/site-frame.css and static/fonts/ are copies of the website's
-// (Sneakers-PAM/website app/site-frame.css and public/fonts/), which is the
-// source of truth. These are the website's checksums: when its frame
-// changes, copy the files over unchanged and update both checksums here.
-const SITE_FRAME_SHA256 = 'aafef473b65e159a5e1ce0bb269d4ea7f358f7d6ea85b786d323f919b7c5be6c';
-const FONTS_SHA256 = '27abdef0193b7fea3d84736891e15649aa403c45e3e66b060728faa96a35e69a';
+// The frame (packages/frame) and the brand assets (packages/brand) are the
+// website's own; these check that the docs site loads them the way the
+// website does.
+const config = readFileSync(new URL('../docusaurus.config.ts', import.meta.url), 'utf8');
+const fonts = readdirSync(new URL('../../../packages/frame/public/fonts/', import.meta.url));
 
-const framePath = new URL('../src/css/site-frame.css', import.meta.url);
-const fontsDir = new URL('../static/fonts/', import.meta.url);
-const frame = readFileSync(framePath, 'utf8');
-const fonts = readdirSync(fontsDir).filter((name) => name.endsWith('.woff2')).sort();
-
-const sha256 = (data) => createHash('sha256').update(data).digest('hex');
-
-test("site-frame.css is the website's copy, byte for byte", () => {
-  assert.equal(
-    sha256(readFileSync(framePath)),
-    SITE_FRAME_SHA256,
-    "src/css/site-frame.css differs from the website's: copy the website's file over, never edit it here",
-  );
+test('the site config loads the shared frame first, then the docs styles', () => {
+  assert.match(config, /const framePackage = '\.\.\/\.\.\/packages\/frame';/);
+  assert.match(config, /customCss: \[`\$\{framePackage\}\/site-frame\.css`, '\.\/src\/css\/custom\.css'\]/);
 });
 
-test("the font files are the website's, byte for byte", () => {
-  const hash = createHash('sha256');
-  for (const name of fonts) {
-    hash.update(`${name}\n`);
-    hash.update(readFileSync(new URL(name, fontsDir)));
+test('the site serves the shared fonts and brand assets from the site root', () => {
+  assert.match(config, /staticDirectories: \['static', `\$\{framePackage\}\/public`, `\$\{brandPackage\}\/public`\]/);
+  for (const name of ['favicon.svg', 'img/mark-light.svg', 'img/mark-dark.svg']) {
+    assert.ok(readFileSync(new URL(`../../../packages/brand/public/${name}`, import.meta.url)).length > 0, name);
   }
-  assert.equal(hash.digest('hex'), FONTS_SHA256, "static/fonts differs from the website's public/fonts");
 });
 
-test('every font the frame declares is a file in static/fonts', () => {
-  const urls = [...frame.matchAll(/url\("\/fonts\/([^"]+)"\)/g)].map((match) => match[1]);
-  assert.ok(urls.length > 0);
-  assert.deepEqual([...new Set(urls)].sort(), fonts);
-});
-
-test('the site config loads the frame first and preloads the same fonts as the website', () => {
-  const config = readFileSync(new URL('../docusaurus.config.ts', import.meta.url), 'utf8');
-  assert.match(config, /customCss: \['\.\/src\/css\/site-frame\.css', '\.\/src\/css\/custom\.css'\]/);
+test('the site config preloads the same three fonts as the website', () => {
   const list = config.match(/headTags: \[([^\]]+)\]/);
   assert.ok(list, 'docusaurus.config.ts has no preload list');
   const preloaded = [...list[1].matchAll(/'([^']+\.woff2)'/g)].map((match) => match[1]);
   assert.deepEqual(preloaded, ['bricolage-grotesque-latin.woff2', 'atkinson-hyperlegible-400-latin.woff2', 'jetbrains-mono-latin.woff2']);
+  for (const name of preloaded) assert.ok(fonts.includes(name), `${name} is preloaded but not in packages/frame/public/fonts`);
 });

@@ -8,6 +8,11 @@ import {themes as prismThemes} from 'prism-react-renderer';
 // served locally but left out of the published site.
 const includeNext = process.env.DOCS_INCLUDE_NEXT !== 'false';
 
+// The frame and the brand assets come from the shared packages: one copy of
+// site-frame.css, the fonts, the marks and the favicon for both sites.
+const framePackage = '../../packages/frame';
+const brandPackage = '../../packages/brand';
+
 const codeTheme = {
   ...prismThemes.dracula,
   plain: {...prismThemes.dracula.plain, color: '#e6e9ef', backgroundColor: '#0e1117'},
@@ -21,7 +26,7 @@ const baseUrl = '/';
 const config: Config = {
   title: 'Sneakers-PAM',
   tagline: 'An open-source, Apache-2.0 privileged access management system.',
-  favicon: 'img/favicon.svg',
+  favicon: 'favicon.svg',
 
   future: {
     v4: true,
@@ -32,7 +37,11 @@ const config: Config = {
   trailingSlash: false,
 
   organizationName: 'Sneakers-PAM',
-  projectName: 'docs',
+  projectName: 'website',
+
+  // static/ holds the docs' own images; /fonts/ comes from packages/frame
+  // and /img/mark-*.svg and /favicon.svg from packages/brand.
+  staticDirectories: ['static', `${framePackage}/public`, `${brandPackage}/public`],
 
   onBrokenLinks: 'throw',
   onBrokenAnchors: 'throw',
@@ -49,8 +58,8 @@ const config: Config = {
     locales: ['en'],
   },
 
-  // The fonts are self-hosted (static/fonts) and declared in
-  // src/css/site-frame.css, shared with the website. The three the header
+  // The fonts are self-hosted (packages/frame/public/fonts) and declared in
+  // packages/frame/site-frame.css, shared with the website. The three the header
   // and footer draw with are preloaded, the same files the website preloads.
   headTags: [
     'bricolage-grotesque-latin.woff2',
@@ -67,13 +76,13 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          editUrl: 'https://github.com/Sneakers-PAM/docs/edit/main/',
+          editUrl: 'https://github.com/Sneakers-PAM/website/edit/main/apps/docs/',
           showLastUpdateTime: true,
           includeCurrentVersion: includeNext,
         },
         blog: false,
         theme: {
-          customCss: ['./src/css/site-frame.css', './src/css/custom.css'],
+          customCss: [`${framePackage}/site-frame.css`, './src/css/custom.css'],
         },
       } satisfies Preset.Options,
     ],

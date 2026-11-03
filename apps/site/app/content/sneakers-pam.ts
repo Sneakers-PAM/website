@@ -2,8 +2,10 @@
 Copyright 2026 The Sneakers-PAM Authors
 SPDX-License-Identifier: Apache-2.0
 */
-// Content layer: the page and every component stay the same shape; a new
-// release only changes this file and release.ts.
+import { release } from "@sneakers-pam/frame/release";
+
+// Content layer: the page and every component stay the same shape; the
+// version shown comes from packages/frame/release.ts.
 export interface LedeSegment {
   text: string;
   accent?: boolean;
@@ -32,7 +34,7 @@ export const nav = {
 };
 
 export const hero = {
-  eyebrow: `Sneakers-PAM ${"v0.1.0-rc.7"} is out`,
+  eyebrow: `Sneakers-PAM ${release.version} is out`,
   headlineLine1: "Privileged access,",
   headlineLine2: "kept on a short",
   headlineLine2TmWord: "leash",
@@ -46,7 +48,7 @@ export const hero = {
     { text: "signed appliance", accent: true },
     { text: " you own outright." },
   ] satisfies LedeSegment[],
-  primaryCta: { label: "Download v0.1.0-rc.7", href: "#download" },
+  primaryCta: { label: `Download ${release.version}`, href: "#download" },
   secondaryCta: { label: "View on GitHub", href: "https://github.com/Sneakers-PAM" },
   terminal: {
     title: "sneakers-run",

@@ -1,7 +1,9 @@
 {
-  "name": "@sneakers-pam/website",
+  "name": "@sneakers-pam/site",
   "private": true,
   "type": "module",
+  "description": "The Sneakers-PAM product site, www.sneakers-pam.com.",
+  "license": "Apache-2.0",
   "scripts": {
     "dev": "react-router dev",
     "build": "react-router build && node scripts/build-security-pdf.mjs",
@@ -12,6 +14,8 @@
     "preview": "npx serve build/client"
   },
   "dependencies": {
+    "@sneakers-pam/brand": "*",
+    "@sneakers-pam/frame": "*",
     "@react-router/node": "^7.18.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -19,16 +23,11 @@
     "isbot": "^5"
   },
   "devDependencies": {
-    "@eslint/js": "9.39.5",
     "@react-router/dev": "^7.18.4",
     "@types/node": "^22.10.5",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
-    "eslint": "9.39.5",
-    "eslint-plugin-react": "7.37.5",
-    "eslint-plugin-react-hooks": "7.1.1",
     "typescript": "^5.7.2",
-    "typescript-eslint": "8.71.2",
     "vite": "^6.0.7",
     "vite-tsconfig-paths": "^5.1.4"
   }

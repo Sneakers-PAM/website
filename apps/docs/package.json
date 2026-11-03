@@ -1,8 +1,8 @@
 {
-  "name": "@sneakers-pam/website",
+  "name": "@sneakers-pam/docs",
   "private": true,
   "version": "0.1.0",
-  "description": "Sneakers-PAM public website and system docs",
+  "description": "The Sneakers-PAM docs site, docs.sneakers-pam.com.",
   "license": "Apache-2.0",
   "scripts": {
     "docusaurus": "docusaurus",
@@ -12,9 +12,12 @@
     "clear": "docusaurus clear",
     "typecheck": "tsc",
     "test": "node --test scripts/*.test.mjs scripts/screenshots/*.test.mjs",
-    "screenshots": "node scripts/screenshots/capture.mjs"
+    "screenshots": "node scripts/screenshots/capture.mjs",
+    "lint": "eslint ."
   },
   "dependencies": {
+    "@sneakers-pam/brand": "*",
+    "@sneakers-pam/frame": "*",
     "@docusaurus/core": "3.10.1",
     "@docusaurus/faster": "3.10.1",
     "@docusaurus/preset-classic": "3.10.1",

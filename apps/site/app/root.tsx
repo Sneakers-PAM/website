@@ -7,7 +7,7 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 
 import { themeInitScript } from "./theme";
 
-import "./site-frame.css";
+import "@sneakers-pam/frame/site-frame.css";
 import "./app.css";
 
 const frameFonts = [

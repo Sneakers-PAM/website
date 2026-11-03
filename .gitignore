@@ -1,9 +1,11 @@
 # Dependencies
 node_modules/
 
-# Production build + caches
+# Production builds + caches (apps/site and apps/docs)
 build/
 .react-router/
+.docusaurus/
+.cache-loader/
 
 # Misc
 *.log

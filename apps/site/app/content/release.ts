@@ -3,16 +3,17 @@ Copyright 2026 The Sneakers-PAM Authors
 SPDX-License-Identifier: Apache-2.0
 */
 // The current release's downloads, in one place: a new release is a change
-// to this file only. Sizes are the GitHub Release API's byte counts at the
-// time this was written; the "How to verify" section checks them against
-// SHA256SUMS and the cosign bundle instead of trusting this file.
+// to this file and to the version in packages/frame/release.ts. Sizes are
+// the GitHub Release API's byte counts at the time this was written; the
+// "How to verify" section checks them against SHA256SUMS and the cosign
+// bundle instead of trusting this file.
+import { release as current } from "@sneakers-pam/frame/release";
+
 const RELEASE_BASE = "https://github.com/Sneakers-PAM/sneakers-appliance/releases/download";
 
 export const release = {
-  version: "v0.1.0-rc.7",
-  kind: "prerelease" as const,
-  publishedOn: "2026-11-03",
-  pageHref: "https://github.com/Sneakers-PAM/sneakers-appliance/releases/tag/v0.1.0-rc.7",
+  ...current,
+  pageHref: `https://github.com/Sneakers-PAM/sneakers-appliance/releases/tag/${current.version}`,
 };
 
 // The same release as Helm charts for a Kubernetes cluster you run yourself.

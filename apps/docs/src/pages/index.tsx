@@ -3,7 +3,7 @@ import Head from '@docusaurus/Head';
 import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
 
-import {release} from '@site/src/release';
+import {release} from '@sneakers-pam/frame/release';
 
 // The home page uses the website's home markup (website
 // app/components/split-hero.tsx, terminal-card.tsx, section.tsx and
@@ -207,7 +207,7 @@ export default function Home(): ReactNode {
               Sneakers-PAM is pre-1.0 and under active development. The services, the appliance and this site are
               all being built in the open as a from-scratch, open-source PAM. Interfaces, configuration and the
               install flow can still change before v0.1.0. Nothing here is ready for production use yet — most pages
-              below mark what's still coming. Follow along or get involved on{' '}
+              below mark what&apos;s still coming. Follow along or get involved on{' '}
               <Link href="https://github.com/Sneakers-PAM">GitHub</Link>; see{' '}
               <Link to="/docs/contributing">Contributing</Link> for how.
             </>

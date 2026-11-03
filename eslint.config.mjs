@@ -4,7 +4,7 @@ import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 
 export default tseslint.config(
-  { ignores: ["build", "node_modules", ".react-router"] },
+  { ignores: ["**/build", "**/node_modules", "**/.react-router", "**/.docusaurus"] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
@@ -27,7 +27,20 @@ export default tseslint.config(
   },
   {
     // Build scripts run on Node, not in the browser.
-    files: ["scripts/**/*.mjs"],
-    languageOptions: { globals: { console: "readonly", process: "readonly", URL: "readonly" } },
+    files: ["**/scripts/**/*.mjs"],
+    languageOptions: {
+      globals: {
+        Buffer: "readonly",
+        URL: "readonly",
+        WebSocket: "readonly",
+        console: "readonly",
+        fetch: "readonly",
+        process: "readonly",
+        setTimeout: "readonly",
+      },
+    },
+    // A failed best-effort cleanup (killing Chrome, removing a temp folder)
+    // is ignored on purpose.
+    rules: { "no-empty": ["error", { allowEmptyCatch: true }] },
   },
 );
