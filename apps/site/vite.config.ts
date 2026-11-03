@@ -12,6 +12,13 @@ import { sharedPublic } from "./shared-public";
 // asset URLs match the router's basename in a one-off preview build.
 export default defineConfig({
   base: process.env.PREVIEW_BASE_PATH || "/",
+  // React Router's dev plugin pre-bundles react-router-dom whenever it can
+  // resolve it, and in this workspace it resolves to the docs' Docusaurus copy
+  // (v5), which breaks the dev server. In v7 react-router-dom only re-exports
+  // react-router, so point it there. The site itself never imports it.
+  resolve: {
+    alias: { "react-router-dom": "react-router" },
+  },
   plugins: [
     reactRouter(),
     tsconfigPaths(),
