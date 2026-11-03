@@ -2,10 +2,12 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import {themes as prismThemes} from 'prism-react-renderer';
 
-// Versioned docs: until the first release there are no snapshots, so the
-// unversioned "current" docs are the whole site and must stay included. Once a
-// version is cut, the release build sets DOCS_INCLUDE_NEXT=false so "next" is
-// served locally but left out of the published site.
+// Versioned docs. Each release's snapshot lives in versioned_docs/ and is
+// listed in versions.json; the newest one is the default at /docs/. The pages
+// in docs/ are "Next", unreleased main, served at /docs/next/ under a banner
+// that points at the current version. The deploy builds with
+// DOCS_INCLUDE_NEXT=false, so the published site has the released versions
+// only; every other build (dev, CI, previews) includes Next.
 const includeNext = process.env.DOCS_INCLUDE_NEXT !== 'false';
 
 // The frame and the brand assets come from the shared packages: one copy of
@@ -79,6 +81,8 @@ const config: Config = {
           editUrl: 'https://github.com/Sneakers-PAM/website/edit/main/apps/docs/',
           showLastUpdateTime: true,
           includeCurrentVersion: includeNext,
+          // Docusaurus rejects options for a version it isn't building.
+          versions: includeNext ? {current: {label: 'Next', path: 'next', banner: 'unreleased'}} : {},
         },
         blog: false,
         theme: {
@@ -123,6 +127,11 @@ const config: Config = {
         height: 28,
       },
       items: [
+        // The version picker sits right after the wordmark, where the
+        // website's header shows nothing, so the rest of the header lines up
+        // with the website's to the pixel. It shows on doc pages only, so the
+        // docs home's header matches the website's home exactly.
+        {type: 'custom-docsVersion', position: 'left', className: 'navbar__version', dropdownActiveClassDisabled: true},
         {href: 'https://www.sneakers-pam.com/#what-it-is', html: 'What it is', target: '_self', position: 'right'},
         {href: 'https://www.sneakers-pam.com/#different', html: 'What&#39;s different', target: '_self', position: 'right'},
         {href: 'https://www.sneakers-pam.com/#download', html: 'Download', target: '_self', position: 'right'},

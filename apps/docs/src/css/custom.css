@@ -539,6 +539,44 @@ code {
   color: var(--frame-ink);
 }
 
+/* The docs version picker (docs.sneakers-pam.com only): right after the
+   wordmark, where the website's header has empty space, so nothing else in
+   the bar moves. It takes the nav links' size and line, so the bar keeps the
+   frame's height, and the mono face the release tags use elsewhere. Doc
+   pages only; below 997px it moves into the menu with the sidebar. */
+.navbar__items:not(.navbar__items--right) > .dropdown {
+  display: flex;
+  align-items: center;
+  height: var(--frame-nav-line);
+  margin-left: var(--frame-nav-gap);
+  padding: 0;
+  font-size: var(--frame-nav-size);
+  line-height: var(--frame-nav-line);
+}
+
+.navbar__version.navbar__link {
+  display: block;
+  padding: 0;
+  font-family: var(--frame-font-mono);
+  font-weight: 400;
+  line-height: var(--frame-nav-line);
+  color: var(--frame-muted);
+}
+
+.navbar__version.navbar__link:hover,
+.navbar__version.navbar__link:focus-visible,
+.dropdown--show > .navbar__version.navbar__link {
+  color: var(--frame-ink);
+}
+
+.navbar__items:not(.navbar__items--right) > .dropdown > .dropdown__menu {
+  min-width: 10rem;
+  border: 1px solid var(--frame-border);
+  background: var(--frame-surface);
+  font-family: var(--frame-font-mono);
+  font-size: var(--frame-nav-size);
+}
+
 /* The theme switch: Docusaurus's own, which cycles System, Light, Dark and
    remembers the choice. Styled and placed like the website's switch
    (website app/components/theme-switch.tsx), and shown at every width:
