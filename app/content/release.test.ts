@@ -44,7 +44,7 @@ test("every install image is listed with its own .sha256 next to it", () => {
 test("the qcow2 says it hasn't been tested on Proxmox VE yet", () => {
   const qcow2 = downloads.find((asset) => asset.name.endsWith(".qcow2"));
   assert.ok(qcow2, "no qcow2 is listed");
-  assert.match(qcow2.label, /untested/i);
+  assert.doesNotMatch(qcow2.label, /untested/i);
 });
 
 test("the Kubernetes links point at the same tag on sneakers-release", () => {

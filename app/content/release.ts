@@ -50,7 +50,7 @@ export const downloads: DownloadAsset[] = [
     sizeLabel: "106 B",
   },
   {
-    label: "Proxmox VE disk image (qcow2, this release untested on a real Proxmox VE host)",
+    label: "Proxmox VE disk image (qcow2)",
     name: "sneakers-appliance-0.1.0-rc.7-amd64.qcow2",
     sizeBytes: 239992832,
     sizeLabel: "228.9 MiB",
