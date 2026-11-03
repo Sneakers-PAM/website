@@ -13,8 +13,9 @@ depends on what the folder's rules give you and on the secret's type.
 1. Open the secret.
 2. Choose **Reveal** next to a field to show it, or **Copy** to put it on your clipboard without
    showing it.
-3. Revealing says so: "Password revealed. This is logged." Every reveal and copy is written to the
-   [audit trail](../concepts/audit.md) with your name.
+
+Revealing says so: "Password revealed. This is logged." Every reveal and copy is written to the
+[audit trail](../concepts/audit.md) with your name.
 
 In a folder's list, the copy button next to a secret copies its main secret value in one step,
 under the same rules and the same audit entry.
@@ -64,12 +65,11 @@ Every reveal you make on one visit to the page belongs to one task, so they're d
 
 ## 🧩 When a field is missing {#missing}
 
-*From v0.1.0-rc.3.*
-
-A secret created through the API or an MCP tool can be stored without a value for a field its
-type marks required — a password never set, say. That field opens normally, not as an error: it
-shows **Missing required field**, with an **Edit** button that goes straight to it so it can be
-filled in. The secret otherwise reads, reveals and rotates as any other.
+The vault refuses to save a new secret with a required field left empty, from the web app, the
+API or an MCP tool alike. A secret saved before that check came in can still be missing one, a
+password never set, say. That field opens normally, not as an error: it shows **Missing required
+field**, with an **Edit** button that goes straight to it so it can be filled in. The secret
+otherwise reads, reveals and rotates as any other.
 
 If a secret doesn't open at all, the page says so plainly: "This secret doesn't exist, or you
 don't have access to it," with its id. That's never the same as a missing field, and it's never
@@ -83,17 +83,22 @@ For an [SSH Key](../admin-guide/secret-types/ssh-key.md) secret with a target, t
 signed in with the stored key. The credential never reaches your browser, and the session's start
 and end are audited.
 
-*From v0.1.0-rc.3: a [Password Account (SSH)](../admin-guide/secret-types/unix-ssh.md) secret
-offers **Open terminal** too, signed in with the stored password instead of a key; the session
-audit then records which of the two signed it in.*
+A [Password Account (SSH)](../admin-guide/secret-types/unix-ssh.md) secret offers **Open
+terminal** too, signed in with the stored password instead of a key; the session audit then
+records which of the two signed it in.
+
+When the terminal can't connect yet, **Open terminal** stays in the menu but is greyed out, with
+the reason beside it: the secret needs a target, its target doesn't connect over SSH, or the
+target's host key isn't pinned yet.
 
 The terminal works whichever way you opened Sneakers-PAM — a host name, an IPv4 address or an
 IPv6 address — it connects back on that same address, so there's nothing extra to set up for a
 box reached by IP.
 
-A target with no pinned SSH host key is refused up front, before anything connects: a site admin
-sees **Pin the host key** right there, and anyone else sees where an admin pins it
-([Targets and connections](../admin-guide/targets-and-connections.md#host-keys)). Once a target is
+A target with no pinned SSH host key is refused up front, before anything connects. Someone who may
+pin it (a site admin for a shared target, or the owner of a personal target) gets **Scan and pin
+host key…** in the same menu and **Pin the host key** on the terminal page; anyone else is told an
+admin needs to pin it ([Targets and connections](../admin-guide/targets-and-connections.md#host-keys)). Once a target is
 pinned, the session connects only to a host presenting one of its pins. A connect that can't reach
 the target, or stalls partway through, says why — such as "couldn't reach the box's terminal
 service" or which step it got stuck on — instead of sitting on **Connecting** with no explanation.

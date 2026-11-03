@@ -34,8 +34,8 @@ Sneakers-PAM is Apache-2.0, so you're free to fork it and build your own applian
 
 - **Make your own signing keys.** That means the release key, the update key and the Secure Boot
   keys (PK, KEK and db). Keep their private halves in your own custody, for example a hardware
-  token or an environment-protected secret. The project's private keys live only in the project's
-  release environment, and a fork never has them.
+  token or an environment-protected secret. The project's private keys stay in the project's own
+  custody, in its release environment or offline, and a fork never has them.
 - **You own their life cycle.** Creating, storing, rotating, revoking and recovering those keys is
   yours. A box trusts only the keys built into its image, so a box built from your fork takes only
   your releases, and a box built from the project's releases takes only the project's.

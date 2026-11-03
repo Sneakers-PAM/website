@@ -17,14 +17,20 @@ the secret out: the page says **Check out first, so others know it's in use**.
 
 ## 🔑 Check out {#check-out}
 
-1. Open the secret. The **Checkout** card says **Available**.
-2. Pick the lease: **1h**, **2h** or **4h**.
-3. Choose **Check out for 2 hours** (or the length you picked).
-4. Sneakers-PAM rotates the account on its target to a new value, verifies the new value works,
-   and starts your lease. Only then do the fields unlock for you to reveal or copy.
+### Before you start
 
-You need read access to the secret. Checking out a secret whose type has a super-sensitive field
-asks for a fresh second factor (an admin can turn that off).
+- You need read access to the secret.
+- Checking out a secret whose type has a super-sensitive field asks for a fresh second factor (an
+  admin can turn that off), so keep your authenticator or passkey to hand.
+
+### Steps
+
+1. Open the secret. The **Checkout** card says **Available**.
+2. Pick the lease: **1h**, **2h** or **4h**. It starts on **2h**.
+3. Choose **Check out for 2 hours** (or the length you picked).
+
+Sneakers-PAM rotates the account on its target to a new value, verifies the new value works, and
+starts your lease. Only then do the fields unlock for you to reveal or copy.
 
 While you hold it, the card says **Held by you** with the time left, and the **Checkouts** page
 lists every lease you hold. Anyone else who opens the secret sees **Checked out** and until when.
@@ -41,15 +47,17 @@ Only the person holding the lease can check it in, so nobody else can force a ro
 
 Rotation on check-out and check-in works for Active Directory and Windows domain accounts, over
 LDAPS or Kerberos. There's no SSH key rotation yet: checking out an SSH Key secret gives you the
-lease, and check-in ends it without changing the key. A Windows local account's rotation needs the
-WinRM adapter, which isn't built yet.
+lease, and check-in ends it without changing the key. A Windows local account's rotation needs a
+WinRM or SAMR connection, and neither adapter is built yet, so a rotation over one reports the
+target as unreachable.
 
 :::
 
 ## ⌛ When the lease runs out {#expiry}
 
-A lease that passes its end without a check-in is closed for you, and the secret is available
-again; whoever checks it out next starts from a fresh rotation, the same as any check-out.
+A lease that passes its end without a check-in is checked in for you: the password rotates, the
+same as when you check in yourself, and the secret is available again. Whoever checks it out next
+starts from a fresh rotation, the same as any check-out.
 
 ## 🚨 When someone else has it and it can't wait {#urgent}
 

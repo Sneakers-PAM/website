@@ -4,7 +4,7 @@ description: "An SSH account that signs in with a key pair: the username, the ke
 sidebar_position: 4
 ---
 
-{/* Generated from the sneakers-vault 30ac7fd9296e secret-type catalogue by the docs repo's draft generator (Sneakers-PAM/docs#21), which isn't carried over yet; edit by hand until it is. */}
+{/* Checked by hand against the sneakers-vault secret-type catalogue at d68f3e0e (v0.1.0-rc.7). The docs repo's draft generator (Sneakers-PAM/docs#21) isn't carried over yet; edit by hand until it is. */}
 
 # 🗝️ SSH Key
 
@@ -41,4 +41,4 @@ Type id: `type-ssh-key`. Agents and `sneakers-put` name the type by this id; `sn
 
 ## 🎯 Targets {#targets}
 
-A target with an SSH connection (port 22 by default) and its pinned host keys. Only a site admin pins or changes a target's host keys. The target serves both the heartbeat and brokered sessions. See [targets and connections](../targets-and-connections.md) for how to set one up.
+A target with an SSH connection (port 22 by default) and its pinned host keys. A site admin pins a shared target's host keys, and a personal target's owner pins their own; no token can. The target serves both the heartbeat and brokered sessions, and one key can be attached to several targets, each with its own pins. See [targets and connections](../targets-and-connections.md) for how to set one up.

@@ -4,13 +4,14 @@ description: "A Unix or Linux account that signs in over SSH with a password: th
 sidebar_position: 9
 ---
 
-{/* Generated from the sneakers-vault 30ac7fd9296e secret-type catalogue by the docs repo's draft generator (Sneakers-PAM/docs#21), which isn't carried over yet; edit by hand until it is. */}
+{/* Checked by hand against the sneakers-vault secret-type catalogue at d68f3e0e (v0.1.0-rc.7). The docs repo's draft generator (Sneakers-PAM/docs#21) isn't carried over yet; edit by hand until it is. */}
 
 # 🐧 Password Account (SSH)
 
 A Unix or Linux account that signs in over SSH with a password: the host, the username and the password.
 
 - The password can be generated from the password policy, but Sneakers-PAM never checks it or changes it on the host.
+- With a target, a person can choose **Open terminal** on the secret's page and get a password SSH session in the browser; the password is used for them and never shown.
 
 Type id: `type-unix-ssh`. Agents and `sneakers-put` name the type by this id; `sneakers_list_secret_types` lists it.
 
@@ -36,4 +37,4 @@ Type id: `type-unix-ssh`. Agents and `sneakers-put` name the type by this id; `s
 
 ## 🎯 Targets {#targets}
 
-The type can carry a target with an SSH connection, but it has no heartbeat or rotation, and the web app's terminal opens SSH Key secrets only, so the target does nothing for it today. See [targets and connections](../targets-and-connections.md) for how to set one up.
+A target with an SSH connection (port 22 by default) and its pinned host keys. The target is where a terminal session opens; there's no heartbeat or rotation against it. With more than one target attached, the terminal asks which one to open. See [targets and connections](../targets-and-connections.md) for how to set one up.

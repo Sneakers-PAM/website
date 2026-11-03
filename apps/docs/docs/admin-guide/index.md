@@ -22,7 +22,7 @@ guide](../user-guide/index.md) if you need the basics of signing in and using a 
 - ✅ **[Approvals and requests](../concepts/approvals.md):** who approves a reveal, when nobody else
   can, and how one task gets one prompt.
 - 🔐 **[Security settings](./security-settings.md):** the site-wide switches for super-sensitive
-  fields, MFA on checkout and MFA on reveal.
+  fields, MFA on checkout and on reveal, top-level folders, and session limits.
 - 🚨 **[Break-glass](../concepts/break-glass.md):** the emergency path outside the planned approvals, for
   people only — agents and tokens can't use it.
 - 📜 **[Audit trail](../concepts/audit.md):** the hash-chained log every sensitive action lands in.
@@ -36,11 +36,12 @@ guide](../user-guide/index.md) if you need the basics of signing in and using a 
 | Anyone with access | Read, reveal and use whatever a folder's rules give them |
 | A folder owner | Also approves requests for that folder's secrets, and authors (creates, edits) in it |
 | A designated approver | Approves requests for the specific secrets a folder's rules name them on, without owning the folder |
-| A site admin | Reads everything, manages secret types, targets, connections and security settings; is never an automatic approver or author |
+| A site admin | Reads every shared folder's secrets, manages secret types, shared targets, connections and security settings; is never an automatic approver or author |
 
-A site admin's broad read access is for running the site, not for everyday use: see
-[break-glass](../concepts/break-glass.md#break-the-glass-mode-for-site-admins) for the one path that lets an
-admin reveal someone else's personal secrets, and why it's recorded the way it is.
+A site admin's broad read access is for running the site, not for everyday use, and it stops at
+other people's personal folders: see
+[break-glass](../concepts/break-glass.md#break-the-glass-mode-for-site-admins) for the one path that
+lets an admin reveal someone else's personal secrets, and why it's recorded the way it is.
 
 ## 📦 Looking after the box {#appliance}
 

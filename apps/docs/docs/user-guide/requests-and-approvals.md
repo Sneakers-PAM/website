@@ -18,11 +18,13 @@ Either way, the person asking never decides. An owner of the secret or a designa
 
 1. On the secret you can't read, choose **Request access**.
 2. Under **Why do you need it?** say what you need it for. Approvers read this before they decide.
-3. Send it. It waits until someone who can approve for that secret acts on it.
+3. Choose **Send request**.
+
+The request waits until someone who can approve for that secret acts on it.
 
 When it's approved you can read the secret for the time the approver chose (1 to 24 hours). Your
-pending requests are under **Your open requests** on **Requests**, where you can cancel one. A
-stale request expires on its own.
+pending requests are under **Your open requests** on **Requests**; **View** opens one to follow it.
+Asking again for a secret you've already asked about points you back there.
 
 ## ✅ Deciding access requests {#deciding-requests}
 

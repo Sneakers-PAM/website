@@ -40,8 +40,9 @@ disabled, with the reason beside it:
 - **Attach a target first.** The secret has no target attached.
 - **Its target doesn't connect over SSH.** None of its targets uses an SSH connection.
 - **Pin the target's host key first.** None of its SSH targets has a pinned host key yet (see
-  [SSH host keys](#ssh-host-keys)). A site admin also gets **Open the target in the admin app**
-  in the same menu, to scan and pin it there. Anyone else is told an admin needs to pin it.
+  [SSH host keys](#ssh-host-keys)). Whoever may pin the target (a site admin, or the owner of a
+  personal target) also gets **Scan and pin host key…** in the same menu. Anyone else is told an
+  admin needs to pin it.
 
 One SSH target with a pinned host key is enough to turn the action back on.
 
@@ -53,8 +54,9 @@ host's credential before changing or deleting the target.
 
 A target reached over SSH carries its own pinned host keys — the public keys that identify the
 real server, so a credential is never sent to an impostor. Pinning them is always a person's
-decision, made from the admin app (Targets → Scan and pin): no token, agent or automated
-request — not even a site admin's — can add, change or clear a target's pins. A secret whose
+decision: a site admin pins any target, and the owner of a personal target pins their own (see
+[Pinning SSH host keys](../admin-guide/targets-and-connections.md#host-keys)). No token, agent or
+automated request — not even a site admin's — can add, change or clear a target's pins. A secret whose
 target has none of its host keys pinned yet can't heartbeat until a person pins one. Each attached
 target keeps its own pins.
 

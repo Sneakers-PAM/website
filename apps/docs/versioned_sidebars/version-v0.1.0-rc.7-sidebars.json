@@ -12,6 +12,16 @@
         },
         {
           "type": "doc",
+          "id": "why",
+          "label": "Why Sneakers-PAM"
+        },
+        {
+          "type": "doc",
+          "id": "index",
+          "label": "Documentation"
+        },
+        {
+          "type": "doc",
           "id": "getting-started",
           "label": "Getting started"
         },
@@ -81,9 +91,135 @@
     },
     {
       "type": "category",
+      "label": "User guide",
+      "collapsible": true,
+      "items": [
+        {
+          "type": "doc",
+          "id": "user-guide/index",
+          "label": "Overview"
+        },
+        {
+          "type": "doc",
+          "id": "user-guide/sign-in",
+          "label": "Sign in"
+        },
+        {
+          "type": "doc",
+          "id": "user-guide/find-secrets",
+          "label": "Find a secret"
+        },
+        {
+          "type": "doc",
+          "id": "user-guide/use-secrets",
+          "label": "Use a secret"
+        },
+        {
+          "type": "doc",
+          "id": "user-guide/check-out",
+          "label": "Check-out and check-in"
+        },
+        {
+          "type": "doc",
+          "id": "user-guide/requests-and-approvals",
+          "label": "Requests and approvals"
+        },
+        {
+          "type": "doc",
+          "id": "user-guide/add-and-share",
+          "label": "Add and share"
+        },
+        {
+          "type": "doc",
+          "id": "user-guide/break-glass",
+          "label": "Break-glass"
+        },
+        {
+          "type": "doc",
+          "id": "user-guide/agents-and-the-mcp",
+          "label": "Agents and the MCP"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Admin guide",
+      "collapsible": true,
+      "items": [
+        {
+          "type": "doc",
+          "id": "admin-guide/index",
+          "label": "Overview"
+        },
+        {
+          "type": "doc",
+          "id": "admin-guide/folders-and-permissions",
+          "label": "Folders and permissions"
+        },
+        {
+          "type": "doc",
+          "id": "admin-guide/secret-types/index",
+          "label": "Secret types"
+        },
+        {
+          "type": "doc",
+          "id": "admin-guide/targets-and-connections",
+          "label": "Targets and connections"
+        },
+        {
+          "type": "doc",
+          "id": "admin-guide/security-settings",
+          "label": "Security settings"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Appliance admin guide",
+      "collapsible": true,
+      "items": [
+        {
+          "type": "doc",
+          "id": "appliance-guide/index",
+          "label": "Overview"
+        },
+        {
+          "type": "doc",
+          "id": "appliance-guide/first-setup",
+          "label": "First setup"
+        },
+        {
+          "type": "doc",
+          "id": "appliance-guide/email",
+          "label": "Email"
+        },
+        {
+          "type": "doc",
+          "id": "appliance-guide/protection",
+          "label": "Protection levels"
+        },
+        {
+          "type": "doc",
+          "id": "appliance-guide/console-and-shells",
+          "label": "Console and shells"
+        },
+        {
+          "type": "doc",
+          "id": "appliance-guide/troubleshooting",
+          "label": "Troubleshooting"
+        }
+      ]
+    },
+    {
+      "type": "category",
       "label": "Use cases",
       "collapsible": false,
       "items": [
+        {
+          "type": "doc",
+          "id": "use-cases/index",
+          "label": "Overview"
+        },
         {
           "type": "doc",
           "id": "use-cases/agent-vault",
@@ -140,6 +276,23 @@
           "type": "doc",
           "id": "telemetry-guide",
           "label": "Sending telemetry to a collector"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "More",
+      "collapsible": true,
+      "items": [
+        {
+          "type": "doc",
+          "id": "migration-guide",
+          "label": "Migration guide"
+        },
+        {
+          "type": "doc",
+          "id": "kubernetes-helm",
+          "label": "Kubernetes with Helm"
         }
       ]
     },

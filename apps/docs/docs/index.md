@@ -20,8 +20,9 @@ are written for the three people who meet it.
   permissions, the secret types, targets, rotation and heartbeat, the approval policy,
   break-glass, the audit trail, and tokens for agents and the MCP.
 - 📦 **[Appliance admin guide](./appliance-guide/index.md):** for whoever installs and looks after
-  the box. Install it, set it up, use the `:8443` admin page, the console and the closed shell,
-  update it, keep its recovery keys and read its protection level.
+  the box. Install it on VMware ESXi or Proxmox VE, set it up, use the `:8443` admin page, the
+  console and the closed shell, update it, back it up, send its telemetry to a collector, keep its
+  recovery keys and read its protection level.
 
 New here? Start with [Getting started](./getting-started.md), which takes you from nothing to a
 signed-in first admin.

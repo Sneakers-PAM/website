@@ -14,6 +14,14 @@ It isn't a way around permissions. You can only break the glass on a secret you 
 
 ## 🔨 Break the glass on a secret {#how}
 
+### Before you start
+
+- You can read the secret.
+- You're signed in to the web app yourself, not through a token.
+- You have your authenticator app: break-glass takes a six-digit authenticator code.
+
+### Steps
+
 1. Open the secret and, in its **Actions** menu, choose **Break glass…**.
 2. Read what will happen:
    - **Every field is revealed**, skipping check-out and pending approvals.
@@ -23,8 +31,10 @@ It isn't a way around permissions. You can only break the glass on a secret you 
    read it.
 4. Type a fresh **Authenticator code**. Break-glass always asks for one, whatever your step-up
    window says.
-5. Choose **Break glass**. Every field of the secret is shown, with copy buttons, and the page shows
-   a hard-to-miss **Break glass active** marker.
+5. Choose **Break glass**.
+
+Every field of the secret is shown, with copy buttons, and the page shows a hard-to-miss **Break
+glass active** marker. **Hide and end** closes it when you're done.
 
 If the code is wrong the page says **That code didn't work. Try again.** and nothing is revealed.
 

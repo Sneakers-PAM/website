@@ -11,10 +11,11 @@ company's single sign-on) and a second factor (an authenticator app, a passkey o
 ## 🚪 Signing in {#signing-in}
 
 1. Open your Sneakers-PAM address, for example `https://sneakers.example.org`.
-2. If your organisation uses single sign-on, the page opens on **Sign in with SSO**: sign in with
-   your company account and you come straight back. For an account that doesn't use SSO, choose
-   **Use local login instead** (or go straight to the local login when there's no SSO) and type
-   your **username or email** and your **password**.
+2. Sign in with the first factor:
+   1. If your organisation uses single sign-on, choose **Sign in with SSO** and sign in with your
+      company account. You come straight back.
+   2. For an account that doesn't use SSO, choose **Use local login instead** (the local login opens
+      on its own when there's no SSO), then type your **username or email** and your **password**.
 
    ![The Sneakers-PAM sign-in page with the local login form.](/img/guides/sign-in-02-product-form.png)
 
@@ -23,10 +24,10 @@ company's single sign-on) and a second factor (an authenticator app, a passkey o
 
    ![After the password, Sneakers-PAM asks for the authenticator code.](/img/guides/sign-in-03-product-code.png)
 
-4. You land on your [dashboard](./find-secrets.md#dashboard).
+You land on your [dashboard](./find-secrets.md#dashboard).
 
-A wrong name, password or code gets the same answer, so nobody can tell which part was wrong. An
-account an admin has turned off says so.
+A wrong username or a wrong password gets the same answer, so nobody can tell which of the two was
+wrong. An account an admin has turned off says so.
 
 ## 🛡️ Your first sign-in: add a second factor {#first-sign-in}
 

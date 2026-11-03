@@ -36,13 +36,14 @@ with them:
   values. List folders, secret types, targets and connection profiles.
 - **Use:** run a command with a secret supplied to it, or read a single field when the task really
   needs the value.
-- **Store:** create a secret, or generate one with a password that meets the policy, so a new
-  credential goes straight into the vault instead of into a file. A value that doesn't fit its
+- **Store:** create a secret, generate one with a password that meets the policy, or generate an
+  SSH key pair whose private key never leaves the vault, so a new credential goes straight into
+  the vault instead of into a file. A value that doesn't fit its
   type is refused with the reason, for example a choice field set to something that isn't one of
   its allowed values, which names the field and the values it takes. A value that already exists on
   disk goes in with `sneakers-put`, which reads it from the file, so it never passes through the
   agent session or the shell history.
-- **Manage:** rename, move and retype secrets, organise folders, attach a secret to its target,
+- **Manage:** rename, move and retype secrets, make and rename folders, attach a secret to its target,
   check that the stored credential still works against that target, and turn
   [rotation and heartbeat](../concepts/heartbeat-and-rotation.md) on or off. The vault does the
   rotating, on its schedule.
@@ -100,11 +101,13 @@ An agent can't go past its scope by itself:
   through a personal token waits for an owner or a designated approver. The agent opens the
   approval page in the browser, and a person approves with a second factor. On a one-user install
   you confirm the task once yourself.
-- Break-glass isn't reachable through the MCP, and only a human site admin can change the SSH host
-  keys pinned to a target.
-- Some things stay with a person in the web admin by design: top-level folders, folder
-  permissions, connection profiles, shared targets, and the appliance's own settings (network,
-  updates, backups). An agent works inside the structure a person set up.
+- Break-glass isn't reachable through the MCP, and no token can change the SSH host keys pinned to
+  a target: a person does that in the web app (a site admin for a shared target, or the owner of a
+  personal target).
+- Some things stay with a person in the web app by design: sharing a folder, connection profiles,
+  shared targets, and the appliance's own settings (network, updates, backups). An agent with a
+  personal token can make a top-level folder that belongs to its person, but no token sees it until
+  a person shares it. An agent works inside the structure a person set up.
 
 A service account's reveals are never held for approval: its access rules are the limit. Give each
 unattended agent its own service account, with access only to the folders it needs.
@@ -112,8 +115,8 @@ unattended agent its own service account, with access only to the folders it nee
 ## 🚚 In practice: filling a new vault through the MCP
 
 The same tools that serve secrets can fill a vault. On a fresh appliance, a person sets up the
-structure in the web admin first: the top-level folders, the shared targets and the connection
-profiles. Then an agent, signed in once with a personal token and a second factor, creates each
+structure in the web app first: the top-level folders and who they're shared with, the shared
+targets and the connection profiles. Then an agent, signed in once with a personal token and a second factor, creates each
 secret through the MCP, one at a time, in the folder and type the plan says. Every write lands in
 the audit trail as that agent, and the person never had to type a value.
 
@@ -136,7 +139,9 @@ has signed. Your vault, your keys and your audit trail stay on hardware you cont
 
 :::tip[Available now]
 
-v0.1.0-rc.1 is out: the signed OVA and the update files are on the [download](https://www.sneakers-pam.com/#download) page.
+v0.1.0-rc.7 is out: the signed OVA for VMware ESXi, the qcow2 disk image for Proxmox VE (both
+amd64) and the update files are on the [download](https://www.sneakers-pam.com/#download) page.
+To run it on your own Kubernetes instead, see [Kubernetes with Helm](../kubernetes-helm.md).
 
 :::
 
