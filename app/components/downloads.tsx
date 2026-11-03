@@ -54,8 +54,7 @@ export const Downloads = ({
     <p className="prose dl-note">
       All files are on the {version} <a href={pageHref}>release page</a>. No ISO this release:
       install from the OVA, or on Proxmox VE from the qcow2 with the{" "}
-      <a href={proxmoxGuideHref}>Proxmox VE guide</a>. This release hasn&apos;t been run on a real
-      Proxmox VE host&nbsp;yet.
+      <a href={proxmoxGuideHref}>Proxmox VE guide</a>.
     </p>
     <p className="prose dl-note">
       Known issue: a box can stay stuck if it loses power right after the database move, so don&apos;t
