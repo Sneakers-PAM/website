@@ -6,11 +6,11 @@
 # The SIL Open Font License site, linked from the docs' License page (and its versioned copies).
 fqdn openfontlicense.org *license.md
 # npm's "funding" links for dependencies, which npm writes into the lock file.
-fqdn opencollective.com package-lock.json
-fqdn paulmillr.com package-lock.json
-fqdn eslint.org package-lock.json
-fqdn tidelift.com package-lock.json
-fqdn ko-fi.com package-lock.json
-fqdn liberapay.com package-lock.json
-fqdn www.patreon.com package-lock.json
-fqdn feross.org package-lock.json
+fqdn opencollective.com package-lock.json  # an npm funding link in the lock file
+fqdn paulmillr.com package-lock.json  # an npm funding link in the lock file
+fqdn eslint.org package-lock.json  # an npm funding link in the lock file
+fqdn tidelift.com package-lock.json  # an npm funding link in the lock file
+fqdn ko-fi.com package-lock.json  # an npm funding link in the lock file
+fqdn liberapay.com package-lock.json  # an npm funding link in the lock file
+fqdn www.patreon.com package-lock.json  # an npm funding link in the lock file
+fqdn feross.org package-lock.json  # an npm funding link in the lock file
