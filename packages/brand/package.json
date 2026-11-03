@@ -1,0 +1,14 @@
+{
+  "name": "@sneakers-pam/brand",
+  "private": true,
+  "type": "module",
+  "description": "The Sneakers-PAM marks, favicon and touch icon, served by both sites.",
+  "license": "Apache-2.0",
+  "exports": {
+    "./public": "./public/",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "test": "node --experimental-strip-types --test brand.test.ts"
+  }
+}

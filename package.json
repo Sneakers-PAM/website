@@ -1,35 +1,29 @@
 {
-  "name": "@sneakers-pam/website",
+  "name": "@sneakers-pam/website-monorepo",
   "private": true,
   "type": "module",
+  "description": "The Sneakers-PAM product site and docs site, with the frame and brand they share.",
+  "license": "Apache-2.0",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
   "scripts": {
-    "dev": "react-router dev",
-    "build": "react-router build && node scripts/build-security-pdf.mjs",
-    "typecheck": "react-router typegen && tsc",
-    "test": "node --experimental-strip-types --test app/*.test.ts app/content/*.test.ts app/content/trust/*.test.ts scripts/*.test.mjs",
+    "build": "npm run build --workspaces --if-present",
+    "build:site": "npm run build -w @sneakers-pam/site",
+    "build:docs": "npm run build -w @sneakers-pam/docs",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm test --workspaces --if-present && node --test scripts/*.test.mjs",
     "lint": "eslint .",
-    "check:evidence": "node --experimental-strip-types scripts/check-trust-evidence.mjs",
-    "preview": "npx serve build/client"
-  },
-  "dependencies": {
-    "@react-router/node": "^7.18.4",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-router": "^7.18.4",
-    "isbot": "^5"
+    "check:evidence": "npm run check:evidence -w @sneakers-pam/site",
+    "check:docs-version": "node scripts/check-docs-version.mjs",
+    "docs:version": "node scripts/cut-docs-version.mjs"
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",
-    "@react-router/dev": "^7.18.4",
-    "@types/node": "^22.10.5",
-    "@types/react": "^19.0.2",
-    "@types/react-dom": "^19.0.2",
     "eslint": "9.39.5",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "7.1.1",
-    "typescript": "^5.7.2",
-    "typescript-eslint": "8.71.2",
-    "vite": "^6.0.7",
-    "vite-tsconfig-paths": "^5.1.4"
+    "typescript-eslint": "8.71.2"
   }
 }

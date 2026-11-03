@@ -27,57 +27,77 @@ kept in sync with them.
 <!-- layout:begin npm/app -->
 ## Project layout
 
-The `npm/app` layout, as a static product site (not a published package).
+The `npm/app` layout, as an npm workspace of two static sites (not a published package).
 The governance sync replaces this whole CLAUDE.md with the shared template on
 every run. Only the layout choice in the begin marker carries over, and this
 section is rendered again from it. Anything else written here is replaced, so
 keep repo-specific notes in AGENTS.md, which the sync leaves alone.
 
-A React Router v7 site (`ssr: false`, prerendered at build time) that builds to static HTML in
-`build/client/`. Nothing publishes to npm; the deploy workflow (`deploy.yml`) pushes `build/client`
-to Cloudflare Pages, and only when a GitHub Release is published. The version comes from Release
+An npm workspace with two static sites and the packages they share. `apps/site` is a React Router
+v7 site (`ssr: false`, prerendered at build time) that builds to static HTML in
+`apps/site/build/client/`; `apps/docs` is a Docusaurus site with versioned docs that builds to
+`apps/docs/build/`. Nothing publishes to npm; the deploy workflow (`deploy.yml`) pushes both to
+Cloudflare Pages, and only when a GitHub Release is published. The version comes from Release
 Drafter, not a package bump.
 
 ### Tree
 
 ```text
 .
-├── app/
-│   ├── root.tsx              the HTML shell (head, fonts, scripts)
-│   ├── routes.ts             the route table
-│   ├── routes/
-│   │   └── home.tsx          the one page, composed from components + content
-│   ├── components/           reusable presentational pieces (hero, nav, footer, ...)
-│   ├── content/               the copy and release data; a new release changes release.ts only
-│   └── app.css                global tokens (the Laces palette) and resets
-├── public/                   static files served as-is (favicon, logo marks)
-├── react-router.config.ts    ssr: false, the prerendered route list, PREVIEW_BASE_PATH
-├── vite.config.ts            the Vite build, also reads PREVIEW_BASE_PATH
-├── package.json
-└── tsconfig.json
+├── apps/
+│   ├── site/                 www.sneakers-pam.com
+│   │   ├── app/
+│   │   │   ├── root.tsx          the HTML shell (head, fonts, scripts)
+│   │   │   ├── routes.ts         the route table
+│   │   │   ├── routes/           home, trust and the security review print page
+│   │   │   ├── components/       reusable presentational pieces (hero, nav, footer, ...)
+│   │   │   ├── content/          the copy and release data
+│   │   │   └── app.css           global tokens (the Laces palette) and resets
+│   │   ├── scripts/              the security review PDF and the evidence check
+│   │   ├── shared-public.ts      serves packages/*/public from the site root
+│   │   ├── react-router.config.ts  ssr: false, the prerendered route list, PREVIEW_BASE_PATH
+│   │   └── vite.config.ts        the Vite build, also reads PREVIEW_BASE_PATH
+│   └── docs/                 docs.sneakers-pam.com
+│       ├── docs/                 Next (unreleased main), one Markdown file per page
+│       ├── versioned_docs/       one snapshot per release, listed in versions.json
+│       ├── src/                  the home page, the version picker and custom.css
+│       ├── static/img/guides/    the guide screenshots
+│       ├── docusaurus.config.ts
+│       └── sidebars.ts
+├── packages/
+│   ├── frame/                site-frame.css, public/fonts/ and release.ts, for both sites
+│   └── brand/                public/: the marks, favicon and touch icon, for both sites
+├── scripts/                  the docs version check and cut, and the CI path filter
+├── eslint.config.mjs         one ESLint config for the whole repo
+└── package.json              the workspace root
 ```
 
 ### What goes where
 
-- `app/content/release.ts`: the current release's downloads and the verify key. A new release is
-  a change to this file only.
-- `app/content/sneakers-pam.ts`: the page copy (hero, sections, footer marks).
-- `app/components/`: no business logic; props in, markup out. Shared CSS lives in
+- `packages/frame/release.ts`: the release version both sites show. A new release bumps it,
+  updates `apps/site/app/content/release.ts` (the downloads and the verify key), and cuts the docs
+  version with `npm run docs:version`, in one PR.
+- `apps/site/app/content/sneakers-pam.ts`: the site's copy (hero, sections, footer marks).
+- `apps/site/app/components/`: no business logic; props in, markup out. Shared CSS lives in
   `marketing.css`, imported by each component that needs it.
-- `build/` is gitignored; nothing under it is ever committed.
+- `apps/docs/docs/`: new and changed docs pages, which ship in the next release's docs version.
+- `packages/`: anything both sites use, one copy. Never copy a shared file into an app.
+- `build/` folders are gitignored; nothing under them is ever committed.
 
 ### Naming
 
 - Files: `kebab-case.tsx` for components and routes, matching React Router's own convention.
 - Types and interfaces are `PascalCase`; functions and variables `camelCase`.
-- Named exports only.
+- Named exports only (Docusaurus theme files, which must default-export, are the exception).
 
 ### Tests
 
-- `app/content/release.test.ts` (Node's test runner, via `--experimental-strip-types`) checks the
-  release data's own invariants (every asset's URL matches the current tag, no duplicate names, no
-  ISO where the release ships none). There is no component test harness yet; add one before this
-  site grows past a single page.
+- Node's test runner, via `--experimental-strip-types` for TypeScript: each workspace's `test`
+  script, plus `scripts/*.test.mjs` at the root. `npm test` at the root runs them all.
+- `apps/site/app/content/release.test.ts` checks the release data's own invariants (every asset's
+  URL matches the current tag, no duplicate names, no ISO where the release ships none).
+- `scripts/docs-version.test.mjs` fails when the release version has no docs version cut.
+- There is no component test harness yet; add one before the site grows past its few pages.
 <!-- layout:end -->
 
 ## CI and Actions minutes
@@ -95,7 +115,10 @@ fast during a wave of PRs. The shipped workflows are shaped around that:
   that react to `edited`: a title or body fix reruns them, not the build.
 - **Pull requests only.** Build, test, lint, licence and link-check workflows run on pull requests,
   not on push to `main`. The squash merge lands the tree the PR run already tested. Only Release
-  Drafter runs on `main`, and `deploy.yml` runs only on a published release.
+  Drafter (and the scrub) runs on `main`, and `deploy.yml` runs only on a published release.
+- **Only what changed builds.** `scripts/changed-apps.mjs` tells the build and link-check jobs
+  which app a PR touches: `apps/site` or `apps/docs` alone builds that app, anything shared builds
+  both.
 - **Keep the PR run honest:** the PR run covers the merged code only when the branch is up to date
   with `main` before it merges. In the branch ruleset, add **Require status checks to pass** with
   the repo's check names and turn on **Require branches to be up to date before merging** (API:
