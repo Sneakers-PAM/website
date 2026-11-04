@@ -36,7 +36,11 @@ Paths below are under `apps/site/` unless they say otherwise.
 
 - `app/routes/home.tsx` - the home page, composed from components and content.
 - `app/routes/trust.tsx` - the trust center at `/trust`: posture, controls by area, documents,
-  sub-processors and how to report a vulnerability.
+  sub-processors and how to report a vulnerability. The controls list has status chips (each with
+  its count, toggles) and a sort by area or status. The view lives only in the URL hash
+  (`#status=shipped,partial&sort=status`); nothing is stored in the browser. The prerendered HTML
+  lists every control, so with JavaScript off nothing is hidden. The logic is pure, in
+  `app/content/trust/filter.ts`, with `filter.test.ts`.
 - `app/routes/security-review.tsx` - the print source of the security review PDF at
   `/trust/security-review` (noindex, not linked from the nav).
 - `app/content/trust/` - the one source behind both: `controls.ts` (the control register: status,

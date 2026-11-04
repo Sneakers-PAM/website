@@ -9,7 +9,7 @@ import { Footer } from "~/components/footer";
 import { Nav } from "~/components/nav";
 import { Section } from "~/components/section";
 import { siteHref } from "~/components/site-href";
-import { AreaBlock, DocumentList, PostureTiles, SubProcessorTable } from "~/components/trust";
+import { ControlExplorer, DocumentList, PostureTiles, SubProcessorTable } from "~/components/trust";
 import { pageMeta } from "~/content/meta";
 import { footer, nav } from "~/content/sneakers-pam";
 import { areas, controls } from "~/content/trust/controls";
@@ -61,9 +61,7 @@ export default function Trust() {
               </li>
             ))}
           </ul>
-          {areas.map((a) => (
-            <AreaBlock key={a.id} area={a} controls={controls.filter((c) => c.area === a.id)} />
-          ))}
+          <ControlExplorer areas={areas} controls={controls} copy={trustCenter.controls} />
         </Section>
 
         <Section id="documents" eyebrow="Documents" heading={trustCenter.documents.heading} lede={trustCenter.documents.lede}>

@@ -2,7 +2,20 @@
 Copyright 2026 The Sneakers-PAM Authors
 SPDX-License-Identifier: Apache-2.0
 */
-import { evidenceHref, issueHref, issueLabel, mappingLine, statusLabel } from "~/content/trust/links";
+import { useSyncExternalStore } from "react";
+
+import {
+  DEFAULT_VIEW,
+  STATUSES,
+  countByStatus,
+  formatHash,
+  parseHash,
+  type SortKey,
+  toggleStatus,
+  type View,
+  visibleControls,
+} from "~/content/trust/filter";
+import { STATUS_NAMES, evidenceHref, issueHref, issueLabel, mappingLine, statusLabel } from "~/content/trust/links";
 import type { Area, Control, SubProcessor, TrustDocument } from "~/content/trust/types";
 
 import { siteHref } from "./site-href";
@@ -52,12 +65,14 @@ export const ControlCard = ({ control }: { control: Control }) => (
   </li>
 );
 
-export const AreaBlock = ({ area, controls }: { area: Area; controls: Control[] }) => (
-  <div className="area" id={`area-${area.id}`}>
-    <h3 className="area__title">{area.title}</h3>
-    <p className="area__summary">{area.summary}</p>
+const ControlGroup = ({ id, title, summary, items }: { id: string; title: string; summary?: string; items: Control[] }) => (
+  <div className="area" id={id}>
+    <h3 className="area__title">
+      {title} <span className="area__count">{items.length}</span>
+    </h3>
+    {summary ? <p className="area__summary">{summary}</p> : null}
     <ul className="control-list">
-      {controls.map((c) => (
+      {items.map((c) => (
         <ControlCard key={c.id} control={c} />
       ))}
     </ul>
@@ -65,22 +80,108 @@ export const AreaBlock = ({ area, controls }: { area: Area; controls: Control[] 
 );
 
 export const PostureTiles = ({ controls }: { controls: Control[] }) => {
-  const count = (s: Control["status"]) => controls.filter((c) => c.status === s).length;
-  const tiles = [
-    { label: "Controls shipped", value: count("shipped") },
-    { label: "Built, next release", value: count("main") },
-    { label: "Partial", value: count("partial") },
-    { label: "Planned", value: count("planned") },
-  ].filter((t) => t.value > 0);
+  const counts = countByStatus(controls);
   return (
     <ul className="posture-tiles">
-      {tiles.map((t) => (
-        <li key={t.label} className="posture-tile">
-          <span className="posture-tile__value">{t.value}</span>
-          <span className="posture-tile__label">{t.label}</span>
+      {STATUSES.filter((s) => counts[s] > 0).map((s) => (
+        <li key={s} className="posture-tile">
+          <span className="posture-tile__value">{counts[s]}</span>
+          <span className="posture-tile__label">{s === "shipped" ? "Controls shipped" : STATUS_NAMES[s]}</span>
         </li>
       ))}
     </ul>
+  );
+};
+
+const hashListeners = new Set<() => void>();
+const subscribeHash = (listener: () => void) => {
+  hashListeners.add(listener);
+  window.addEventListener("hashchange", listener);
+  return () => {
+    hashListeners.delete(listener);
+    window.removeEventListener("hashchange", listener);
+  };
+};
+
+interface ExplorerCopy {
+  filterLabel: string;
+  sortLabel: string;
+  sortOptions: { value: string; label: string }[];
+  clear: string;
+  shareNote: string;
+  empty: string;
+}
+
+// The controls list with its status chips and sort. The prerendered page is
+// the default view (every control, by area), so it reads in full without
+// JavaScript; the toolbar appears once the page is interactive. The view
+// lives in the URL hash, so a filtered list can be shared as a link, and
+// nothing is stored in the browser.
+export const ControlExplorer = ({ areas, controls, copy }: { areas: Area[]; controls: Control[]; copy: ExplorerCopy }) => {
+  // null on the server and during hydration, so the prerendered page is the default view.
+  const hash = useSyncExternalStore(subscribeHash, () => window.location.hash, () => null);
+  const ready = hash !== null;
+  const view = hash === null ? DEFAULT_VIEW : parseHash(hash);
+
+  const update = (next: View) => {
+    const { pathname, search } = window.location;
+    window.history.replaceState(null, "", `${pathname}${search}${formatHash(next)}`);
+    hashListeners.forEach((l) => l());
+  };
+
+  const counts = countByStatus(controls);
+  const shown = visibleControls(controls, view);
+
+  return (
+    <div className="explorer">
+      {ready ? (
+        <div className="explorer__bar">
+          <div className="explorer__chips" role="group" aria-label={copy.filterLabel}>
+            {STATUSES.map((s) => (
+              <button
+                key={s}
+                type="button"
+                className={`chip chip--${s}`}
+                aria-pressed={view.statuses.includes(s)}
+                onClick={() => update(toggleStatus(view, s))}
+              >
+                {STATUS_NAMES[s]} <span className="chip__count">{counts[s]}</span>
+              </button>
+            ))}
+            {view.statuses.length ? (
+              <button type="button" className="chip chip--clear" onClick={() => update({ ...view, statuses: [] })}>
+                {copy.clear}
+              </button>
+            ) : null}
+          </div>
+          <label className="explorer__sort">
+            {copy.sortLabel}{" "}
+            <select value={view.sort} onChange={(e) => update({ ...view, sort: e.target.value as SortKey })}>
+              {copy.sortOptions.map((o) => (
+                <option key={o.value} value={o.value}>
+                  {o.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <p className="explorer__note" aria-live="polite">
+            Showing {shown.length} of {controls.length} controls. {copy.shareNote}
+          </p>
+        </div>
+      ) : null}
+
+      {shown.length === 0 ? <p className="prose">{copy.empty}</p> : null}
+
+      {view.sort === "area"
+        ? areas.map((a) => {
+            const items = shown.filter((c) => c.area === a.id);
+            return items.length ? <ControlGroup key={a.id} id={`area-${a.id}`} title={a.title} summary={a.summary} items={items} /> : null;
+          })
+        : STATUSES.map((s) => {
+            const items = shown.filter((c) => c.status === s);
+            return items.length ? <ControlGroup key={s} id={`status-${s}`} title={STATUS_NAMES[s]} items={items} /> : null;
+          })}
+    </div>
   );
 };
 

@@ -12,6 +12,13 @@ export const issueHref = (i: IssueRef) => `${org}/${i.repo}/issues/${i.number}`;
 
 export const issueLabel = (i: IssueRef) => `${i.repo}#${i.number}`;
 
+export const STATUS_NAMES: Record<ControlStatus, string> = {
+  shipped: "Shipped",
+  main: "Built, next release",
+  partial: "Partial",
+  planned: "Planned",
+};
+
 export const statusLabel = (c: Pick<Control, "status" | "since">) => {
   const labels: Record<ControlStatus, string> = {
     shipped: `Shipped${c.since ? ` in ${c.since}` : ""}`,
