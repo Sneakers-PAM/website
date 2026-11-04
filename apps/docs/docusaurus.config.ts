@@ -18,9 +18,9 @@ import {DOCS_CONSENT_PREFIX} from './src/lib/consent';
 // in docs/ are "vNext", unreleased main, served at /docs/vnext/ under a
 // banner naming the release that may ship them and the current one
 // (src/theme/DocVersionBanner, so Docusaurus's own banner is off). The
-// deploy builds with DOCS_INCLUDE_NEXT=false, so the published site has the
-// released versions only; every other build (dev, CI, previews) includes
-// vNext.
+// deploy builds with DOCS_INCLUDE_NEXT=true, so the published site carries
+// vNext beside the released versions, as every other build does; only a
+// build that sets it to false leaves vNext out.
 const includeNext = process.env.DOCS_INCLUDE_NEXT !== 'false';
 
 // Docusaurus rejects options for a version it isn't building.

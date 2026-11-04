@@ -90,8 +90,8 @@ A published GitHub Release builds both apps, then deploys `apps/site/build/clien
 Cloudflare Pages project `sneakers-pam-www` and `apps/docs/build` to `sneakers-pam-docs`, creating
 each project on the first run if it doesn't exist yet. A release published as a pre-release goes
 to each project's `dev` branch, its dev site; any other release goes to production. The docs are
-built with `DOCS_INCLUDE_NEXT=false`, so the published docs have the released versions only, not
-vNext.
+built with `DOCS_INCLUDE_NEXT=true`, so the published docs carry vNext (unreleased `main`) under
+its banner beside the released versions, with the released version as the default.
 Nothing else deploys: a merge to `main` only drafts the next release. The custom domains
 (sneakers-pam.com, www.sneakers-pam.com, docs.sneakers-pam.com) are added by hand in Cloudflare,
 not by this workflow.
