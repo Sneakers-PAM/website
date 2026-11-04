@@ -16,12 +16,13 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@sneakers-pam/brand": "*",
-    "@sneakers-pam/frame": "*",
     "@docusaurus/core": "3.10.1",
     "@docusaurus/faster": "3.10.1",
+    "@docusaurus/plugin-client-redirects": "3.10.1",
     "@docusaurus/preset-classic": "3.10.1",
     "@mdx-js/react": "3.1.1",
+    "@sneakers-pam/brand": "*",
+    "@sneakers-pam/frame": "*",
     "clsx": "2.1.1",
     "prism-react-renderer": "2.4.1",
     "react": "19.3.0",
