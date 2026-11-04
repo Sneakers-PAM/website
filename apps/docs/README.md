@@ -64,7 +64,7 @@ npm run serve -w @sneakers-pam/docs
 `npm run check:storage:docs` runs from the repo root against `apps/docs/build`: it fails if any
 page writes browser storage before the visitor accepts the cookie choice.
 
-The published build leaves vNext out:
+The published build is the same as the default, with vNext in it. To build without vNext:
 
 ```bash
 DOCS_INCLUDE_NEXT=false npm run build -w @sneakers-pam/docs
@@ -98,8 +98,8 @@ import TabItem from '@theme/TabItem';
   that says the page is planned, or may ship soon in the next release, worked out from the
   current one in `packages/frame/release.ts` (v0.1.0-rc.7 gives v0.1.0-rc.8; v0.1.0 gives
   v0.2.0). Write new and changed pages there. The old `/docs/next/` paths redirect to
-  `/docs/vnext/`. Dev, CI and preview builds include vNext; the deploy builds with
-  `DOCS_INCLUDE_NEXT=false`, so the published site has the released versions only.
+  `/docs/vnext/`. Every build includes vNext, the deploy too
+  (`DOCS_INCLUDE_NEXT=true`), so the published site carries it beside the released versions.
 - **The picker:** the version dropdown sits in the doc toolbar at the right end of the breadcrumb
   line, beside the full-width switch, so the header is the site's, item for item, on every page.
   On phones and tablets the toolbar takes a line of its own under the breadcrumbs.

@@ -135,8 +135,8 @@ Follow the logging rules in `CLAUDE.md`. In short:
   (e.g. a preview). A preview build prints the PDF too, into `build/client/<base>/trust/`. It's
   unset in the real build, so all of them default to `/`; never hardcode a sub-path into any of
   them. The docs take their base from `baseUrl` in `apps/docs/docusaurus.config.ts`.
-- `DOCS_INCLUDE_NEXT=false` leaves the docs' vNext (unreleased main) out of a docs build. Only the
-  deploy sets it.
+- vNext (unreleased main) is in every docs build, the deploy included (`DOCS_INCLUDE_NEXT=true`);
+  only a build that sets `DOCS_INCLUDE_NEXT=false` leaves it out.
 - CI builds only what a change touches (`scripts/changed-apps.mjs`): `apps/site` or `apps/docs`
   alone builds that app; anything else builds both. Keep a new shared path out of `ROOT_DOCS`
   there unless neither app reads it.
