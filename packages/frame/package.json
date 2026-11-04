@@ -2,15 +2,26 @@
   "name": "@sneakers-pam/frame",
   "private": true,
   "type": "module",
-  "description": "The frame both Sneakers-PAM sites share: site-frame.css, the self-hosted fonts and the current release.",
+  "description": "What both Sneakers-PAM sites share: site-frame.css, the self-hosted fonts, the current release and the consent-first preferences.",
   "license": "Apache-2.0",
   "exports": {
     "./site-frame.css": "./site-frame.css",
     "./release": "./release.ts",
     "./public": "./public/",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./consent": "./consent.ts",
+    "./use-consent": "./use-consent.ts",
+    "./consent-banner": "./consent-banner.tsx",
+    "./theme-pref": "./theme-pref.ts",
+    "./theme-toggle": "./theme-toggle.tsx",
+    "./full-width": "./full-width.ts",
+    "./full-width-toggle": "./full-width-toggle.tsx",
+    "./emoji": "./emoji.ts"
   },
   "scripts": {
-    "test": "node --experimental-strip-types --test frame.test.ts"
+    "test": "node --experimental-strip-types --test frame.test.ts consent.test.ts theme-pref.test.ts full-width.test.ts emoji.test.ts"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
   }
 }

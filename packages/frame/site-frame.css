@@ -39,6 +39,8 @@
   --frame-header-stack-gap: 0.75rem;
   --frame-switch: 2rem;
   --frame-switch-icon: 1.5rem;
+  --frame-toggle-icon: 1rem;
+  --frame-radius: 0.5rem;
 
   /* Footer. */
   --frame-footer-pad-top: 2.5rem;
@@ -598,4 +600,175 @@ html {
   color: var(--frame-muted);
   font-size: 0.875rem;
   line-height: normal;
+}
+
+/* The theme switch (theme-toggle.tsx), the same button in both headers: a
+   round ghost button in the nav's muted colour, showing the sun in light and
+   the moon in dark. data-theme on <html> picks the icon, so the right one is
+   there before either site's scripts run. */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--frame-switch);
+  height: var(--frame-switch);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--frame-muted);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  background: var(--frame-border);
+  color: var(--frame-ink);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--frame-primary);
+  outline-offset: 2px;
+}
+
+.theme-toggle__icon {
+  display: none;
+  width: var(--frame-switch-icon);
+  height: var(--frame-switch-icon);
+  flex-shrink: 0;
+}
+
+:root:not([data-theme="dark"]) .theme-toggle__icon--light,
+:root[data-theme="dark"] .theme-toggle__icon--dark {
+  display: block;
+}
+
+/* The full-width content switch (full-width-toggle.tsx): the nav links'
+   type and line in the mono face, so it sits beside the docs version picker
+   on the doc toolbar. While on, it takes the ink colour. */
+.width-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--frame-muted);
+  font-family: var(--frame-font-mono);
+  font-size: var(--frame-nav-size);
+  line-height: var(--frame-nav-line);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.width-toggle:hover,
+.width-toggle[data-full="true"] {
+  color: var(--frame-ink);
+}
+
+.width-toggle:focus-visible {
+  outline: 2px solid var(--frame-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Both labels share one cell and only the current one shows, so the button
+   is as wide as the longer label either way and the toolbar doesn't move. */
+.width-toggle__label {
+  display: inline-grid;
+  justify-items: start;
+}
+
+.width-toggle__label > span {
+  grid-area: 1 / 1;
+}
+
+.width-toggle__spacer {
+  visibility: hidden;
+}
+
+.width-toggle__icon {
+  width: var(--frame-toggle-icon);
+  height: var(--frame-toggle-icon);
+  flex-shrink: 0;
+}
+
+/* The cookie choice (consent-banner.tsx): a bar on the frame's surface at
+   the bottom of the window, in the page column, over the content and never
+   moving it. */
+.frame-consent {
+  position: fixed;
+  z-index: 300;
+  left: 50%;
+  bottom: calc(1rem + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  width: min(var(--frame-max), calc(100% - 2 * var(--frame-gutter)));
+  padding: 0.875rem 1rem;
+  transform: translateX(-50%);
+  border: 1px solid var(--frame-border);
+  border-radius: var(--frame-radius);
+  background: var(--frame-surface);
+  box-shadow: var(--frame-shadow-raised);
+  color: var(--frame-ink);
+  font-family: var(--frame-font-sans);
+  font-size: var(--frame-nav-size);
+  line-height: var(--frame-nav-line);
+}
+
+.frame-consent__text {
+  flex: 1 1 20rem;
+  margin: 0;
+  color: var(--frame-muted);
+}
+
+.frame-consent__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.frame-consent__button {
+  box-sizing: border-box;
+  height: var(--frame-switch);
+  margin: 0;
+  padding: 0 0.875rem;
+  border: 1px solid var(--frame-border);
+  border-radius: var(--frame-radius);
+  background: transparent;
+  color: var(--frame-ink);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.frame-consent__button:hover {
+  border-color: var(--frame-primary);
+  color: var(--frame-primary);
+}
+
+/* The page's primary button: white on the primary in light, the page colour
+   on it in dark, both over 4.5:1. */
+.frame-consent__button--primary {
+  border-color: var(--frame-primary);
+  background: var(--frame-primary);
+  color: var(--frame-on-primary);
+}
+
+.frame-consent__button--primary:hover {
+  border-color: var(--frame-primary-hover);
+  background: var(--frame-primary-hover);
+  color: var(--frame-on-primary);
+}
+
+.frame-consent__button:focus-visible {
+  outline: 2px solid var(--frame-primary);
+  outline-offset: 2px;
 }
