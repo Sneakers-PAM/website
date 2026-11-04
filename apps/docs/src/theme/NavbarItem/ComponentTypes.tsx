@@ -4,10 +4,10 @@ SPDX-License-Identifier: Apache-2.0
 */
 import ComponentTypes from '@theme-original/NavbarItem/ComponentTypes';
 
-import {DocsVersionNavbarItem} from '@site/src/components/docs-version-navbar-item';
+import {ThemeToggleNavbarItem} from '@site/src/components/theme-toggle-navbar-item';
 
-// Adds the 'custom-docsVersion' navbar item type (docusaurus.config.ts).
+// Adds the 'custom-themeToggle' navbar item type (docusaurus.config.ts).
 export default {
   ...ComponentTypes,
-  'custom-docsVersion': DocsVersionNavbarItem,
+  'custom-themeToggle': ThemeToggleNavbarItem,
 };

@@ -228,6 +228,29 @@ code {
   --ifm-alert-border-color: var(--sp-warn);
 }
 
+/* Links in running text and in callouts read as links in both themes: the
+   primary colour (5:1 or better on the page, the surface and the warning
+   tint, light and dark) and always underlined, since the colour alone sits
+   close to the body text. Infima gives a callout's links the callout's text
+   colour; this takes that back. Only links with no class of their own
+   (Docusaurus writes Markdown links with an empty one), so cards, buttons
+   and heading anchors keep their look. */
+.markdown a:is(:not([class]), [class='']),
+.markdown .theme-admonition a:is(:not([class]), [class='']) {
+  color: var(--sp-primary);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--sp-primary) 60%, transparent);
+  text-underline-offset: 0.2em;
+}
+
+.markdown a:is(:not([class]), [class='']):is(:hover, :focus-visible),
+.markdown .theme-admonition a:is(:not([class]), [class='']):is(:hover, :focus-visible) {
+  color: var(--sp-primary);
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 2px;
+}
+
 .alert--danger {
   --ifm-alert-border-color: var(--ifm-color-danger);
 }
@@ -539,41 +562,143 @@ code {
   color: var(--frame-ink);
 }
 
-/* The docs version picker (docs.sneakers-pam.com only): right after the
-   wordmark, where the website's header has empty space, so nothing else in
-   the bar moves. It takes the nav links' size and line, so the bar keeps the
-   frame's height, and the mono face the release tags use elsewhere. Doc
-   pages only. Below 997px there's no room beside the wordmark, so it stays
-   hidden there, as Infima hides every bar item, and shows in the menu. */
-@media (min-width: 997px) {
-  .navbar__items:not(.navbar__items--right) > .dropdown {
-    display: flex;
-    align-items: center;
-    height: var(--frame-nav-line);
-    margin-left: var(--frame-nav-gap);
-    padding: 0;
-    font-size: var(--frame-nav-size);
-    line-height: var(--frame-nav-line);
-    white-space: nowrap;
+/* The theme switch: the shared one from packages/frame (theme-toggle.tsx,
+   styled in site-frame.css), the same button at the same spot as the
+   website's, shown at every width. Docusaurus's own switch is off
+   (disableSwitch); this keeps it hidden should it ever render. */
+.navbar__items--right > .navbar__theme {
+  display: flex;
+  align-items: center;
+  height: var(--frame-nav-line);
+}
+
+.navbar__items--right > [class*='colorModeToggle_'],
+.navbar-sidebar__brand [class*='colorModeToggle_'] {
+  display: none;
+}
+
+/* The doc toolbar (src/components/doc-toolbar.tsx) at the right end of the
+   breadcrumb line: the version picker and the full-width switch, in the
+   mono face the release tags use, at the nav size. It keeps them out of the
+   header, so the header stays the website's at every width. One line, one
+   height, on every doc page: the breadcrumbs take the room the toolbar
+   leaves, so the title below always starts at the same y.
+   --doc-toolbar-row-height is the breadcrumbs' own pill height. On phones
+   and tablets the toolbar takes a line of its own under the breadcrumbs. */
+.doc-toolbar-row {
+  --doc-toolbar-row-height: 2rem;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--frame-nav-gap);
+  height: var(--doc-toolbar-row-height);
+  margin-bottom: 0.8rem;
+}
+
+.doc-toolbar-row__crumbs {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.doc-toolbar-row__crumbs .theme-doc-breadcrumbs {
+  margin-bottom: 0;
+}
+
+/* The crumbs keep their size and their separators stay inside them;
+   src/theme/DocBreadcrumbs folds the crumbs above the page into one "…"
+   item when the trail doesn't fit. Only the current page's name gives way,
+   last, with an ellipsis, and never below a few characters. */
+.doc-toolbar-row__crumbs .breadcrumbs {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin: 0;
+  overflow: hidden;
+}
+
+.doc-toolbar-row__crumbs .breadcrumbs__item {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  white-space: nowrap;
+}
+
+/* The folded crumbs' "…" is plain text, not a pill, so it takes little
+   room. */
+.doc-toolbar-row__crumbs .breadcrumbs__item--folded .breadcrumbs__link {
+  padding-inline: 0.25rem;
+}
+
+.doc-toolbar-row__crumbs .breadcrumbs__item:last-child {
+  flex: 0 1 auto;
+  min-width: 5em;
+  overflow: hidden;
+}
+
+.doc-toolbar-row__crumbs .breadcrumbs__item:last-child .breadcrumbs__link {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.doc-toolbar-row .doc-toolbar {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 996px) {
+  .doc-toolbar-row {
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+    height: auto;
+  }
+
+  .doc-toolbar-row__crumbs {
+    flex-basis: 100%;
+    height: var(--doc-toolbar-row-height);
   }
 }
 
-.navbar__version.navbar__link {
+.doc-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--frame-nav-gap);
+  margin-left: auto;
+  font-size: var(--frame-nav-size);
+  line-height: var(--frame-nav-line);
+}
+
+/* Infima hides every navbar__item under 997px (it expects them in the
+   phone menu); the picker here isn't in the navbar, so it stays. */
+.doc-toolbar .navbar__item.dropdown,
+.doc-toolbar > .navbar__item {
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.doc-toolbar__version.navbar__link {
   display: block;
   padding: 0;
   font-family: var(--frame-font-mono);
   font-weight: 400;
   line-height: var(--frame-nav-line);
   color: var(--frame-muted);
+  white-space: nowrap;
 }
 
-.navbar__version.navbar__link:hover,
-.navbar__version.navbar__link:focus-visible,
-.dropdown--show > .navbar__version.navbar__link {
+.doc-toolbar__version.navbar__link:hover,
+.doc-toolbar__version.navbar__link:focus-visible,
+.dropdown--show > .doc-toolbar__version.navbar__link {
   color: var(--frame-ink);
+  text-decoration: none;
 }
 
-.navbar__items:not(.navbar__items--right) > .dropdown > .dropdown__menu {
+/* The menu opens under the picker, aligned to its right edge, so it never
+   runs past the right side of a narrow screen. */
+.doc-toolbar .dropdown__menu {
+  left: auto;
+  right: 0;
   min-width: 10rem;
   border: 1px solid var(--frame-border);
   background: var(--frame-surface);
@@ -581,38 +706,31 @@ code {
   font-size: var(--frame-nav-size);
 }
 
-/* The theme switch: Docusaurus's own, which cycles System, Light, Dark and
-   remembers the choice. Styled and placed like the website's switch
-   (website app/components/theme-switch.tsx), and shown at every width:
-   Docusaurus hides it from the bar below 997px and only offers it inside
-   the closed phone menu. Its CSS module class names carry a hash, so they
-   are matched by prefix. */
-.navbar__items--right > [class*='colorModeToggle_'] {
-  display: flex;
-  align-items: center;
-  height: var(--frame-nav-line);
+/* The content only gets narrower than the window above the frame width, so
+   the full-width switch shows only there. */
+.doc-toolbar__width {
+  display: none;
 }
 
-.navbar__items--right [class*='toggleButton_'] {
-  width: var(--frame-switch);
-  height: var(--frame-switch);
-  color: var(--frame-muted);
+@media (min-width: 72rem) {
+  .doc-toolbar__width {
+    display: flex;
+    align-items: center;
+  }
 }
 
-.navbar__items--right [class*='toggleIcon_'] {
-  width: var(--frame-switch-icon);
-  height: var(--frame-switch-icon);
+/* Full width: the doc layout (sidebar, content, table of contents) spans the
+   window, gutter to gutter, with the sidebar at the window's left edge
+   instead of the page column's. The header and the footer don't move; only
+   the doc layout widens. */
+html[data-content-width='full'] [class*='docRoot_'] {
+  max-width: none;
+  margin-inline: 0;
 }
 
-.navbar__items--right [class*='toggleButton_']:hover,
-.navbar__items--right [class*='toggleButton_']:focus-visible {
-  background: var(--frame-border);
-  color: var(--frame-ink);
-}
-
-.navbar__items--right [class*='toggleButton_']:focus-visible {
-  outline: 2px solid var(--frame-primary);
-  outline-offset: 2px;
+html[data-content-width='full'] [class*='docMainContainer_'] > .container {
+  max-width: none;
+  margin-inline: 0;
 }
 
 /* The docs sidebar only reaches phones and tablets through the menu

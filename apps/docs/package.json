@@ -11,7 +11,7 @@
     "serve": "docusaurus serve",
     "clear": "docusaurus clear",
     "typecheck": "tsc",
-    "test": "node --test scripts/*.test.mjs scripts/screenshots/*.test.mjs",
+    "test": "node --test scripts/*.test.mjs scripts/screenshots/*.test.mjs && node --experimental-strip-types --test redirects.test.ts src/lib/*.test.ts",
     "screenshots": "node scripts/screenshots/capture.mjs",
     "lint": "eslint ."
   },
