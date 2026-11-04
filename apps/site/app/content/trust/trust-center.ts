@@ -57,7 +57,7 @@ export const trustCenter = {
       {
         title: "Cryptography and export",
         summary: "The algorithms Sneakers uses and its export classification.",
-        href: "https://github.com/Sneakers-PAM/docs/blob/main/CRYPTO.md",
+        href: "https://github.com/Sneakers-PAM/website/blob/main/CRYPTO.md",
       },
       {
         title: "Key custody",
