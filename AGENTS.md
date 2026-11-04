@@ -13,9 +13,12 @@ The Sneakers-PAM product site and docs site, as one npm workspace:
 - `apps/docs`: the docs site (docs.sneakers-pam.com), Docusaurus with versioned docs. It came from
   the Sneakers-PAM/docs repo's main as one squashed `git subtree` import; see
   [apps/docs/README.md](apps/docs/README.md).
-- `packages/frame`: `site-frame.css`, the fonts in `public/fonts/` and `release.ts`, the release
-  version both sites show. `packages/brand`: the marks, favicon and touch icon in `public/`.
-- `scripts/`: `docs-version.mjs` (with `check-docs-version.mjs` and `cut-docs-version.mjs`) and
+- `packages/frame`: `site-frame.css`, the fonts in `public/fonts/`, `release.ts`, the release
+  version both sites show, and the consent-first preferences (`consent.ts`, `theme-pref.ts`,
+  `full-width.ts` and their React pieces); see [packages/frame/README.md](packages/frame/README.md).
+  `packages/brand`: the marks, favicon, touch icon and link-preview card in `public/`.
+- `scripts/`: `docs-version.mjs` (with `check-docs-version.mjs` and `cut-docs-version.mjs`),
+  `check-no-storage.mjs`, which fails a build that writes browser storage before consent, and
   `changed-apps.mjs`, the path filter the workflows use. Their tests are `scripts/*.test.mjs`.
 
 Nothing here publishes to npm. One published GitHub Release deploys both sites to Cloudflare Pages
@@ -60,18 +63,25 @@ Paths below are under `apps/site/` unless they say otherwise.
 - `shared-public.ts` - the Vite plugin that serves `packages/frame/public` and
   `packages/brand/public` from the site root, in dev and in the build output, the way Vite serves
   `public/`. The site has no `public/` folder of its own.
-- `app/theme.ts` - light and dark mode. `app/app.css` holds both palettes as tokens (the dark one is
-  the web UI kit's and the docs site's); with no choice made the page follows the system setting.
-  The header's theme switch (`components/theme-switch.tsx`) cycles System, Light, Dark like the
-  docs site's, keeps the choice in localStorage under `theme`, and an inline script in `root.tsx`
-  sets `data-theme` before the first paint. `theme.test.ts` runs that script against a fake page.
-  Dark is screen-only, so the security review PDF prints in light. Every colour lives in a token;
-  `components/mark.tsx` swaps the light and dark marks.
+- `app/theme.ts` - light and dark mode, consent first. `app/app.css` holds both palettes as tokens
+  (the dark one is the web UI kit's and the docs site's). Until the visitor accepts the cookie
+  choice the page follows the system setting and nothing is stored. The header's switch
+  (`components/theme-switch.tsx`, the shared `ThemeToggle` from packages/frame) only opens the
+  cookie bar (`components/consent-bar.tsx`) before an answer; after one it flips Light and Dark,
+  stored under `sneakers-site:` keys only if they accepted. An inline script in `root.tsx` sets
+  `data-theme` before the first paint; `theme.test.ts` runs it against a fake page.
+  `components/scroll-to-top.tsx` stands in for React Router's `ScrollRestoration`, which writes
+  sessionStorage. Dark is screen-only, so the security review PDF prints in light. Every colour
+  lives in a token; `components/mark.tsx` swaps the light and dark marks.
 - `packages/brand/public/` (repo root) - the favicon, logo marks and `apple-touch-icon.png`,
   served as-is by both sites. The touch icon is a 180x180 render of `img/mark-light.svg` on the
   page background; re-render it if the mark changes (`packages/brand/brand.test.ts`).
-- Link previews: the Open Graph and Twitter card tags in `app/routes/home.tsx` read their values
-  from `meta` in `app/content/sneakers-pam.ts`. There is no og:image yet.
+- Link previews: every route's title, Open Graph and Twitter card tags come from `pageMeta` in
+  `app/content/meta.ts` (summary_large_image, absolute URLs), with the share card
+  `packages/brand/public/img/og-card.png` (1200x630), made from `packages/brand/og-card.html`. To
+  change the card, edit that page and render it headless at 1200x630, device scale 1;
+  `app/content/meta.test.ts` and `packages/brand/brand.test.ts` check the tags and the file. The
+  docs use the same card (`image` in `apps/docs/docusaurus.config.ts`).
 
 ## Build, test, lint
 
@@ -82,10 +92,14 @@ workspace; add `-w @sneakers-pam/site` or `-w @sneakers-pam/docs` for one app.
 - Typecheck: `npm run typecheck`
 - Test: `npm test` (every workspace's tests plus `scripts/*.test.mjs`; no fixtures or services)
 - Lint: `npm run lint` (ESLint over the whole repo, from the root `eslint.config.mjs`)
+- No storage before consent: `npm run check:storage:site` and `npm run check:storage:docs`, after
+  the builds. They load every page in jsdom with storage watched (and hydrate and use a few docs
+  pages); CI runs both.
 - Preview locally: `npm run preview -w @sneakers-pam/site` (serves `build/client` with `serve`),
   `npm run serve -w @sneakers-pam/docs`
 - Docs version: `npm run docs:version` cuts the docs version for `packages/frame/release.ts`;
-  `npm run check:docs-version` fails unless it's cut and newest. The deploy runs the check first.
+  `npm run check:docs-version` fails unless it's cut and newest, and no cut version is named
+  `vnext`, `next` or `current`. The deploy runs the check first.
 - Security review PDF: `npm run build` ends by printing `/trust/security-review` with headless Chrome
   (`CHROME_PATH` if it isn't in a standard place; GitHub's Ubuntu runners have it) to
   `build/client/trust/sneakers-security-review.pdf`, the file the trust center's Documents section
@@ -121,7 +135,7 @@ Follow the logging rules in `CLAUDE.md`. In short:
   (e.g. a preview). A preview build prints the PDF too, into `build/client/<base>/trust/`. It's
   unset in the real build, so all of them default to `/`; never hardcode a sub-path into any of
   them. The docs take their base from `baseUrl` in `apps/docs/docusaurus.config.ts`.
-- `DOCS_INCLUDE_NEXT=false` leaves the docs' Next (unreleased main) out of a docs build. Only the
+- `DOCS_INCLUDE_NEXT=false` leaves the docs' vNext (unreleased main) out of a docs build. Only the
   deploy sets it.
 - CI builds only what a change touches (`scripts/changed-apps.mjs`): `apps/site` or `apps/docs`
   alone builds that app; anything else builds both. Keep a new shared path out of `ROOT_DOCS`
