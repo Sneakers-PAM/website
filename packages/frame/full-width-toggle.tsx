@@ -1,0 +1,58 @@
+/*
+Copyright 2026 The Sneakers-PAM Authors
+SPDX-License-Identifier: Apache-2.0
+*/
+import { widthToggleText } from "./full-width.ts";
+
+// The full-width content switch for a docs header (full-width.ts): a
+// button in the nav type, beside the version picker, labelled with what
+// pressing it does.
+// Drawn with plain classes from site-frame.css.
+
+const iconProps = {
+  "aria-hidden": true,
+  fill: "none",
+  height: 16,
+  stroke: "currentColor",
+  strokeLinecap: "round",
+  strokeLinejoin: "round",
+  strokeWidth: 1.75,
+  viewBox: "0 0 24 24",
+  width: 16,
+} as const;
+
+// Arrows out to the sides (widen) and in from them (narrow).
+const Widen = () => (
+  <svg {...iconProps} className="width-toggle__icon">
+    <path d="M3 12h7M3 12l3-3M3 12l3 3" />
+    <path d="M21 12h-7M21 12l-3-3M21 12l-3 3" />
+  </svg>
+);
+
+const Narrow = () => (
+  <svg {...iconProps} className="width-toggle__icon">
+    <path d="M10 12H3M10 12l-3-3M10 12l-3 3" />
+    <path d="M14 12h7M14 12l3-3M14 12l3 3" />
+  </svg>
+);
+
+export const FullWidthToggle = ({ full, onToggle }: { full: boolean; onToggle: () => void }) => {
+  const { label, other, title } = widthToggleText(full);
+  return (
+    <button
+      className="width-toggle"
+      data-full={full ? "true" : undefined}
+      onClick={onToggle}
+      title={title}
+      type="button"
+    >
+      {full ? <Narrow /> : <Widen />}
+      <span className="width-toggle__label">
+        <span>{label}</span>
+        <span aria-hidden="true" className="width-toggle__spacer">
+          {other}
+        </span>
+      </span>
+    </button>
+  );
+};

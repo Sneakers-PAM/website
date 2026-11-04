@@ -3,8 +3,10 @@ Copyright 2026 The Sneakers-PAM Authors
 SPDX-License-Identifier: Apache-2.0
 */
 import type { ReactNode } from "react";
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
+import { Links, Meta, Outlet, Scripts } from "react-router";
 
+import { ConsentBar } from "./components/consent-bar";
+import { ScrollToTop } from "./components/scroll-to-top";
 import { themeInitScript } from "./theme";
 
 import "@sneakers-pam/frame/site-frame.css";
@@ -18,8 +20,9 @@ const frameFonts = [
 
 export function Layout({ children }: { children: ReactNode }) {
   return (
-    // The head script sets data-theme before React hydrates, so <html> differs
-    // from the prerendered markup on purpose.
+    // The head script sets data-theme before React hydrates (the system
+    // setting, or the visitor's own choice once they have accepted the cookie
+    // choice), so <html> differs from the prerendered markup on purpose.
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
@@ -44,7 +47,8 @@ export function Layout({ children }: { children: ReactNode }) {
       </head>
       <body>
         {children}
-        <ScrollRestoration />
+        <ConsentBar />
+        <ScrollToTop />
         <Scripts />
       </body>
     </html>

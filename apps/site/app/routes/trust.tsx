@@ -10,14 +10,13 @@ import { Nav } from "~/components/nav";
 import { Section } from "~/components/section";
 import { siteHref } from "~/components/site-href";
 import { AreaBlock, DocumentList, PostureTiles, SubProcessorTable } from "~/components/trust";
+import { pageMeta } from "~/content/meta";
 import { footer, nav } from "~/content/sneakers-pam";
 import { areas, controls } from "~/content/trust/controls";
 import { trustCenter } from "~/content/trust/trust-center";
 
-export const meta: MetaFunction = () => [
-  { title: trustCenter.meta.title },
-  { name: "description", content: trustCenter.meta.description },
-];
+export const meta: MetaFunction = () =>
+  pageMeta({ title: trustCenter.meta.title, description: trustCenter.meta.description, path: "/trust" });
 
 export default function Trust() {
   return (

@@ -16,6 +16,8 @@
     "test": "npm test --workspaces --if-present && node --test scripts/*.test.mjs",
     "lint": "eslint .",
     "check:evidence": "npm run check:evidence -w @sneakers-pam/site",
+    "check:storage:site": "node scripts/check-no-storage.mjs --app=site apps/site/build/client",
+    "check:storage:docs": "node scripts/check-no-storage.mjs --app=docs apps/docs/build",
     "check:docs-version": "node scripts/check-docs-version.mjs",
     "docs:version": "node scripts/cut-docs-version.mjs"
   },
@@ -24,6 +26,7 @@
     "eslint": "9.39.5",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "7.1.1",
+    "jsdom": "25.0.1",
     "typescript-eslint": "8.71.2"
   }
 }

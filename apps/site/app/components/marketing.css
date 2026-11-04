@@ -105,46 +105,8 @@
   align-items: center;
 }
 
-/* The theme switch: the same size, icons and hover as the docs site's
-   Docusaurus switch, which sits at the same spot in its header. */
-.theme-switch {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--frame-switch);
-  height: var(--frame-switch);
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: transparent;
-  color: var(--frame-muted);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.theme-switch:hover,
-.theme-switch:focus-visible {
-  background: var(--frame-border);
-  color: var(--frame-ink);
-}
-
-.theme-switch:focus-visible {
-  outline: 2px solid var(--frame-primary);
-  outline-offset: 2px;
-}
-
-.theme-switch__icon {
-  display: none;
-  width: var(--frame-switch-icon);
-  height: var(--frame-switch-icon);
-}
-
-:root:not([data-theme-choice]) .theme-switch__icon--system,
-[data-theme-choice="system"] .theme-switch__icon--system,
-[data-theme-choice="light"] .theme-switch__icon--light,
-[data-theme-choice="dark"] .theme-switch__icon--dark {
-  display: block;
-}
+/* The theme switch is the shared one (packages/frame theme-toggle.tsx),
+   styled in site-frame.css with the docs' header. */
 
 @media (max-width: 720px) {
   .nav__row {

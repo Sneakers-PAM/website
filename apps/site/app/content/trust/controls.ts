@@ -240,7 +240,7 @@ export const controls: Control[] = [
       "Sneakers uses only standard, published algorithms from the Go standard library and well-known libraries (AES-GCM, AES-XTS through LUKS2, SHA-256, HKDF, ECDSA, age). There is no FIPS 140-3 validated mode yet.",
     status: "shipped",
     since: "v0.1.0-rc.1",
-    evidence: [{ repo: "docs", path: "CRYPTO.md", kind: "doc" }],
+    evidence: [{ repo: "website", path: "CRYPTO.md", kind: "doc" }],
     mappings: { iso27001: ["A.8.24", "A.5.31"], asvs: ["V6.2.2"] },
     gaps: [{ repo: "sneakers-appliance", number: 216, title: "FIPS 140-3 mode" }],
   },

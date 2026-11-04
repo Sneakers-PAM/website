@@ -13,9 +13,9 @@ An npm workspace with two apps and the two packages they share:
 │   ├── site/        www.sneakers-pam.com: React Router v7, prerendered to static HTML
 │   └── docs/        docs.sneakers-pam.com: Docusaurus, with versioned docs
 ├── packages/
-│   ├── frame/       site-frame.css, the self-hosted fonts and the current release version
-│   └── brand/       the marks, the favicon and the touch icon
-├── scripts/         the docs version and path-filter scripts the workflows run
+│   ├── frame/       site-frame.css, the fonts, the release version and the consent-first switches
+│   └── brand/       the marks, the favicon, the touch icon and the link-preview card
+├── scripts/         the docs version, no-storage and path-filter scripts the workflows run
 └── .github/         one checks, one Release Drafter and one deploy workflow for both sites
 ```
 
@@ -26,10 +26,20 @@ An npm workspace with two apps and the two packages they share:
   `git subtree` commit (the content, not its commit history). See
   [apps/docs/README.md](apps/docs/README.md) for writing pages and how the versions work.
 - `packages/frame`: the one copy of the frame both sites share (the header, page column and footer
-  sizes, the frame colours, the hero and section styles), the fonts in `public/fonts/`, and
-  `release.ts`, the release version both sites show. Change it here and both sites change.
-- `packages/brand`: the marks, favicon and touch icon in `public/`. Both sites serve the two
-  packages' `public/` folders from their own root (`/fonts/`, `/img/`, `/favicon.svg`).
+  sizes, the frame colours, the hero and section styles), the fonts in `public/fonts/`,
+  `release.ts`, the release version both sites show, and the consent-first preferences: the
+  cookie choice, the theme switch both headers render and the docs' full-width switch. Change it
+  here and both sites change. See [packages/frame/README.md](packages/frame/README.md).
+- `packages/brand`: the marks, favicon, touch icon and link-preview card (`img/og-card.png`, made
+  from `og-card.html`) in `public/`. Both sites serve the two packages' `public/` folders from
+  their own root (`/fonts/`, `/img/`, `/favicon.svg`).
+
+## 🍪 Privacy
+
+Neither site stores anything in the browser (localStorage, sessionStorage, cookies or IndexedDB)
+until the visitor accepts the cookie choice, which only shows once they use the theme or
+full-width switch. Until then the theme follows the system setting. CI checks both builds with
+`scripts/check-no-storage.mjs`.
 
 ## 🚀 Run it locally
 
@@ -46,6 +56,8 @@ npm run lint
 npm run typecheck
 npm test
 npm run build
+npm run check:storage:site
+npm run check:storage:docs
 ```
 
 One app at a time:
@@ -65,12 +77,12 @@ A release ships both sites, and the docs get a version for it:
 1. Bump the version in `packages/frame/release.ts` and update the site's
    `apps/site/app/content/release.ts` (downloads, sizes, guides) in the release's PR.
 2. In the same PR, cut the docs version with `npm run docs:version`. It snapshots `apps/docs/docs`
-   (Next) into `apps/docs/versioned_docs/` under that version, which becomes the default at
+   (vNext) into `apps/docs/versioned_docs/` under that version, which becomes the default at
    `/docs/`. Commit `apps/docs/versions.json`, `versioned_docs/` and `versioned_sidebars/`.
 3. Merge it, then publish the GitHub Release.
 
 `npm run check:docs-version` fails unless the release version is cut and is the newest docs
-version. The deploy runs it first, so a release without its docs version deploys nothing.
+version, and no cut version takes vNext's name or path (`vnext`, `next` or `current`). The deploy runs it first, so a release without its docs version deploys nothing.
 
 ## 🚢 Deploying
 
@@ -78,7 +90,8 @@ A published GitHub Release builds both apps, then deploys `apps/site/build/clien
 Cloudflare Pages project `sneakers-pam-www` and `apps/docs/build` to `sneakers-pam-docs`, creating
 each project on the first run if it doesn't exist yet. A release published as a pre-release goes
 to each project's `dev` branch, its dev site; any other release goes to production. The docs are
-built with `DOCS_INCLUDE_NEXT=false`, so the published docs have the released versions only.
+built with `DOCS_INCLUDE_NEXT=false`, so the published docs have the released versions only, not
+vNext.
 Nothing else deploys: a merge to `main` only drafts the next release. The custom domains
 (sneakers-pam.com, www.sneakers-pam.com, docs.sneakers-pam.com) are added by hand in Cloudflare,
 not by this workflow.
@@ -88,8 +101,9 @@ not by this workflow.
 `.github/workflows/checks.yml` runs the org scrub (leak guard) and the `🧪 Build & Test` job.
 `scripts/changed-apps.mjs` picks what that job builds: a change under `apps/site` or `apps/docs`
 alone builds that app; anything shared (the packages, the root manifests, the workflows) builds
-both. Lint and the shared packages' tests always run. The link check builds the site only when the
-site could have changed.
+both. Lint and the shared packages' tests always run. After each app's build, the no-storage check
+loads its pages and fails on any write to browser storage before consent. The link check builds
+the site only when the site could have changed.
 
 ## 🙏 Acknowledgements
 

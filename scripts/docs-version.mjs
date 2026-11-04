@@ -23,9 +23,19 @@ export function docsVersions(json) {
   return versions;
 }
 
+// The unreleased docs are vNext at /docs/vnext/ (Docusaurus's "current"
+// version; it was Next at /docs/next/ before, which still redirects), so no
+// cut version may take one of those names or paths.
+export const RESERVED_VERSION_NAMES = ["vnext", "next", "current"];
+
 // Why a release can't deploy these docs, or null when it can: the release's
-// version has to be cut and be the newest, so it's the default at /docs/.
+// version has to be cut and be the newest, so it's the default at /docs/, and
+// no cut version may clash with vNext.
 export function docsVersionProblem(version, versions) {
+  const reserved = versions.find((v) => RESERVED_VERSION_NAMES.includes(v.toLowerCase()));
+  if (reserved) {
+    return `"${reserved}" is reserved for the unreleased docs (vNext at /docs/vnext/); remove it from apps/docs/versions.json`;
+  }
   if (!versions.includes(version)) {
     return `the docs have no ${version} version: run "npm run docs:version" and merge it before publishing the release`;
   }

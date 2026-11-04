@@ -58,16 +58,16 @@ Drafter, not a package bump.
 │   │   ├── react-router.config.ts  ssr: false, the prerendered route list, PREVIEW_BASE_PATH
 │   │   └── vite.config.ts        the Vite build, also reads PREVIEW_BASE_PATH
 │   └── docs/                 docs.sneakers-pam.com
-│       ├── docs/                 Next (unreleased main), one Markdown file per page
+│       ├── docs/                 vNext (unreleased main), one Markdown file per page
 │       ├── versioned_docs/       one snapshot per release, listed in versions.json
-│       ├── src/                  the home page, the version picker and custom.css
+│       ├── src/                  the home page, the doc toolbar, theme overrides and custom.css
 │       ├── static/img/guides/    the guide screenshots
 │       ├── docusaurus.config.ts
 │       └── sidebars.ts
 ├── packages/
-│   ├── frame/                site-frame.css, public/fonts/ and release.ts, for both sites
-│   └── brand/                public/: the marks, favicon and touch icon, for both sites
-├── scripts/                  the docs version check and cut, and the CI path filter
+│   ├── frame/                site-frame.css, public/fonts/, release.ts and the consent-first switches
+│   └── brand/                public/: the marks, favicon, touch icon and share card, for both sites
+├── scripts/                  the docs version check and cut, the no-storage check, the CI path filter
 ├── eslint.config.mjs         one ESLint config for the whole repo
 └── package.json              the workspace root
 ```
