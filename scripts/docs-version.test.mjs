@@ -31,3 +31,9 @@ test("the repo's own release has its docs version cut", () => {
   const { version, versions } = readState();
   assert.equal(docsVersionProblem(version, versions), null);
 });
+
+test("a cut version can't take vNext's path or name", () => {
+  for (const name of ["vnext", "vNext", "next", "current"]) {
+    assert.match(docsVersionProblem("v0.1.0", ["v0.1.0", name]), /reserved for the unreleased docs/);
+  }
+});

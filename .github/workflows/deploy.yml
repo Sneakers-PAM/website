@@ -42,8 +42,9 @@ jobs:
 
       # The release's docs version must already be cut and merged: the
       # version in packages/frame/release.ts has to be in apps/docs/versions.json,
-      # newest first. Nothing builds or deploys until it is, so a release
-      # can't ship docs without its own version. The fix is a PR that runs
+      # newest first, and no cut version may take vNext's name or path.
+      # Nothing builds or deploys until it is, so a release can't ship docs
+      # without its own version. The fix is a PR that runs
       # `npm run docs:version`, then publishing the release again.
       - name: Check the docs version for this release
         run: npm run check:docs-version
@@ -56,7 +57,7 @@ jobs:
       - name: Build the site
         run: npm run build -w @sneakers-pam/site
 
-      # The published docs leave out Next (unreleased main).
+      # The published docs leave out vNext (unreleased main).
       - name: Build the docs
         env:
           DOCS_INCLUDE_NEXT: "false"
