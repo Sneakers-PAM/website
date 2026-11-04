@@ -11,19 +11,12 @@ import { Nav } from "~/components/nav";
 import { Section } from "~/components/section";
 import { SplitHero } from "~/components/split-hero";
 import { TerminalCard } from "~/components/terminal-card";
-import { different, footer, hero, meta as pageMeta, nav, whatItIs } from "~/content/sneakers-pam";
+import { pageMeta } from "~/content/meta";
+import { different, footer, hero, meta as homeMeta, nav, whatItIs } from "~/content/sneakers-pam";
 import { downloads, installTargets, kubernetes, release, verify } from "~/content/release";
 
-export const meta: MetaFunction = () => [
-  { title: pageMeta.title },
-  { name: "description", content: pageMeta.description },
-  { property: "og:site_name", content: pageMeta.siteName },
-  { property: "og:title", content: pageMeta.title },
-  { property: "og:description", content: pageMeta.description },
-  { property: "og:type", content: "website" },
-  { property: "og:url", content: pageMeta.url },
-  { name: "twitter:card", content: pageMeta.twitterCard },
-];
+export const meta: MetaFunction = () =>
+  pageMeta({ title: homeMeta.title, description: homeMeta.description, path: "/" });
 
 export default function Home() {
   return (
