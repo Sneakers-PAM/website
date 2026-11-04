@@ -38,6 +38,15 @@ export const trustCenter = {
   controls: {
     heading: "Controls by area.",
     lede: "Shipped means the code is on a published tag. Partial means it's built with a named gap. Planned means it isn't built yet.",
+    filterLabel: "Filter controls by status",
+    sortLabel: "Sort by",
+    sortOptions: [
+      { value: "area", label: "Area" },
+      { value: "status", label: "Status" },
+    ],
+    clear: "Show all",
+    shareNote: "The address bar holds this view, so you can share it as a link.",
+    empty: "No controls match this filter.",
   },
   documents: {
     heading: "Documents.",
