@@ -17,6 +17,7 @@ export default {
   ssr: false,
   basename,
   async prerender() {
-    return ["/", "/trust", "/trust/security-review"];
+    // /404 is the catch-all route's page, written out as the 404 page.
+    return ["/", "/trust", "/trust/security-review", "/404"];
   },
 } satisfies Config;

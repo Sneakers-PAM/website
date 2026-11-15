@@ -8,4 +8,6 @@ export default [
   index("routes/home.tsx"),
   route("trust", "routes/trust.tsx"),
   route("trust/security-review", "routes/security-review.tsx"),
+  // Last: anything the routes above do not match.
+  route("*", "routes/not-found.tsx"),
 ] satisfies RouteConfig;
