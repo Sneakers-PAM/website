@@ -2,6 +2,20 @@
   "format": 2,
   "products": [
     {
+      "version": "0.1.0-rc.10",
+      "arch": "amd64",
+      "channel": "production",
+      "bases": [
+        "0.1.0-rc.10"
+      ],
+      "min_base": "0.1.0-rc.10",
+      "inputs": "1a8d59ecc62c20e0743cacc8963197ebb2e80c99f68238f6c752bf3a941a53c0",
+      "file": "sneakers-product-0.1.0-rc.10-amd64.bin",
+      "size": 1123497778,
+      "tag": "v0.1.0-rc.10",
+      "docs": "https://docs.sneakers-pam.com/v0.1.0-rc.10/"
+    },
+    {
       "version": "0.1.0-rc.9",
       "arch": "amd64",
       "channel": "production",
@@ -129,6 +143,41 @@
     }
   ],
   "baseOS": [
+    {
+      "kind": "full",
+      "version": "0.1.0-rc.10",
+      "arch": "amd64",
+      "channel": "production",
+      "bases": null,
+      "commit": "3396594",
+      "inputs": "d9571cb16fb884d3e3e48c9e72494b0f3be4d5e0828f75aba33477ac702dc7bc",
+      "includes": {
+        "baseWeb": "0.1.0-rc.10"
+      },
+      "file": "sneakers-appliance-baseOS-0.1.0-rc.10-amd64.bin",
+      "size": 242783623,
+      "tag": "v0.1.0-rc.10",
+      "docs": "https://docs.sneakers-pam.com/v0.1.0-rc.10/"
+    },
+    {
+      "kind": "patch",
+      "version": "0.1.0-rc.10",
+      "arch": "amd64",
+      "channel": "production",
+      "bases": [
+        "0.1.0-rc.9"
+      ],
+      "commit": "3396594",
+      "inputs": "d9571cb16fb884d3e3e48c9e72494b0f3be4d5e0828f75aba33477ac702dc7bc",
+      "includes": {
+        "baseWeb": "0.1.0-rc.10"
+      },
+      "base_root_sha256": "ef5bbf60b2e878a46632132129dc0e3ac7f3c7e90dc6ae4d39af30271e04f25e",
+      "file": "sneakers-appliance-baseOS-patch-0.1.0-rc.9-to-0.1.0-rc.10-amd64.bin",
+      "size": 14895699,
+      "tag": "v0.1.0-rc.10",
+      "docs": "https://docs.sneakers-pam.com/v0.1.0-rc.10/"
+    },
     {
       "kind": "full",
       "version": "0.1.0-rc.9",
@@ -429,6 +478,19 @@
   "baseWeb": [
     {
       "kind": "full",
+      "version": "0.1.0-rc.10",
+      "arch": "amd64",
+      "channel": "production",
+      "bases": null,
+      "commit": "3396594",
+      "inputs": "0e61bf76f771ac411aedfc1a35cee008540ebb96e4ece045e00d814f48acf061",
+      "file": "sneakers-appliance-baseWeb-0.1.0-rc.10-amd64.bin",
+      "size": 1349429,
+      "tag": "v0.1.0-rc.10",
+      "docs": "https://docs.sneakers-pam.com/v0.1.0-rc.10/"
+    },
+    {
+      "kind": "full",
       "version": "0.1.0-rc.9",
       "arch": "amd64",
       "channel": "production",
@@ -567,7 +629,7 @@
   ],
   "feed": {
     "channel": "rc",
-    "sequence": 1,
-    "generated_at": "2026-11-18T11:42:21Z"
+    "sequence": 2,
+    "generated_at": "2026-11-18T22:09:06Z"
   }
 }
