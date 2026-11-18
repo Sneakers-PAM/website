@@ -1,0 +1,9 @@
+# Everything that is not a feed file goes to the product site. Pages applies
+# the first matching rule, and redirects win over files, so each feed path
+# is first passed through to its own file (a 200 rule for the same path).
+/rc/index.json /rc/index.json 200
+/rc/index.json.sigstore.json /rc/index.json.sigstore.json 200
+/stable/index.json /stable/index.json 200
+/stable/index.json.sigstore.json /stable/index.json.sigstore.json 200
+/ https://sneakers-pam.com 302
+/* https://sneakers-pam.com 302
