@@ -21,8 +21,13 @@ The Sneakers-PAM product site and docs site, as one npm workspace:
   `check-no-storage.mjs`, which fails a build that writes browser storage before consent, and
   `changed-apps.mjs`, the path filter the workflows use. Their tests are `scripts/*.test.mjs`.
 
+- `apps/updates`: the signed update feed host (updates.sneakers-pam.com), plain files in `public/`
+  with no build; see [apps/updates/README.md](apps/updates/README.md). Unlike the sites it deploys on
+  its own, through `deploy-updates.yml`, when a change under `apps/updates/**` merges to `main`.
+  `npm run check:feed-docs` requires a version the feed adds to have its docs snapshot first.
+
 Nothing here publishes to npm. One published GitHub Release deploys both sites to Cloudflare Pages
-through `deploy.yml`.
+through `deploy.yml`; the update feed deploys separately, as above.
 
 An agent changing this repo should know: a new release bumps `packages/frame/release.ts`, updates
 `apps/site/app/content/release.ts` (every download's URL, size and the verify key come from there)

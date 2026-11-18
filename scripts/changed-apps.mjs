@@ -22,6 +22,7 @@ export function changedApps(files) {
   for (const file of files) {
     if (file.startsWith("apps/site/")) siteChanged = true;
     else if (file.startsWith("apps/docs/")) docsChanged = true;
+    else if (file.startsWith("apps/updates/")) continue; // plain files deployed as they are
     else if (!ROOT_DOCS.test(file)) {
       siteChanged = true;
       docsChanged = true;

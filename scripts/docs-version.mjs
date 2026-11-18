@@ -13,6 +13,12 @@ export function releaseVersion(source) {
   return match[1];
 }
 
+// The docs version name for a feed version: the feed lists 0.1.0-rc.10, the
+// docs snapshot (and the release) is v0.1.0-rc.10.
+export function docsVersionName(feedVersion) {
+  return feedVersion.startsWith("v") ? feedVersion : `v${feedVersion}`;
+}
+
 // The cut docs versions, newest first, from apps/docs/versions.json.
 export function docsVersions(json) {
   if (json === undefined) return [];
