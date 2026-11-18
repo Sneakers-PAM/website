@@ -5,7 +5,7 @@ SPDX-License-Identifier: Apache-2.0
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { docsVersionProblem, docsVersions, readState, releaseVersion } from "./docs-version.mjs";
+import { docsVersionProblem, docsVersions, readState, releaseVersion, RESERVED_VERSION_NAMES } from "./docs-version.mjs";
 
 test("the release version is read from packages/frame/release.ts", () => {
   assert.equal(releaseVersion('export const release = {\n  version: "v1.2.3-rc.4",\n};'), "v1.2.3-rc.4");
@@ -27,9 +27,14 @@ test("the release's docs version must be the newest, so it's the default", () =>
   assert.equal(docsVersionProblem("v0.1.0", ["v0.1.0", "v0.1.0-rc.7"]), null);
 });
 
+// The docs version of the next release can be cut before the release's own PR bumps packages/frame/release.ts (the
+// update feed's docs guard needs it earlier), so the repo's state is only held to having its release's version cut and
+// no reserved name. That the release's version is the newest is held by the test above and, at publish time, by
+// check:docs-version in deploy.yml, which is why the newest-version rule stays in docsVersionProblem.
 test("the repo's own release has its docs version cut", () => {
   const { version, versions } = readState();
-  assert.equal(docsVersionProblem(version, versions), null);
+  assert.ok(versions.includes(version), `the docs have no ${version} version`);
+  assert.ok(!versions.some((v) => RESERVED_VERSION_NAMES.includes(v.toLowerCase())));
 });
 
 test("a cut version can't take vNext's path or name", () => {

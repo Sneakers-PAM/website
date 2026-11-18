@@ -5,7 +5,90 @@ prerelease until v0.1.0. The full list of changes in each repository is on its G
 page, such as the
 [appliance releases](https://github.com/Sneakers-PAM/sneakers-appliance/releases).
 
+## v0.1.0-rc.10
+
+:::info[Updating from an older release candidate]
+
+An update from v0.1.0-rc.6 to rc.7, rc.8 or rc.9 fails, and those three are withdrawn. Update to
+rc.10. A box on rc.9 or older can't read the withdrawn marker until it has updated to rc.10, so this
+page is the only warning it gets before then.
+
+:::
+
+:::warning[Known issues]
+
+- A box on rc.9 or older doesn't see which releases are withdrawn until it runs rc.10.
+  ([sneakers-appliance#646](https://github.com/Sneakers-PAM/sneakers-appliance/pull/646))
+- A box can still stay stuck if it loses power right after the database move that rc.7 introduced.
+  It's tracked in
+  [sneakers-appliance#579](https://github.com/Sneakers-PAM/sneakers-appliance/issues/579).
+
+:::
+
+### New
+
+- **Releases that shouldn't be installed are marked withdrawn.** The signed update index can list a
+  release with the reason and the version to use. A box doesn't offer a withdrawn release, never
+  prefers it, and refuses to fetch it with that reason. A marker for a release that isn't listed
+  changes nothing. See [Updating the appliance](./appliance-updates-guide.md#withdrawn-releases).
+  ([sneakers-appliance#646](https://github.com/Sneakers-PAM/sneakers-appliance/pull/646))
+- **An uploaded file of a withdrawn release is warned about.** Staging stops with the reason and the
+  version to use, and the file stays held, so a deliberate rollback stays possible. The stop and a
+  later confirmation are in the audit log. A box that holds no withdrawn list can't tell, so it
+  stages the file and says withdrawn releases couldn't be checked.
+  ([sneakers-appliance#653](https://github.com/Sneakers-PAM/sneakers-appliance/pull/653))
+
+### Changed
+
+- **Updates now come from the project's update feed.** The box's list of updates is read from
+  `updates.sneakers-pam.com`: signed static files, so a withdrawal or a correction needs no new
+  release. The index has to be signed by a feed key built into the appliance, the release key
+  doesn't sign it, and every file it names is still verified when it's staged. GitHub's releases
+  are a source an admin can pick instead. A mirror, no source and an upload are unchanged. When the
+  feed can't be taken, the Updates page shows the cause and the last list the box verified, with
+  its age. See [Updating the appliance](./appliance-updates-guide.md#where-the-list-comes-from).
+  ([sneakers-appliance#647](https://github.com/Sneakers-PAM/sneakers-appliance/pull/647),
+  [sneakers-appliance#648](https://github.com/Sneakers-PAM/sneakers-appliance/pull/648),
+  [sneakers-appliance#649](https://github.com/Sneakers-PAM/sneakers-appliance/pull/649))
+
+### Fixed
+
+- **An update from a box that never had cert-manager keeps the services' certificates.** Going from
+  a published rc.6 box to rc.8 or rc.9 could leave the services without their issuer and
+  certificates, so the identity and vault pods waited on a missing TLS secret until the step timed
+  out and the box went back. The update now checks that every certificate object the always-on
+  stacks declare is in the cluster, and waits for them before it goes on.
+  ([sneakers-appliance#643](https://github.com/Sneakers-PAM/sneakers-appliance/pull/643))
+
+## v0.1.0-rc.9
+
+:::danger[Withdrawn]
+
+This release is withdrawn: an update from v0.1.0-rc.6 to it fails. Don't install it, use [v0.1.0-rc.10](#v010-rc10).
+
+:::
+
+This release has no notes here. The full list of changes is on its
+[GitHub release](https://github.com/Sneakers-PAM/sneakers-appliance/releases/tag/v0.1.0-rc.9).
+
+## v0.1.0-rc.8
+
+:::danger[Withdrawn]
+
+This release is withdrawn: an update from v0.1.0-rc.6 to it fails. Don't install it, use [v0.1.0-rc.10](#v010-rc10).
+
+:::
+
+This release has no notes here. The full list of changes is on its
+[GitHub release](https://github.com/Sneakers-PAM/sneakers-appliance/releases/tag/v0.1.0-rc.8).
+
 ## v0.1.0-rc.7
+
+:::danger[Withdrawn]
+
+This release is withdrawn: an update from v0.1.0-rc.6 to it fails. Don't install it, use [v0.1.0-rc.10](#v010-rc10).
+
+:::
 
 :::warning[Known issue]
 

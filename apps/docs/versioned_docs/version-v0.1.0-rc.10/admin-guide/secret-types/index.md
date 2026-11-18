@@ -1,0 +1,83 @@
+---
+title: Secret types
+description: Every built-in secret type, its fields, which are secret, and what it can do.
+sidebar_position: 0
+---
+
+{/* Checked by hand against the sneakers-vault secret-type catalogue at d68f3e0e (v0.1.0-rc.7). The docs repo's draft generator (Sneakers-PAM/docs#21) isn't carried over yet; edit by hand until it is. */}
+
+# 🧩 Secret types
+
+A secret's type decides which fields it has, which of them are secret, and what Sneakers-PAM can do
+with it: check it against a target (the heartbeat), change it on the target (rotation), or lend it
+to one person at a time (check-out). Sneakers-PAM ships with the 22 types below. They're read-only:
+nobody can edit or delete a built-in type, but a site admin can clone one into a custom type on the
+admin console's **Secret types** page, and install the [extension packs](./extension-packs.md).
+
+| Type | Secret fields | Heartbeat | Rotation | Check-out | Takes a target |
+|---|---|---|---|---|---|
+| [Password](./password.md) | Password | No | No | No | No |
+| [Secure Note](./secure-note.md) | Note | No | No | No | No |
+| [Web Password](./web-password.md) | Password | No | No | No | No |
+| [SSH Key](./ssh-key.md) | Private Key, Passphrase | Yes | No | Yes | Yes |
+| [API Token](./api-token.md) | Token | No | No | No | No |
+| [OAuth Application](./oauth.md) | Client Secret, Access Token, Refresh Token | No | No | No | No |
+| [Recovery / Backup Codes](./recovery-codes.md) | Recovery / Backup Codes | No | No | No | No |
+| [Database Account](./database-account.md) | Password | Yes | Yes | No | Yes |
+| [Password Account (SSH)](./unix-ssh.md) | Password | No | No | No | Yes |
+| [Windows Account (Local)](./windows-local.md) | Password | Yes | Yes | Yes | Yes |
+| [Windows Domain Account](./windows-domain.md) | Password | Yes | Yes | Yes | Yes |
+| [Active Directory Account](./active-directory.md) | Password | Yes | Yes | Yes | Yes |
+| [Bank Account](./bank-account.md) | Account number, Routing number, Online password | No | No | No | No |
+| [Credit Card](./credit-card.md) | Card number, CVV | No | No | No | No |
+| [License Key](./license-key.md) | License key | No | No | No | No |
+| [Combination Lock](./combination-lock.md) | Combination | No | No | No | No |
+| [PIN](./pin.md) | PIN | No | No | No | No |
+| [Social Security Number](./ssn.md) | SSN | No | No | No | No |
+| [Contact](./contact.md) | Email, Phone | No | No | No | No |
+| [Anthropic Token](./anthropic-token.md) | Token | No | No | No | No |
+| [SSL/PKI Certificate](./ssl-cert.md) | Private Key | No | No | No | No |
+| [GitHub App](./github-app.md) | Client Secret, Private Key (PEM), Webhook Secret | No | No | No | No |
+
+:::info[Heartbeat and rotation need a connector adapter]
+
+A type marked for heartbeat or rotation still needs an adapter in the connector for its target's
+protocol. LDAP, LDAPS, Kerberos and SSH work today; WinRM and SAMR are registered but report the
+target as unreachable, and there is no database adapter yet. Each type's page says what works.
+
+:::
+
+## 🔤 Field kinds {#field-kinds}
+
+| Kind | What it holds |
+|---|---|
+| Text | Plain text, shown to anyone who can see the secret. |
+| Password (can be generated) | A secret password. The editor can generate one from the folder's password policy, and rotation changes it. |
+| Secret value (never generated) | A fixed secret, such as a key or a token: masked and revealed like a password, never generated or rotated. |
+| Multi-line text | Longer text, such as notes or a certificate. Secret only where the type marks it so. |
+| Choice | One of a fixed list of options. |
+| Yes or no | A flag. |
+
+A **Choice** field only takes one of its type's own options: creating or editing a secret with
+anything else is refused, naming the field and listing the options to pick from. A value stored
+before this was enforced still reads back as it was; the next save on that field has to pick a
+valid option.
+
+## 🔐 Secret and super-sensitive fields {#sensitivity}
+
+- **Sensitive fields** are masked everywhere. Revealing or copying one is a deliberate act, written
+  to the [audit trail](../../concepts/audit.md), and a site admin can require a fresh second factor first
+  ([security settings](../security-settings.md)).
+- **Super-sensitive fields** (a card number and CVV, a PIN, the SSN, a certificate's private key,
+  a bank account's numbers and online password) also show a partial mask before the whole value, and service accounts and personal
+  tokens can't read them unless a site admin turns on **Allow API access to sensitive secrets**.
+
+## 🔄 Changing a secret's type {#changing-type}
+
+A secret can move to another type, from the staff app, with a preview of where each field goes
+before anything changes. No value is ever dropped: a value with no field in the new type moves to
+the notes, or the change is refused. A secret value only moves into a secret field, and a
+super-sensitive one only into a super-sensitive field. See [Changing a secret's
+type](../../change-type-guide.md) for the steps.
+
+<small>These pages match the vault's built-in catalogue at commit `d68f3e0e`, the one v0.1.0-rc.7 ships.</small>
