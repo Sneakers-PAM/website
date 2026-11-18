@@ -92,6 +92,8 @@ export async function deployedFeed(channel, fetchFn = fetch) {
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`the deployed ${channel} feed answered ${res.status}`);
   const text = await res.text();
+  // The host's HTML fallback page answers a feed path that has no file yet.
+  if (text.trimStart().startsWith("<")) return null;
   let parsed;
   try {
     parsed = JSON.parse(text);
