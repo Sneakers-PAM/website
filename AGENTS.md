@@ -24,7 +24,10 @@ The Sneakers-PAM product site and docs site, as one npm workspace:
 - `apps/updates`: the signed update feed host (updates.sneakers-pam.com), plain files in `public/`
   with no build; see [apps/updates/README.md](apps/updates/README.md). Unlike the sites it deploys on
   its own, through `deploy-updates.yml`, when a change under `apps/updates/**` merges to `main`.
-  `npm run check:feed-docs` requires a version the feed adds to have its docs snapshot first.
+  The reviewed unsigned source is `apps/updates/feed/<channel>/index.json`; the deploy stages it
+  (`scripts/feed-stage.mjs`), signs it behind the `feed-signing` environment and verifies it with
+  `apps/updates/feed-public-key.pem`. `npm run check:feed-docs` requires a version the feed adds to
+  have its docs snapshot first; `npm run check:feed-content` checks the source.
 
 Nothing here publishes to npm. One published GitHub Release deploys both sites to Cloudflare Pages
 through `deploy.yml`; the update feed deploys separately, as above.

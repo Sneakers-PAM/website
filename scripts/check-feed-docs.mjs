@@ -2,8 +2,8 @@
 Copyright 2026 The Sneakers-PAM Authors
 SPDX-License-Identifier: Apache-2.0
 */
-// Fails when a change ADDS a version to a signed update feed index
-// (apps/updates/public/<channel>/index.json) whose docs snapshot is not cut yet
+// Fails when a change ADDS a version to an update feed index
+// (apps/updates/feed/<channel>/index.json) whose docs snapshot is not cut yet
 // (apps/docs/versions.json). Only additions count: editing withdrawn, notes,
 // feed.sequence or generated_at, or removing or changing existing versions, is
 // not checked. Versions are compared with the same index at a base ref; with no
@@ -68,7 +68,7 @@ export function runCheck({ root, base }) {
   const docs = docsVersions(existsSync(versionsPath) ? readFileSync(versionsPath, "utf8") : undefined);
   const problems = [];
   for (const channel of CHANNELS) {
-    const path = `apps/updates/public/${channel}/index.json`;
+    const path = `apps/updates/feed/${channel}/index.json`;
     const file = join(root, path);
     if (!existsSync(file)) {
       console.log(`${channel}: no feed index, nothing to check`);

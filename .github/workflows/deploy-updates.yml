@@ -1,8 +1,11 @@
 name: deploy-updates
 
-# The signed update feed (apps/updates/public) deploys on its own when a change
-# under apps/updates lands on main, and by hand. It does not wait for a release:
-# the feed files are proposed as pull requests and must go live when merged.
+# The update feed deploys on its own when a change under apps/updates lands on
+# main, and by hand. It does not wait for a release. The reviewed, UNSIGNED
+# source is apps/updates/feed/<channel>/index.json; the signature exists only
+# here, made in the deploy behind the feed-signing environment (the owner
+# approves each run) and checked against the committed public key before the
+# files go live. Nothing signed is ever committed.
 on:
   push:
     branches: [main]
@@ -17,10 +20,10 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
-    name: Deploy the update feed to Cloudflare Pages
+  check:
+    name: Check the feed source
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 10
     steps:
       - name: Check out the repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -33,6 +36,10 @@ jobs:
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
           node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
 
       # A version the feed adds must already have its docs snapshot. On a push
       # compare with the commit before it; a manual run compares with the
@@ -42,6 +49,89 @@ jobs:
         env:
           BEFORE: ${{ github.event.before }}
         run: npm run check:feed-docs -- "--base=${BEFORE:-HEAD~1}"
+
+      # The source's shape, a sequence above the deployed one, and every
+      # entry's release asset present with the listed size.
+      - name: Check the feed content
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run check:feed-content
+
+  sign_and_deploy:
+    name: Sign and deploy the update feed
+    needs: check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    # The owner approves each run here; FEED_SIGNING_KEY and COSIGN_PASSWORD
+    # are secrets of this environment and exist in no other job.
+    environment: feed-signing
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      # Copies each channel's source index to public/<channel>/index.json and
+      # records the channels it staged. A channel with no source is not served
+      # (the box falls back to GitHub); a push that changed only the static
+      # files still deploys, with the channels that do have a source.
+      - name: Stage the feed
+        id: stage
+        run: |
+          channels="$(node scripts/feed-stage.mjs | tr '\n' ' ')"
+          echo "channels=${channels}" >> "$GITHUB_OUTPUT"
+
+      - name: Install cosign
+        if: steps.stage.outputs.channels != ''
+        uses: sigstore/cosign-installer@756fe2d284c7292c4e9b62c8a28f1e5629c59532 # v4.1.3
+
+      # The bytes signed are the reviewed source's, so signing again on every
+      # deploy is fine. No transparency log: the box checks the key alone.
+      - name: Sign the feed
+        if: steps.stage.outputs.channels != ''
+        env:
+          FEED_SIGNING_KEY: ${{ secrets.FEED_SIGNING_KEY }}
+          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
+          CHANNELS: ${{ steps.stage.outputs.channels }}
+        run: |
+          for channel in ${CHANNELS}; do
+            cosign sign-blob --yes --key env://FEED_SIGNING_KEY \
+              --bundle "apps/updates/public/${channel}/index.json.sigstore.json" \
+              --tlog-upload=false --use-signing-config=false \
+              "apps/updates/public/${channel}/index.json"
+          done
+
+      # Never deploy a signature the committed public key does not accept.
+      - name: Verify the signatures with the public key
+        if: steps.stage.outputs.channels != ''
+        env:
+          CHANNELS: ${{ steps.stage.outputs.channels }}
+        run: |
+          for channel in ${CHANNELS}; do
+            cosign verify-blob --key apps/updates/feed-public-key.pem \
+              --bundle "apps/updates/public/${channel}/index.json.sigstore.json" \
+              --insecure-ignore-tlog=true \
+              "apps/updates/public/${channel}/index.json"
+          done
+
+      - name: Keep the signed files
+        if: steps.stage.outputs.channels != ''
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: signed-feed
+          path: |
+            apps/updates/public/rc/index.json*
+            apps/updates/public/stable/index.json*
+          if-no-files-found: error
 
       - name: Deploy the update feed
         uses: cloudflare/wrangler-action@2ef9f398b9175c68f953e40d679493850d640a85 # v4.1.3

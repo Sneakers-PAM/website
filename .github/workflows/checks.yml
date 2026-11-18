@@ -70,13 +70,19 @@ jobs:
           node --test scripts/*.test.mjs
 
       # A version the update feed adds must already have its docs snapshot
-      # (only apps/updates/public/<channel>/index.json is read; no change
-      # there is a no-op).
+      # (only apps/updates/feed/<channel>/index.json is read; no change there
+      # is a no-op).
       - name: Update feed - docs exist for added versions
         if: github.event_name == 'pull_request'
         env:
           BASE_REF: ${{ github.base_ref }}
         run: npm run check:feed-docs -- "--base=origin/${BASE_REF}"
+
+      # The source's shape and a sequence above the deployed one. The release
+      # assets are checked at deploy time, not here (--skip-network).
+      - name: Update feed - content
+        if: github.event_name == 'pull_request'
+        run: npm run check:feed-content -- --skip-network
 
       - name: Site - type-check
         if: steps.changes.outputs.site_changed == 'true'

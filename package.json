@@ -20,6 +20,8 @@
     "check:storage:docs": "node scripts/check-no-storage.mjs --app=docs apps/docs/build",
     "check:docs-version": "node scripts/check-docs-version.mjs",
     "check:feed-docs": "node scripts/check-feed-docs.mjs",
+    "check:feed-content": "node scripts/feed-content.mjs",
+    "stage:feed": "node scripts/feed-stage.mjs",
     "docs:version": "node scripts/cut-docs-version.mjs"
   },
   "devDependencies": {

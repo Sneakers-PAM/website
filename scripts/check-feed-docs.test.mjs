@@ -82,7 +82,7 @@ function repo() {
   git("config", "commit.gpgsign", "false");
   git("config", "core.hooksPath", "/dev/null");
   mkdirSync(join(dir, "apps/docs"), { recursive: true });
-  mkdirSync(join(dir, "apps/updates/public/rc"), { recursive: true });
+  mkdirSync(join(dir, "apps/updates/feed/rc"), { recursive: true });
   const write = (f, v) => writeFileSync(join(dir, f), typeof v === "string" ? v : JSON.stringify(v));
   return { dir, git, write };
 }
@@ -91,12 +91,12 @@ test("runCheck compares the working tree's index with the base ref's", () => {
   const { dir, git, write } = repo();
   try {
     write("apps/docs/versions.json", ["v0.1.0-rc.7"]);
-    write("apps/updates/public/rc/index.json", index({ products: [product("0.1.0-rc.7")] }));
+    write("apps/updates/feed/rc/index.json", index({ products: [product("0.1.0-rc.7")] }));
     git("add", "-A");
     git("commit", "-q", "-m", "base");
 
     // Adding rc.10 with no docs snapshot fails.
-    write("apps/updates/public/rc/index.json", index({ products: [product("0.1.0-rc.7"), product("0.1.0-rc.10")] }));
+    write("apps/updates/feed/rc/index.json", index({ products: [product("0.1.0-rc.7"), product("0.1.0-rc.10")] }));
     assert.equal(runCheck({ root: dir, base: "HEAD" }).length, 1);
 
     // With the snapshot cut it passes.
@@ -108,7 +108,7 @@ test("runCheck compares the working tree's index with the base ref's", () => {
     assert.equal(runCheck({ root: dir, base: "0000000000000000000000000000000000000000" }).length, 2);
 
     // No feed file at all is nothing to check.
-    rmSync(join(dir, "apps/updates/public/rc/index.json"));
+    rmSync(join(dir, "apps/updates/feed/rc/index.json"));
     assert.deepEqual(runCheck({ root: dir, base: "HEAD" }), []);
   } finally {
     rmSync(dir, { recursive: true, force: true });
