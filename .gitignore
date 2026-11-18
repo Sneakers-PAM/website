@@ -14,3 +14,8 @@ build/
 
 # Local design notes (non-tracked).
 .local/
+
+# The update feed is signed in the deploy; the staged copy and its signature
+# are generated, never committed (apps/updates/feed/ holds the reviewed source).
+apps/updates/public/rc/index.json*
+apps/updates/public/stable/index.json*
