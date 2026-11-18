@@ -1,7 +1,8 @@
 # Updating the appliance
 
-This guide covers the **Updates** page in the `:8443` appliance admin: what it shows, how to install
-an update, and what the note means when a check skips a release.
+This guide covers the **Updates** page in the `:8443` appliance admin: what it shows, where its list
+comes from, how to install an update, what a withdrawn release is, and what the note means when a
+check skips a release.
 
 ## Before you start
 
@@ -22,7 +23,41 @@ The page has a card for each part of the appliance you can update:
 
 Each card shows the running version, the previous version and what the update source offers. Below
 them, the **Update mirror** card shows the source, its status and the last check, with **Check now**.
+(See [Where the list comes from](#where-the-list-comes-from).)
 **Install an update** takes an uploaded file, and it's the only way to update an air-gapped box.
+
+## Where the list comes from
+
+From v0.1.0-rc.10 the box reads its list of updates from the project's update feed at
+`updates.sneakers-pam.com`: signed static files, so a withdrawal or a correction needs no new
+release. The box takes the list only when it is signed by a feed key built into the appliance. The
+release key doesn't sign it and the host isn't trusted. Every file the list names is still verified
+when you stage it. The box keeps the newest list it has taken per channel and refuses an older one.
+
+When the feed can't be taken (it's unreachable, missing, or its signature or sequence is refused),
+the **Update mirror** card shows the cause and the last list the box verified, with its age. A list
+that fails its check never replaces the last good one, and a bad signature is written to the audit
+log. With no list yet, the card says to upload a file or set a mirror.
+
+GitHub's releases are a source an admin can pick instead of the feed. A mirror, no source and an
+uploaded file work as before. A build for a lab or development, with no feed, keeps GitHub's
+releases as its built-in source. The box asks the feed again every 5 minutes at most, or when you
+select **Check now**.
+
+## Withdrawn releases
+
+The signed list can mark a release withdrawn, with the reason and the version to use instead. A
+withdrawn release isn't offered, is never the preferred line, and the box refuses to fetch it,
+showing the reason and the version to use. The check lists withdrawn releases apart from the offers.
+A box on v0.1.0-rc.9 or older can't read the marker until it has updated to rc.10.
+
+v0.1.0-rc.7, rc.8 and rc.9 are withdrawn: an update from rc.6 to any of them fails. Use
+v0.1.0-rc.10.
+
+An uploaded file of a withdrawn release is warned about, not refused, so a deliberate rollback stays
+possible. Staging it stops with the reason and the version to use, and the file stays held. The stop
+is in the audit log, and so is a later confirmation. If the box holds no withdrawn list, it stages
+the file and says that withdrawn releases couldn't be checked.
 
 ## Which offer is preferred
 
@@ -71,8 +106,8 @@ Skipping a release never steps the box down. Nothing at or below the version the
 offered, even though the note still shows. If nothing on the channel is usable, the check fails
 with an error naming the release it stopped at.
 
-These notes come from releases on GitHub. A box using an internal mirror reads the mirror's index
-as usual, and an air-gapped box is unchanged.
+These notes come from the releases the list names. A box using an internal mirror reads the mirror's
+index as usual, and an air-gapped box is unchanged.
 
 ## Install an update
 
