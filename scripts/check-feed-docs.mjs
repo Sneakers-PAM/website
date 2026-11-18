@@ -38,8 +38,9 @@ export function addedVersions(head, base) {
 }
 
 // One message per added version whose docs snapshot is missing.
-export function feedDocsProblems(channel, head, base, docs) {
+export function feedDocsProblems(channel, head, base, docs, exempt = []) {
   return addedVersions(head, base)
+    .filter((v) => !exempt.includes(v))
     .filter((v) => !docs.includes(docsVersionName(v)))
     .map(
       (v) =>
@@ -66,6 +67,11 @@ function baseIndex(root, base, path) {
 export function runCheck({ root, base }) {
   const versionsPath = join(root, "apps/docs/versions.json");
   const docs = docsVersions(existsSync(versionsPath) ? readFileSync(versionsPath, "utf8") : undefined);
+  // Releases that came out before the feed existed have no docs snapshot to
+  // wait for: apps/updates/feed/docs-exempt.json lists them by channel, and a
+  // release newer than the feed's first is never added to it.
+  const exemptPath = join(root, "apps/updates/feed/docs-exempt.json");
+  const exempt = existsSync(exemptPath) ? JSON.parse(readFileSync(exemptPath, "utf8")) : {};
   const problems = [];
   for (const channel of CHANNELS) {
     const path = `apps/updates/feed/${channel}/index.json`;
@@ -77,7 +83,7 @@ export function runCheck({ root, base }) {
     const head = JSON.parse(readFileSync(file, "utf8"));
     const added = addedVersions(head, baseIndex(root, base, path));
     console.log(`${channel}: ${added.length} added version(s) against ${base}${added.length ? `: ${added.join(", ")}` : ""}`);
-    problems.push(...feedDocsProblems(channel, head, baseIndex(root, base, path), docs));
+    problems.push(...feedDocsProblems(channel, head, baseIndex(root, base, path), docs, exempt[channel] ?? []));
   }
   return problems;
 }

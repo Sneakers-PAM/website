@@ -114,3 +114,10 @@ test("runCheck compares the working tree's index with the base ref's", () => {
     rmSync(dir, { recursive: true, force: true });
   }
 });
+
+test("a version listed in the exempt file needs no docs snapshot", () => {
+  const head = { products: [{ version: "0.1.0-rc.8" }, { version: "0.1.0-rc.10" }] };
+  const problems = feedDocsProblems("rc", head, null, ["v0.1.0-rc.7"], ["0.1.0-rc.8"]);
+  assert.equal(problems.length, 1);
+  assert.match(problems[0], /0\.1\.0-rc\.10/);
+});

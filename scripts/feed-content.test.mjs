@@ -99,6 +99,9 @@ test("deployedFeed reads the live index, and a 404 or a network error means none
 test("a deployed feed that cannot be read, other than a 404, is an error", async () => {
   await assert.rejects(deployedFeed("rc", async () => res(500)), /500/);
   await assert.rejects(deployedFeed("rc", async () => res(200, "not json")), /JSON/);
+  // Before a channel has a feed the host answers the feed path with its HTML
+  // fallback page: that is no feed deployed, not a broken one.
+  assert.equal(await deployedFeed("rc", async () => res(200, "<!doctype html>\n<html></html>")), null);
 });
 
 test("assets must exist with the same size", async () => {
