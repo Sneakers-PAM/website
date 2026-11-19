@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 // and the docs home. It is also the docs version a release deploys, so
 // apps/docs/versions.json must list it before a release can go out.
 export const release = {
-  version: "v0.1.0-rc.7",
+  version: "v0.1.0-rc.10",
   kind: "prerelease" as const,
-  publishedOn: "2026-11-03",
+  publishedOn: "2026-11-18",
 };

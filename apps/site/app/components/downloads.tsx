@@ -89,12 +89,14 @@ export const Downloads = ({
       a bare-metal install isn&apos;t available in this release.
     </p>
     <p className="prose dl-note dl-known-issue">
-      Known issue: a box can stay stuck if it loses power right after the database move, so don&apos;t
-      cut power during an upgrade to this release or straight after it. It&apos;s tracked in{" "}
+      Known issues: an update that loses power during the database move doesn&apos;t resume. The
+      box reverts to the version it was on, with the reason, and you start the update again; that
+      and a box that can stay stuck after a power cut are tracked in{" "}
       <a href="https://github.com/Sneakers-PAM/sneakers-appliance/issues/579">
         sneakers-appliance#579
       </a>
-      .
+      . rc.7, rc.8 and rc.9 are withdrawn because an update from rc.6 to them fails; update to this
+      release instead.
     </p>
 
     <h3>Install with Helm</h3>

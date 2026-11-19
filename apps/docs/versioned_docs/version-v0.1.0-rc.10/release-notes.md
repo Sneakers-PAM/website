@@ -22,6 +22,18 @@ page is the only warning it gets before then.
 - A box can still stay stuck if it loses power right after the database move that rc.7 introduced.
   It's tracked in
   [sneakers-appliance#579](https://github.com/Sneakers-PAM/sneakers-appliance/issues/579).
+- An update cut off by a power loss during the database move doesn't resume. The box reverts to
+  the version it was on, with the reason, and the update can be started again. The revert leaves
+  the old version's certificate objects removed and a few unused certificate secrets behind; the
+  old version doesn't use them, and starting the update again recreates fresh ones.
+  ([sneakers-appliance#579](https://github.com/Sneakers-PAM/sneakers-appliance/issues/579),
+  [#641](https://github.com/Sneakers-PAM/sneakers-appliance/issues/641))
+- A small box can run out of time waiting for the product to be ready after an update.
+  ([sneakers-appliance#640](https://github.com/Sneakers-PAM/sneakers-appliance/issues/640))
+- The first start after a Base OS update can be slow.
+  ([sneakers-appliance#401](https://github.com/Sneakers-PAM/sneakers-appliance/issues/401))
+- Setup's network step can't set the box's FQDN yet.
+  ([sneakers-appliance#176](https://github.com/Sneakers-PAM/sneakers-appliance/issues/176))
 
 :::
 
