@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "dev": "react-router dev",
-    "build": "react-router build && node scripts/build-security-pdf.mjs",
+    "build": "react-router build && node --experimental-strip-types scripts/build-seo-files.mjs && node scripts/build-security-pdf.mjs",
     "typecheck": "react-router typegen && tsc",
     "test": "node --experimental-strip-types --test app/*.test.ts app/content/*.test.ts app/content/trust/*.test.ts scripts/*.test.mjs",
     "lint": "eslint .",
